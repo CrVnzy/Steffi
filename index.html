@@ -8,10 +8,20 @@
 
     <style>
 
+        /* =========================
+           GRUNDLEGENDES
+        ========================= */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
         }
 
         body {
@@ -23,57 +33,91 @@
             align-items: center;
 
             font-family: Arial, Helvetica, sans-serif;
+
             color: white;
 
             background:
-                radial-gradient(circle at 20% 20%, rgba(255, 74, 130, 0.25), transparent 30%),
-                radial-gradient(circle at 80% 80%, rgba(187, 61, 255, 0.20), transparent 30%),
-                linear-gradient(135deg, #10070d, #1b0713, #090509);
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255, 60, 120, 0.28),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(170, 50, 255, 0.22),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #10070d,
+                    #1c0814,
+                    #09050a
+                );
         }
 
-        /* Hintergrund */
+
+        /* =========================
+           HINTERGRUND
+        ========================= */
 
         .background-glow {
             position: fixed;
             inset: 0;
+
             overflow: hidden;
+
             pointer-events: none;
+
             z-index: 0;
         }
 
         .glow {
             position: absolute;
+
             border-radius: 50%;
+
             filter: blur(100px);
-            opacity: 0.4;
-            animation: floating 8s ease-in-out infinite;
+
+            opacity: 0.35;
+
+            animation:
+                floating 8s ease-in-out infinite;
         }
 
         .glow-1 {
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            height: 320px;
+
             background: #ff2f68;
-            top: -100px;
-            left: -80px;
+
+            top: -120px;
+            left: -100px;
         }
 
         .glow-2 {
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            height: 320px;
+
             background: #9c27ff;
+
+            right: -100px;
             bottom: -100px;
-            right: -80px;
+
             animation-delay: 2s;
         }
 
-        /* Hauptkarte */
+
+        /* =========================
+           HAUPTKARTE
+        ========================= */
 
         .card {
             position: relative;
+
             z-index: 2;
 
             width: min(700px, 90%);
-            min-height: 500px;
+            min-height: 520px;
 
             padding: 60px 40px;
 
@@ -84,8 +128,11 @@
 
             text-align: center;
 
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.13);
+            background:
+                rgba(255, 255, 255, 0.07);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.13);
 
             border-radius: 35px;
 
@@ -95,20 +142,28 @@
                 0 30px 100px rgba(0, 0, 0, 0.45),
                 inset 0 0 30px rgba(255, 255, 255, 0.02);
 
-            animation: cardAppear 1s ease forwards;
+            animation:
+                cardAppear 1s ease forwards;
         }
 
-        /* Herz */
+
+        /* =========================
+           HERZ
+        ========================= */
 
         .heart {
             font-size: 70px;
 
             margin-bottom: 20px;
 
-            animation: heartbeat 1.8s ease-in-out infinite;
+            animation:
+                heartbeat 1.8s ease-in-out infinite;
         }
 
-        /* Text */
+
+        /* =========================
+           TEXT
+        ========================= */
 
         .small-text {
             margin-bottom: 15px;
@@ -119,20 +174,24 @@
             font-weight: bold;
 
             letter-spacing: 3px;
+
             text-transform: uppercase;
         }
 
         h1 {
-            font-size: clamp(42px, 8vw, 75px);
+            font-size:
+                clamp(42px, 8vw, 75px);
+
             line-height: 1;
 
             margin-bottom: 25px;
 
-            background: linear-gradient(
-                90deg,
-                #ffffff,
-                #ffb0c7
-            );
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #ffb0c7
+                );
 
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -143,34 +202,48 @@
 
             margin-bottom: 45px;
 
-            color: rgba(255, 255, 255, 0.75);
+            color:
+                rgba(255, 255, 255, 0.75);
 
             font-size: 18px;
+
             line-height: 1.7;
         }
 
-        /* Button Bereich */
+
+        /* =========================
+           BUTTON BEREICH
+        ========================= */
 
         .button-area {
             position: relative;
 
             width: 100%;
-            height: 150px;
+
+            max-width: 560px;
+
+            height: 180px;
 
             display: flex;
+
             justify-content: center;
             align-items: center;
 
             gap: 25px;
         }
 
-        /* Allgemeiner Button */
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         button {
             border: none;
+
             outline: none;
 
             font-size: 18px;
+
             font-weight: bold;
 
             border-radius: 999px;
@@ -186,7 +259,10 @@
                 top 0.35s ease;
         }
 
-        /* JA */
+
+        /* =========================
+           JA BUTTON
+        ========================= */
 
         #yesButton {
             position: relative;
@@ -195,67 +271,71 @@
 
             color: white;
 
-            background: linear-gradient(
-                135deg,
-                #ff2f68,
-                #ff6d99
-            );
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff2f68,
+                    #ff6d99
+                );
 
             box-shadow:
-                0 10px 30px rgba(255, 47, 104, 0.35);
+                0 10px 30px
+                rgba(255, 47, 104, 0.35);
 
             transform: scale(1);
         }
 
         #yesButton:hover {
             box-shadow:
-                0 15px 40px rgba(255, 47, 104, 0.55);
-
-            transform: scale(
-                calc(var(--yes-scale) + 0.03)
-            );
+                0 15px 40px
+                rgba(255, 47, 104, 0.55);
         }
 
-        /* NEIN */
 
-       #noButton {
-    position: absolute;
+        /* =========================
+           NEIN BUTTON
+        ========================= */
 
-    z-index: 4;
+        #noButton {
+            position: relative;
 
-    color: white;
+            z-index: 4;
 
-    background: rgba(255, 255, 255, 0.08);
+            color: white;
 
-    border: 1px solid rgba(255, 255, 255, 0.12);
+            background:
+                rgba(255, 255, 255, 0.08);
 
-    /*
-     * Startposition:
-     * rechts neben dem JA-Button
-     */
-    left: 58%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-}
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+        }
 
         #noButton:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background:
+                rgba(255, 255, 255, 0.12);
         }
 
-        /* Kleine Info */
+
+        /* =========================
+           HINWEIS
+        ========================= */
 
         .hint {
             position: absolute;
 
             bottom: 20px;
 
-            color: rgba(255, 255, 255, 0.35);
+            color:
+                rgba(255, 255, 255, 0.35);
 
             font-size: 13px;
         }
 
-        /* Erfolg */
+
+        /* =========================
+           ERFOLGSSEITE
+        ========================= */
 
         .success {
             position: fixed;
@@ -275,12 +355,15 @@
                 radial-gradient(
                     circle,
                     rgba(255, 47, 104, 0.25),
-                    rgba(0, 0, 0, 0.95)
+                    rgba(0, 0, 0, 0.96)
                 );
         }
 
         .success-content {
-            animation: successAppear 1s ease forwards;
+            padding: 30px;
+
+            animation:
+                successAppear 1s ease forwards;
         }
 
         .success-heart {
@@ -288,19 +371,22 @@
 
             margin-bottom: 25px;
 
-            animation: heartbeat 1s infinite;
+            animation:
+                heartbeat 1s infinite;
         }
 
         .success h2 {
-            font-size: clamp(45px, 9vw, 90px);
+            font-size:
+                clamp(45px, 9vw, 90px);
 
             margin-bottom: 20px;
 
-            background: linear-gradient(
-                90deg,
-                #ff5c8a,
-                #ffc2d4
-            );
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff5c8a,
+                    #ffc2d4
+                );
 
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -309,12 +395,16 @@
         .success p {
             font-size: 21px;
 
-            color: rgba(255, 255, 255, 0.8);
+            color:
+                rgba(255, 255, 255, 0.8);
 
             line-height: 1.7;
         }
 
-        /* Herzen */
+
+        /* =========================
+           HERZEN
+        ========================= */
 
         .floating-heart {
             position: fixed;
@@ -327,10 +417,14 @@
 
             pointer-events: none;
 
-            animation: floatHeart 5s linear forwards;
+            animation:
+                floatHeart 5s linear forwards;
         }
 
-        /* Animationen */
+
+        /* =========================
+           ANIMATIONEN
+        ========================= */
 
         @keyframes heartbeat {
 
@@ -348,7 +442,7 @@
 
             0%,
             100% {
-                transform: translateY(0px);
+                transform: translateY(0);
             }
 
             50% {
@@ -360,12 +454,18 @@
 
             from {
                 opacity: 0;
-                transform: translateY(35px) scale(0.96);
+
+                transform:
+                    translateY(35px)
+                    scale(0.96);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+
+                transform:
+                    translateY(0)
+                    scale(1);
             }
         }
 
@@ -373,12 +473,16 @@
 
             from {
                 opacity: 0;
-                transform: scale(0.8);
+
+                transform:
+                    scale(0.8);
             }
 
             to {
                 opacity: 1;
-                transform: scale(1);
+
+                transform:
+                    scale(1);
             }
         }
 
@@ -401,91 +505,127 @@
             }
         }
 
-        /* Handy */
+
+        /* =========================
+           HANDY
+        ========================= */
 
         @media (max-width: 600px) {
 
             .card {
-                min-height: 460px;
+                width: 92%;
+
+                min-height: 500px;
 
                 padding:
-                    45px 20px;
+                    40px 20px;
             }
 
             .heart {
                 font-size: 60px;
             }
 
-            .button-area {
-                height: 170px;
-            }
-
             .question-text {
                 font-size: 16px;
+
+                margin-bottom: 30px;
+            }
+
+            .button-area {
+                height: 190px;
             }
 
             button {
                 font-size: 16px;
-                padding: 15px 27px;
+
+                padding:
+                    15px 27px;
+            }
+
+            .hint {
+                bottom: 15px;
             }
         }
 
     </style>
 </head>
 
+
 <body>
 
-    <!-- Hintergrund -->
+
+    <!-- =========================
+         HINTERGRUND
+    ========================= -->
 
     <div class="background-glow">
+
         <div class="glow glow-1"></div>
+
         <div class="glow glow-2"></div>
+
     </div>
 
 
-    <!-- Hauptkarte -->
 
-    <div class="card" id="mainCard">
+    <!-- =========================
+         HAUPTSEITE
+    ========================= -->
+
+    <div
+        class="card"
+        id="mainCard"
+    >
 
         <div class="heart">
             ❤️
         </div>
 
+
         <div class="small-text">
             Eine kleine Frage
         </div>
+
 
         <h1>
             Magst du mich?
         </h1>
 
+
         <p class="question-text">
+
             Bevor wir hier weitermachen,
             muss ich natürlich erstmal
             eine ganz wichtige Sache wissen... 🤭
+
         </p>
 
 
-        <div class="button-area" id="buttonArea">
+
+        <!-- BUTTON BEREICH -->
+
+        <div
+            class="button-area"
+            id="buttonArea"
+        >
 
             <button
                 id="yesButton"
-                onclick="sayYes()">
-
+                onclick="sayYes()"
+            >
                 Ja ❤️
-
             </button>
 
 
             <button
                 id="noButton"
-                onclick="sayNo()">
-
+                onclick="sayNo()"
+            >
                 Nein 🙈
-
             </button>
 
         </div>
+
 
 
         <div class="hint">
@@ -495,9 +635,15 @@
     </div>
 
 
-    <!-- Erfolgsseite -->
 
-    <div class="success" id="success">
+    <!-- =========================
+         ERFOLGSSEITE
+    ========================= -->
+
+    <div
+        class="success"
+        id="success"
+    >
 
         <div class="success-content">
 
@@ -505,9 +651,11 @@
                 ❤️
             </div>
 
+
             <h2>
                 Jaaaa! 🥰
             </h2>
+
 
             <p>
                 Ich wusste doch,
@@ -519,17 +667,20 @@
     </div>
 
 
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
     <script>
 
-        /*
-         * Wie stark der JA-Button
-         * wachsen soll.
-         *
-         * 1.00 = normale Größe
-         * 1.12 = 12 % größer
-         */
+        /* -------------------------
+           VARIABLEN
+        ------------------------- */
 
         let yesScale = 1;
+
+        let noClickCount = 0;
 
         const yesButton =
             document.getElementById("yesButton");
@@ -541,31 +692,69 @@
             document.getElementById("buttonArea");
 
 
-        /*
-         * NEIN wurde gedrückt
-         */
+
+        /* -------------------------
+           NEIN-TEXTE
+        ------------------------- */
+
+        const noTexts = [
+
+            "Nein 🙈",
+
+            "Bist du sicher? 🤭",
+
+            "Wirklich? 🥺",
+
+            "Denk nochmal nach 😏",
+
+            "Ganz sicher? ❤️",
+
+            "Letzte Chance 😂",
+
+            "Okay... wirklich Nein? 🥺"
+
+        ];
+
+
+
+        /* -------------------------
+           NEIN BUTTON
+        ------------------------- */
 
         function sayNo() {
 
+            noClickCount++;
+
+
             /*
-             * JA wird jedes Mal
-             * um 12 % größer
+             * JA BUTTON VERGRÖSSERN
+             *
+             * Jede Betätigung:
+             * vorherige Größe × 1.12
              */
 
             yesScale *= 1.12;
 
+
+            /*
+             * Maximale Größe festlegen,
+             * damit der Button nicht
+             * irgendwann komplett eskaliert.
+             */
+
+            if (yesScale > 3.2) {
+                yesScale = 3.2;
+            }
+
+
             yesButton.style.transform =
                 `scale(${yesScale})`;
 
-            yesButton.style.setProperty(
-                "--yes-scale",
-                yesScale
-            );
 
 
             /*
-             * Größe des Bereichs,
-             * in dem NEIN herumspringen darf
+             * NEIN BUTTON MUSS
+             * HERUMSPRINGEN
              */
 
             const areaWidth =
@@ -575,10 +764,6 @@
                 buttonArea.clientHeight;
 
 
-            /*
-             * Größe des Buttons
-             */
-
             const buttonWidth =
                 noButton.offsetWidth;
 
@@ -586,27 +771,62 @@
                 noButton.offsetHeight;
 
 
+
             /*
-             * Neue zufällige Position
+             * Sicherheitsabstand
+             */
+
+            const padding = 10;
+
+
+            /*
+             * Maximale Position
              */
 
             const maxX =
-                areaWidth - buttonWidth;
+                areaWidth -
+                buttonWidth -
+                padding * 2;
 
             const maxY =
-                areaHeight - buttonHeight;
+                areaHeight -
+                buttonHeight -
+                padding * 2;
 
-
-            const randomX =
-                Math.random() * maxX;
-
-            const randomY =
-                Math.random() * maxY;
 
 
             /*
-             * Button bewegen
+             * Zufällige Position
              */
+
+            let randomX =
+                padding +
+                Math.random() *
+                Math.max(maxX, 0);
+
+            let randomY =
+                padding +
+                Math.random() *
+                Math.max(maxY, 0);
+
+
+
+            /*
+             * Transform entfernen,
+             * damit left/top sauber
+             * funktionieren.
+             */
+
+            noButton.style.transform =
+                "none";
+
+
+            /*
+             * Position setzen
+             */
+
+            noButton.style.position =
+                "absolute";
 
             noButton.style.left =
                 `${randomX}px`;
@@ -615,64 +835,80 @@
                 `${randomY}px`;
 
 
+
             /*
-             * Text vom Nein-Button
-             * wird etwas frecher 😏
+             * Text ändern
              */
 
-            const texts = [
-                "Nein 🙈",
-                "Bist du sicher? 🤭",
-                "Wirklich? 🥺",
-                "Denk nochmal nach 😏",
-                "Ganz sicher? ❤️",
-                "Letzte Chance 😂"
-            ];
+            const textIndex =
+                Math.min(
+                    noClickCount,
+                    noTexts.length - 1
+                );
 
 
-            const randomText =
-                texts[
-                    Math.floor(
-                        Math.random() * texts.length
-                    )
-                ];
-
-
-            noButton.innerText = randomText;
+            noButton.innerText =
+                noTexts[textIndex];
 
         }
 
 
-        /*
-         * JA wurde gedrückt
-         */
+
+        /* -------------------------
+           JA BUTTON
+        ------------------------- */
 
         function sayYes() {
+
+            /*
+             * Hauptkarte ausblenden
+             */
 
             document
                 .getElementById("mainCard")
                 .style.display = "none";
 
 
+            /*
+             * Erfolgsseite anzeigen
+             */
+
             document
                 .getElementById("success")
                 .style.display = "flex";
 
+
+            /*
+             * Herzen starten
+             */
 
             createHearts();
 
         }
 
 
-        /*
-         * Herzen erzeugen
-         */
+
+        /* -------------------------
+           HERZEN ERSTELLEN
+        ------------------------- */
 
         function createHearts() {
 
+            const heartTypes = [
+
+                "❤️",
+                "💕",
+                "💗",
+                "💖",
+                "💘",
+                "💞"
+
+            ];
+
+
             for (
                 let i = 0;
-                i < 45;
+                i < 50;
                 i++
             ) {
 
@@ -686,14 +922,9 @@
                         "floating-heart";
 
 
-                    const heartTypes = [
-                        "❤️",
-                        "💕",
-                        "💗",
-                        "💖",
-                        "💘"
-                    ];
-
+                    /*
+                     * Zufälliges Herz
+                     */
 
                     heart.innerText =
                         heartTypes[
@@ -704,12 +935,35 @@
                         ];
 
 
-                    heart.style.left =
-                        Math.random() * 100 + "vw";
+                    /*
+                     * Zufällige X-Position
+                     */
 
+                    heart.style.left =
+                        Math.random() *
+                        100 +
+                        "vw";
+
+
+                    /*
+                     * Zufällige Größe
+                     */
+
+                    heart.style.fontSize =
+                        (18 +
+                        Math.random() * 25)
+                        + "px";
+
+
+                    /*
+                     * Zufällige
+                     * Animationsdauer
+                     */
 
                     heart.style.animationDuration =
-                        (3 + Math.random() * 3) + "s";
+                        (3 +
+                        Math.random() * 3)
+                        + "s";
 
 
                     document.body.appendChild(
@@ -717,11 +971,17 @@
                     );
 
 
+                    /*
+                     * Nach der Animation
+                     * wieder entfernen
+                     */
+
                     setTimeout(() => {
 
                         heart.remove();
 
-                    }, 6000);
+                    }, 6500);
+
 
                 }, i * 80);
 
