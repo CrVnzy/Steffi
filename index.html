@@ -39,19 +39,21 @@
 
         body {
 
-            width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
 
             overflow: hidden;
 
             display: flex;
+
             justify-content: center;
             align-items: center;
+
 
             font-family:
                 Arial,
                 Helvetica,
                 sans-serif;
+
 
             color: white;
 
@@ -60,21 +62,21 @@
 
                 radial-gradient(
                     circle at 15% 20%,
-                    rgba(255, 60, 120, 0.30),
+                    rgba(255, 55, 115, 0.30),
                     transparent 30%
                 ),
 
                 radial-gradient(
                     circle at 85% 80%,
-                    rgba(170, 50, 255, 0.22),
+                    rgba(160, 60, 255, 0.22),
                     transparent 30%
                 ),
 
                 linear-gradient(
                     135deg,
                     #10070d,
-                    #1c0814,
-                    #09050a
+                    #1b0814,
+                    #080409
                 );
         }
 
@@ -84,7 +86,7 @@
            HINTERGRUND
         ===================================================== */
 
-        .background-glow {
+        .background {
 
             position: fixed;
 
@@ -113,27 +115,27 @@
         }
 
 
-        .glow-1 {
+        .glow.one {
 
             width: 320px;
             height: 320px;
 
-            top: -120px;
-            left: -100px;
-
             background: #ff2f68;
+
+            left: -110px;
+            top: -120px;
         }
 
 
-        .glow-2 {
+        .glow.two {
 
             width: 320px;
             height: 320px;
 
+            background: #9c27ff;
+
             right: -100px;
             bottom: -100px;
-
-            background: #9c27ff;
 
             animation-delay: 2s;
         }
@@ -148,38 +150,44 @@
 
             position: relative;
 
-            z-index: 2;
+            z-index: 5;
 
-            width: min(700px, 92%);
+
+            width: min(
+                700px,
+                92vw
+            );
+
 
             min-height: 540px;
 
+
             padding:
-                55px 40px;
+                55px 35px;
 
 
             display: flex;
 
             flex-direction: column;
 
-            justify-content: center;
-
             align-items: center;
+
+            justify-content: center;
 
 
             text-align: center;
 
 
             background:
-                rgba(255, 255, 255, 0.07);
+                rgba(255,255,255,0.07);
 
 
             border:
                 1px solid
-                rgba(255, 255, 255, 0.13);
+                rgba(255,255,255,0.13);
 
 
-            border-radius: 35px;
+            border-radius: 32px;
 
 
             backdrop-filter:
@@ -189,14 +197,14 @@
             box-shadow:
 
                 0 30px 100px
-                rgba(0, 0, 0, 0.45),
+                rgba(0,0,0,0.45),
 
                 inset 0 0 30px
-                rgba(255, 255, 255, 0.02);
+                rgba(255,255,255,0.02);
 
 
             animation:
-                cardAppear 1s ease;
+                appear 0.8s ease;
         }
 
 
@@ -207,9 +215,10 @@
 
         .heart {
 
-            font-size: 70px;
+            font-size: 65px;
 
-            margin-bottom: 18px;
+            margin-bottom: 15px;
+
 
             animation:
                 heartbeat 1.8s ease-in-out infinite;
@@ -221,17 +230,22 @@
            KLEINER TEXT
         ===================================================== */
 
-        .small-text {
+        .eyebrow {
 
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+
 
             color: #ff9db8;
 
-            font-size: 14px;
+
+            font-size: 13px;
+
 
             font-weight: bold;
 
+
             letter-spacing: 3px;
+
 
             text-transform: uppercase;
         }
@@ -244,10 +258,16 @@
 
         h1 {
 
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+
 
             font-size:
-                clamp(42px, 8vw, 75px);
+                clamp(
+                    42px,
+                    8vw,
+                    75px
+                );
+
 
             line-height: 1;
 
@@ -257,7 +277,7 @@
                 linear-gradient(
                     90deg,
                     #ffffff,
-                    #ffb0c7
+                    #ffb4ca
                 );
 
 
@@ -269,21 +289,28 @@
 
 
         /* =====================================================
-           TEXT
+           BESCHREIBUNG
         ===================================================== */
 
-        .question-text {
+        .description {
 
             max-width: 520px;
+
 
             margin-bottom: 25px;
 
 
             color:
-                rgba(255, 255, 255, 0.75);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.75
+                );
 
 
             font-size: 18px;
+
 
             line-height: 1.7;
         }
@@ -291,38 +318,49 @@
 
 
         /* =====================================================
-           FLUGBEREICH
+           BUTTON-STAGE
 
-           WICHTIG:
+           DAS IST DER GESAMTE SICHERHEITSBEREICH.
 
-           Der NEIN Button darf sich NUR innerhalb
-           dieses Bereichs bewegen.
-
-           Nicht über den kompletten Bildschirm.
+           NEIN DARF NUR INNERHALB DIESES ELEMENTS
+           TELEPORTIEREN.
         ===================================================== */
 
         .button-stage {
 
             position: relative;
 
-            width: 100%;
 
-            max-width: 600px;
+            width: min(
+                560px,
+                100%
+            );
 
-            height: 190px;
+
+            /*
+             * Auf Desktop etwas größer.
+             */
+
+            height: 220px;
+
 
             margin-top: 5px;
 
+
+            border-radius: 24px;
+
+
+            /*
+             * Unsichtbare Begrenzung.
+             */
+
             overflow: hidden;
-
-            border-radius: 25px;
-
         }
 
 
 
         /* =====================================================
-           BUTTON
+           BUTTON BASIS
         ===================================================== */
 
         button {
@@ -331,9 +369,12 @@
 
             outline: none;
 
+
             font-family: inherit;
 
+
             font-size: 18px;
+
 
             font-weight: bold;
 
@@ -342,34 +383,42 @@
 
 
             padding:
-                17px 35px;
+                16px 32px;
 
 
             cursor: pointer;
 
+
             user-select: none;
 
+
             white-space: nowrap;
+
+
+            -webkit-tap-highlight-color:
+                transparent;
         }
 
 
 
         /* =====================================================
-           JA
+           JA BUTTON
 
-           Bleibt IMMER in der Mitte.
+           Immer ungefähr in der Mitte.
         ===================================================== */
 
         #yesButton {
 
             position: absolute;
 
-            z-index: 10;
 
+            left: 38%;
 
-            left: 42%;
 
             top: 50%;
+
+
+            z-index: 10;
 
 
             transform:
@@ -401,13 +450,21 @@
             box-shadow:
 
                 0 10px 30px
-                rgba(255, 47, 104, 0.35);
+                rgba(
+                    255,
+                    47,
+                    104,
+                    0.35
+                );
 
 
             transition:
-                transform 0.35s ease,
-                box-shadow 0.3s ease;
 
+                transform
+                0.35s ease,
+
+                box-shadow
+                0.25s ease;
         }
 
 
@@ -416,35 +473,39 @@
             box-shadow:
 
                 0 15px 40px
-                rgba(255, 47, 104, 0.55);
-
+                rgba(
+                    255,
+                    47,
+                    104,
+                    0.55
+                );
         }
 
 
 
         /* =====================================================
-           NEIN
+           NEIN BUTTON
 
-           WICHTIG:
+           IMPORTANT:
+           position: absolute
+           innerhalb der Stage.
 
-           Er ist von ANFANG AN absolute.
-
-           Dadurch gibt es beim ersten Klick
-           KEINEN Wechsel von relative -> fixed.
-
-           Genau dadurch verschwindet er nicht mehr.
+           Kein fixed.
+           Keine Bildschirmkoordinaten.
         ===================================================== */
 
         #noButton {
 
             position: absolute;
 
-            z-index: 20;
 
+            left: 70%;
 
-            left: 58%;
 
             top: 50%;
+
+
+            z-index: 20;
 
 
             transform:
@@ -459,30 +520,43 @@
 
 
             background:
-                rgba(255,255,255,0.10);
+
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
 
 
             border:
+
                 1px solid
-                rgba(255,255,255,0.18);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.18
+                );
 
-
-            /*
-             * JavaScript übernimmt die Bewegung.
-
-             * Deshalb KEINE left/top transition.
-             */
 
             transition:
-                background 0.2s ease;
+
+                background
+                0.2s ease;
         }
 
 
         #noButton:hover {
 
             background:
-                rgba(255,255,255,0.16);
 
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.16
+                );
         }
 
 
@@ -493,10 +567,17 @@
 
         .hint {
 
-            margin-top: 10px;
+            margin-top: 5px;
+
 
             color:
-                rgba(255,255,255,0.35);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.35
+                );
+
 
             font-size: 13px;
         }
@@ -504,21 +585,25 @@
 
 
         /* =====================================================
-           ERFOLG
+           ERFOLGSSEITE
         ===================================================== */
 
         .success {
 
             position: fixed;
 
+
             inset: 0;
 
-            z-index: 5000;
+
+            z-index: 100;
 
 
             display: none;
 
+
             justify-content: center;
+
 
             align-items: center;
 
@@ -526,34 +611,47 @@
             text-align: center;
 
 
+            padding: 25px;
+
+
             background:
 
                 radial-gradient(
                     circle,
-                    rgba(255,47,104,0.25),
-                    rgba(0,0,0,0.96)
+                    rgba(
+                        255,
+                        47,
+                        104,
+                        0.28
+                    ),
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.96
+                    )
                 );
         }
 
 
         .success-content {
 
-            padding: 30px;
-
             animation:
-                successAppear 1s ease;
+                successAppear
+                0.9s ease;
         }
 
 
         .success-heart {
 
-            font-size: 110px;
+            font-size: 100px;
 
-            margin-bottom: 25px;
+            margin-bottom: 20px;
 
 
             animation:
-                heartbeat 1s infinite;
+                heartbeat
+                1s infinite;
         }
 
 
@@ -561,8 +659,13 @@
 
             margin-bottom: 20px;
 
+
             font-size:
-                clamp(45px,9vw,90px);
+                clamp(
+                    48px,
+                    9vw,
+                    90px
+                );
 
 
             background:
@@ -570,7 +673,7 @@
                 linear-gradient(
                     90deg,
                     #ff5c8a,
-                    #ffc2d4
+                    #ffc5d6
                 );
 
 
@@ -583,9 +686,16 @@
         .success p {
 
             color:
-                rgba(255,255,255,0.8);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.8
+                );
 
-            font-size: 21px;
+
+            font-size: 20px;
+
 
             line-height: 1.7;
         }
@@ -600,9 +710,15 @@
 
             position: fixed;
 
-            bottom: -50px;
 
-            z-index: 6000;
+            left: 50%;
+
+
+            bottom: -40px;
+
+
+            z-index: 500;
+
 
             pointer-events: none;
 
@@ -611,7 +727,9 @@
 
 
             animation:
-                floatHeart 5s linear forwards;
+
+                floatHeart
+                5s linear forwards;
         }
 
 
@@ -624,15 +742,17 @@
 
             0%,
             100% {
+
                 transform:
                     scale(1);
             }
 
+
             50% {
+
                 transform:
                     scale(1.15);
             }
-
         }
 
 
@@ -640,29 +760,29 @@
 
             0%,
             100% {
+
                 transform:
                     translateY(0);
             }
 
-            50% {
-                transform:
-                    translateY(-30px);
-            }
 
+            50% {
+
+                transform:
+                    translateY(-25px);
+            }
         }
 
 
-        @keyframes cardAppear {
+        @keyframes appear {
 
             from {
 
                 opacity: 0;
 
-
                 transform:
-                    translateY(35px)
-                    scale(0.96);
-
+                    translateY(25px)
+                    scale(0.97);
             }
 
 
@@ -670,13 +790,10 @@
 
                 opacity: 1;
 
-
                 transform:
                     translateY(0)
                     scale(1);
-
             }
-
         }
 
 
@@ -686,10 +803,8 @@
 
                 opacity: 0;
 
-
                 transform:
                     scale(0.8);
-
             }
 
 
@@ -697,12 +812,9 @@
 
                 opacity: 1;
 
-
                 transform:
                     scale(1);
-
             }
-
         }
 
 
@@ -715,7 +827,6 @@
                     rotate(0deg);
 
                 opacity: 1;
-
             }
 
 
@@ -726,63 +837,68 @@
                     rotate(360deg);
 
                 opacity: 0;
-
             }
-
         }
 
 
 
         /* =====================================================
            MOBILE
+
+           Der Flugbereich wird höher,
+           damit genug Platz vorhanden ist.
         ===================================================== */
 
-        @media (max-width: 600px) {
+        @media (
+            max-width: 600px
+        ) {
 
             .card {
 
-                width: 92%;
+                width: 92vw;
 
-                min-height: 520px;
+                min-height: 540px;
 
                 padding:
                     40px 18px;
-
             }
 
 
             .heart {
 
-                font-size: 60px;
+                font-size: 55px;
 
+                margin-bottom: 12px;
             }
 
 
-            .question-text {
+            .description {
 
                 font-size: 16px;
 
+                max-width: 90%;
+
+                margin-bottom: 15px;
             }
 
 
             .button-stage {
 
-                height: 180px;
+                width: 100%;
 
+                height: 250px;
             }
 
 
             #yesButton {
 
                 left: 38%;
-
             }
 
 
             #noButton {
 
-                left: 65%;
-
+                left: 70%;
             }
 
 
@@ -791,8 +907,13 @@
                 font-size: 16px;
 
                 padding:
-                    15px 24px;
+                    14px 23px;
+            }
 
+
+            .hint {
+
+                font-size: 12px;
             }
 
         }
@@ -810,11 +931,11 @@
          HINTERGRUND
     ===================================================== -->
 
-    <div class="background-glow">
+    <div class="background">
 
-        <div class="glow glow-1"></div>
+        <div class="glow one"></div>
 
-        <div class="glow glow-2"></div>
+        <div class="glow two"></div>
 
     </div>
 
@@ -824,7 +945,7 @@
          HAUPTKARTE
     ===================================================== -->
 
-    <div
+    <main
         class="card"
         id="mainCard"
     >
@@ -835,7 +956,7 @@
         </div>
 
 
-        <div class="small-text">
+        <div class="eyebrow">
             Eine kleine Frage
         </div>
 
@@ -845,7 +966,7 @@
         </h1>
 
 
-        <p class="question-text">
+        <p class="description">
 
             Bevor wir hier weitermachen,
             muss ich natürlich erstmal
@@ -856,7 +977,7 @@
 
 
         <!-- =================================================
-             BEGRENZTER FLUGBEREICH
+             SICHERHEITSBEREICH
         ================================================== -->
 
         <div
@@ -869,11 +990,9 @@
 
             <button
                 id="yesButton"
-                onclick="sayYes()"
+                type="button"
             >
-
                 Ja ❤️
-
             </button>
 
 
@@ -882,11 +1001,9 @@
 
             <button
                 id="noButton"
-                onclick="sayNo()"
+                type="button"
             >
-
                 Nein 🙈
-
             </button>
 
 
@@ -895,20 +1012,19 @@
 
 
         <div class="hint">
-
             Eine Antwort macht mich glücklich... 🥰
-
         </div>
 
-    </div>
+
+    </main>
 
 
 
     <!-- =====================================================
-         ERFOLG
+         ERFOLGSSEITE
     ===================================================== -->
 
-    <div
+    <section
         class="success"
         id="success"
     >
@@ -928,14 +1044,17 @@
 
 
             <p>
+
                 Ich wusste doch,
                 dass du mich magst. ❤️
+
             </p>
 
 
         </div>
 
-    </div>
+
+    </section>
 
 
 
@@ -964,6 +1083,18 @@
             );
 
 
+        const mainCard =
+            document.getElementById(
+                "mainCard"
+            );
+
+
+        const success =
+            document.getElementById(
+                "success"
+            );
+
+
 
         /* =====================================================
            VARIABLEN
@@ -971,54 +1102,47 @@
 
         let yesScale = 1;
 
+
         let noClicks = 0;
 
-        let isFlying = false;
-
-
-
-        /* =====================================================
-           EINSTELLUNGEN
-        ===================================================== */
 
         /*
-         * JA wächst um 10%.
+         * JA wächst bei jedem NEIN
+         * um 12 %.
          */
 
-        const growth =
-            1.10;
+        const growthFactor = 1.12;
 
 
         /*
-         * Maximale Größe von JA.
+         * Maximal 220 %.
+         *
+         * Damit bleibt auf Handys
+         * genug Platz.
          */
 
-        const maxYesScale =
-            2.15;
+        const maxYesScale = 2.2;
 
 
         /*
-         * Sicherheitsabstand
-         * zwischen den Buttons.
+         * Mindestabstand zwischen
+         * JA und NEIN.
          */
 
-        const safetyGap =
-            30;
+        const safetyGap = 25;
 
 
         /*
-         * Abstand zum Rand
-         * des FLUGBEREICHS.
+         * Abstand zum Rand der
+         * button-stage.
          */
 
-        const stagePadding =
-            10;
+        const stagePadding = 10;
 
 
-
-        /* =====================================================
-           NEIN-TEXTE
-        ===================================================== */
+        /*
+         * Texte für NEIN.
+         */
 
         const noTexts = [
 
@@ -1038,51 +1162,22 @@
 
             "Warum? 😭",
 
-            "Ich lauf weg 😂",
+            "Ich gebe nicht auf 😂",
 
-            "Du bekommst mich nicht 😏"
+            "Du machst es mir schwer 😏"
 
         ];
 
 
 
         /* =====================================================
-           RECHTECK
-        ===================================================== */
-
-        function createRect(
-            x,
-            y,
-            width,
-            height
-        ) {
-
-            return {
-
-                left: x,
-
-                top: y,
-
-                right:
-                    x + width,
-
-                bottom:
-                    y + height
-
-            };
-
-        }
-
-
-
-        /* =====================================================
-           RECHTECKE ÜBERSCHNEIDEN
+           RECHTECK ÜBERLAPPT?
         ===================================================== */
 
         function overlaps(
             a,
             b,
-            gap
+            gap = 0
         ) {
 
             return (
@@ -1116,17 +1211,18 @@
 
 
         /* =====================================================
-           BEREICH INNERHALB STAGE
+           IST NEIN INNERHALB DER STAGE?
         ===================================================== */
 
-        function insideStage(
+        function isInsideStage(
             rect
         ) {
 
-            const width =
+            const stageWidth =
                 stage.clientWidth;
 
-            const height =
+
+            const stageHeight =
                 stage.clientHeight;
 
 
@@ -1146,7 +1242,7 @@
 
                 rect.right
                 <=
-                width
+                stageWidth
                 -
                 stagePadding
 
@@ -1154,7 +1250,7 @@
 
                 rect.bottom
                 <=
-                height
+                stageHeight
                 -
                 stagePadding
 
@@ -1165,10 +1261,10 @@
 
 
         /* =====================================================
-           JA RECHTECK IN STAGE-KOORDINATEN
+           JA-RECHTECK IN STAGE KOORDINATEN
         ===================================================== */
 
-        function getYesRectInStage() {
+        function getYesRect() {
 
             const stageRect =
                 stage.getBoundingClientRect();
@@ -1207,34 +1303,43 @@
 
 
         /* =====================================================
-           NEIN AKTUELLE POSITION
+           NEIN-RECHTECK FÜR EINE POSITION
         ===================================================== */
 
-        function getNoCenter() {
+        function getNoRect(
+            centerX,
+            centerY
+        ) {
 
-            const noRect =
-                noButton.getBoundingClientRect();
+            const width =
+                noButton.offsetWidth;
 
 
-            const stageRect =
-                stage.getBoundingClientRect();
+            const height =
+                noButton.offsetHeight;
 
 
             return {
 
-                x:
-                    noRect.left
+                left:
+                    centerX
                     -
-                    stageRect.left
-                    +
-                    noRect.width / 2,
+                    width / 2,
 
-                y:
-                    noRect.top
+                top:
+                    centerY
                     -
-                    stageRect.top
+                    height / 2,
+
+                right:
+                    centerX
                     +
-                    noRect.height / 2
+                    width / 2,
+
+                bottom:
+                    centerY
+                    +
+                    height / 2
 
             };
 
@@ -1243,63 +1348,14 @@
 
 
         /* =====================================================
-           PRÜFEN OB EIN KOMPLETTER PUNKT
-           ZU NAH AN JA IST
+           SICHERE POSITION SUCHEN
         ===================================================== */
 
-        function pointInsideObstacle(
-            point,
-            obstacle
-        ) {
+        function findSafePosition() {
 
-            return (
-
-                point.x
-                >=
-                obstacle.left
-
-                &&
-
-                point.x
-                <=
-                obstacle.right
-
-                &&
-
-                point.y
-                >=
-                obstacle.top
-
-                &&
-
-                point.y
-                <=
-                obstacle.bottom
-
-            );
-
-        }
-
-
-
-        /* =====================================================
-           BEWEGUNGSWEG PRÜFEN
-
-           Wir testen eine kurvige Bewegung,
-           nicht nur Start und Ende.
-
-           Dadurch kann NEIN während des Fluges
-           nicht durch JA fliegen.
-        ===================================================== */
-
-        function pathIsSafe(
-            start,
-            control,
-            end
-        ) {
 
             const yesRect =
-                getYesRectInStage();
+                getYesRect();
 
 
             const noWidth =
@@ -1311,315 +1367,255 @@
 
 
             /*
-             * JA um die komplette NEIN-Größe
-             * und Sicherheitsabstand erweitern.
+             * Erlaubte Mittelpunkt-Positionen
+             * für NEIN.
              */
 
-            const obstacle = {
+            const minX =
+                stagePadding
+                +
+                noWidth / 2;
 
-                left:
-                    yesRect.left
-                    -
-                    noWidth / 2
-                    -
-                    safetyGap,
 
-                top:
-                    yesRect.top
-                    -
-                    noHeight / 2
-                    -
-                    safetyGap,
+            const maxX =
+                stage.clientWidth
+                -
+                stagePadding
+                -
+                noWidth / 2;
 
-                right:
-                    yesRect.right
-                    +
-                    noWidth / 2
-                    +
-                    safetyGap,
 
-                bottom:
-                    yesRect.bottom
-                    +
-                    noHeight / 2
-                    +
-                    safetyGap
+            const minY =
+                stagePadding
+                +
+                noHeight / 2;
 
-            };
+
+            const maxY =
+                stage.clientHeight
+                -
+                stagePadding
+                -
+                noHeight / 2;
+
 
 
             /*
-             * 180 Punkte entlang
-             * der Bezier-Kurve testen.
+             * Falls aus irgendeinem Grund
+             * kein sinnvoller Bereich existiert,
+             * nichts verändern.
+             */
+
+            if (
+                maxX <= minX
+                ||
+                maxY <= minY
+            ) {
+
+                return null;
+
+            }
+
+
+
+            /*
+             * Bis zu 10.000 Positionen testen.
+
+             * Dadurch ist die Chance extrem hoch,
+             * dass eine sichere Position gefunden wird.
              */
 
             for (
                 let i = 0;
-                i <= 180;
+                i < 10000;
                 i++
             ) {
 
-                const t =
-                    i / 180;
-
-
-                /*
-                 * Quadratische Bezier-Kurve.
-                 */
 
                 const x =
 
-                    Math.pow(
-                        1 - t,
-                        2
-                    )
-                    * start.x
-
+                    minX
                     +
-
-                    2 *
+                    Math.random()
+                    *
                     (
-                        1 - t
-                    ) *
-                    t *
-                    control.x
-
-                    +
-
-                    Math.pow(
-                        t,
-                        2
-                    )
-                    * end.x;
+                        maxX - minX
+                    );
 
 
                 const y =
 
-                    Math.pow(
-                        1 - t,
-                        2
-                    )
-                    * start.y
-
+                    minY
                     +
-
-                    2 *
+                    Math.random()
+                    *
                     (
-                        1 - t
-                    ) *
-                    t *
-                    control.y
-
-                    +
-
-                    Math.pow(
-                        t,
-                        2
-                    )
-                    * end.y;
+                        maxY - minY
+                    );
 
 
 
-                /*
-                 * NEIN-Button an dieser Stelle.
-                 */
-
-                const noRect =
-
-                    createRect(
-
-                        x - noWidth / 2,
-
-                        y - noHeight / 2,
-
-                        noWidth,
-
-                        noHeight
-
+                const candidate =
+                    getNoRect(
+                        x,
+                        y
                     );
 
 
 
                 /*
-                 * Innerhalb der Stage?
+                 * Muss vollständig
+                 * innerhalb der Stage sein.
                  */
 
                 if (
-                    !insideStage(
-                        noRect
+                    !isInsideStage(
+                        candidate
                     )
                 ) {
 
-                    return false;
+                    continue;
 
                 }
 
 
 
                 /*
-                 * JA berührt?
+                 * Darf JA nicht berühren.
                  */
 
                 if (
                     overlaps(
-                        noRect,
+                        candidate,
                         yesRect,
                         safetyGap
                     )
                 ) {
 
-                    return false;
+                    continue;
 
                 }
+
+
+
+                /*
+                 * Zusätzlich müssen wir
+                 * vermeiden, dass NEIN
+                 * exakt an der alten Position landet.
+                 */
+
+                return {
+                    x,
+                    y
+                };
 
             }
 
 
-            return true;
-
-        }
-
-
-
-        /* =====================================================
-           SICHERES ZIEL + KONTROLLPUNKT SUCHEN
-        ===================================================== */
-
-        function findSafeFlight() {
-
-
-            const start =
-                getNoCenter();
-
-
-            const width =
-                noButton.offsetWidth;
-
-
-            const height =
-                noButton.offsetHeight;
-
-
 
             /*
-             * 5000 Möglichkeiten ausprobieren.
+             * Feste Positionen als Fallback.
+
+             * Damit der Button nicht verschwindet,
+             * wenn JA einmal sehr groß ist.
              */
 
+            const fallbackPositions = [
+
+                {
+                    x: minX,
+                    y: minY
+                },
+
+                {
+                    x: maxX,
+                    y: minY
+                },
+
+                {
+                    x: minX,
+                    y: maxY
+                },
+
+                {
+                    x: maxX,
+                    y: maxY
+                },
+
+                {
+                    x:
+                        minX,
+
+                    y:
+                        (
+                            minY
+                            +
+                            maxY
+                        )
+                        /
+                        2
+                },
+
+                {
+                    x:
+                        maxX,
+
+                    y:
+                        (
+                            minY
+                            +
+                            maxY
+                        )
+                        /
+                        2
+                }
+
+            ];
+
+
+
             for (
-                let attempt = 0;
-                attempt < 5000;
-                attempt++
+                const position
+                of fallbackPositions
             ) {
 
 
-                /*
-                 * Zielpunkt innerhalb der Stage.
-                 */
+                const candidate =
+                    getNoRect(
+                        position.x,
+                        position.y
+                    );
 
-                const end = {
-
-                    x:
-
-                        stagePadding
-                        +
-                        width / 2
-                        +
-                        Math.random()
-                        *
-                        (
-                            stage.clientWidth
-                            -
-                            2 *
-                            stagePadding
-                            -
-                            width
-                        ),
-
-                    y:
-
-                        stagePadding
-                        +
-                        height / 2
-                        +
-                        Math.random()
-                        *
-                        (
-                            stage.clientHeight
-                            -
-                            2 *
-                            stagePadding
-                            -
-                            height
-                        )
-
-                };
-
-
-
-                /*
-                 * Kontrollpunkt.
-
-                 * Dadurch wird die Bewegung
-                 * leicht gebogen.
-                 */
-
-                const control = {
-
-                    x:
-
-                        stage.clientWidth
-                        *
-                        (
-                            0.2
-                            +
-                            Math.random()
-                            *
-                            0.6
-                        ),
-
-                    y:
-
-                        stage.clientHeight
-                        *
-                        (
-                            0.15
-                            +
-                            Math.random()
-                            *
-                            0.7
-                        )
-
-                };
-
-
-
-                /*
-                 * Route überprüfen.
-                 */
 
                 if (
-                    pathIsSafe(
-                        start,
-                        control,
-                        end
+
+                    isInsideStage(
+                        candidate
                     )
+
+                    &&
+
+                    !overlaps(
+                        candidate,
+                        yesRect,
+                        safetyGap
+                    )
+
                 ) {
 
-                    return {
-
-                        start,
-                        control,
-                        end
-
-                    };
+                    return position;
 
                 }
 
             }
 
 
+
             /*
-             * Kein sicherer Weg gefunden.
+             * Wirklich keine Position gefunden.
+
+             * Dann bleibt NEIN einfach
+             * an seiner aktuellen Position.
              */
 
             return null;
@@ -1629,280 +1625,23 @@
 
 
         /* =====================================================
-           BEZIER POSITION
+           NEIN BUTTON TELEPORTIEREN
         ===================================================== */
 
-        function getBezierPoint(
-            start,
-            control,
-            end,
-            t
-        ) {
-
-            return {
-
-                x:
-
-                    Math.pow(
-                        1 - t,
-                        2
-                    )
-                    *
-                    start.x
-
-                    +
-
-                    2 *
-                    (
-                        1 - t
-                    )
-                    *
-                    t
-                    *
-                    control.x
-
-                    +
-
-                    Math.pow(
-                        t,
-                        2
-                    )
-                    *
-                    end.x,
+        function teleportNoButton() {
 
 
-                y:
-
-                    Math.pow(
-                        1 - t,
-                        2
-                    )
-                    *
-                    start.y
-
-                    +
-
-                    2 *
-                    (
-                        1 - t
-                    )
-                    *
-                    t
-                    *
-                    control.y
-
-                    +
-
-                    Math.pow(
-                        t,
-                        2
-                    )
-                    *
-                    end.y
-
-            };
-
-        }
-
-
-
-        /* =====================================================
-           SMOOTH FLUG
-        ===================================================== */
-
-        function flyNoButton(
-            route
-        ) {
-
-
-            const startTime =
-                performance.now();
+            const position =
+                findSafePosition();
 
 
             /*
-             * Flugzeit.
-             */
-
-            const duration =
-                900 +
-                Math.random() * 400;
-
-
-            /*
-             * ANIMATION
-             */
-
-            function animate(
-                now
-            ) {
-
-
-                const elapsed =
-                    now -
-                    startTime;
-
-
-                let t =
-                    elapsed / duration;
-
-
-                if (
-                    t > 1
-                ) {
-
-                    t = 1;
-
-                }
-
-
-
-                /*
-                 * Sehr sanftes
-                 * Ease-In-Out.
-                 */
-
-                const eased =
-
-                    t < 0.5
-
-                        ?
-
-                    2 *
-                    t *
-                    t
-
-                        :
-
-                    1 -
-                    Math.pow(
-                        -2 * t + 2,
-                        2
-                    )
-                    /
-                    2;
-
-
-
-                /*
-                 * Punkt auf der Kurve.
-                 */
-
-                const point =
-
-                    getBezierPoint(
-
-                        route.start,
-
-                        route.control,
-
-                        route.end,
-
-                        eased
-
-                    );
-
-
-
-                /*
-                 * Button bewegen.
-                 */
-
-                noButton.style.left =
-
-                    (
-                        point.x
-                        -
-                        noButton.offsetWidth
-                        / 2
-                    )
-                    +
-                    "px";
-
-
-                noButton.style.top =
-
-                    (
-                        point.y
-                        -
-                        noButton.offsetHeight
-                        / 2
-                    )
-                    +
-                    "px";
-
-
-
-                /*
-                 * Leichtes Schwingen.
-                 */
-
-                const rotation =
-
-                    Math.sin(
-                        eased
-                        *
-                        Math.PI
-                        *
-                        3
-                    )
-                    *
-                    4;
-
-
-                noButton.style.transform =
-
-                    `translate(-50%, -50%) rotate(${rotation}deg)`;
-
-
-
-                /*
-                 * Weiter?
-                 */
-
-                if (
-                    t < 1
-                ) {
-
-                    requestAnimationFrame(
-                        animate
-                    );
-
-                }
-
-                else {
-
-                    noButton.style.transform =
-                        "translate(-50%, -50%)";
-
-                    isFlying = false;
-
-                }
-
-            }
-
-
-            requestAnimationFrame(
-                animate
-            );
-
-        }
-
-
-
-        /* =====================================================
-           NEIN GEKLICKT
-        ===================================================== */
-
-        function sayNo() {
-
-
-            /*
-             * Während des Fluges
-             * keinen weiteren Klick.
+             * Falls keine Position gefunden
+             * wurde, nichts verändern.
              */
 
             if (
-                isFlying
+                position === null
             ) {
 
                 return;
@@ -1910,7 +1649,35 @@
             }
 
 
-            isFlying = true;
+
+            /*
+             * WICHTIG:
+
+             * Kein transition für left/top.
+
+             * Dadurch gibt es wirklich
+             * KEINE Bewegung.
+
+             * Der Button erscheint direkt
+             * an der neuen Position.
+             */
+
+            noButton.style.left =
+                `${position.x}px`;
+
+
+            noButton.style.top =
+                `${position.y}px`;
+
+        }
+
+
+
+        /* =====================================================
+           NEIN BUTTON
+        ===================================================== */
+
+        function sayNo() {
 
 
             noClicks++;
@@ -1918,11 +1685,11 @@
 
 
             /*
-             * JA größer.
+             * 1. JA VERGRÖSSERN
              */
 
             yesScale *=
-                growth;
+                growthFactor;
 
 
             if (
@@ -1936,6 +1703,11 @@
             }
 
 
+
+            /*
+             * JA Größe aktualisieren.
+             */
+
             yesButton.style.transform =
 
                 `
@@ -1946,10 +1718,11 @@
 
 
             /*
-             * NEIN Text wechseln.
+             * 2. NEIN TEXT ÄNDERN
              */
 
             const textIndex =
+
                 Math.min(
                     noClicks,
                     noTexts.length - 1
@@ -1962,80 +1735,49 @@
 
 
             /*
-             * Warten, bis JA tatsächlich
-             * größer geworden ist.
+             * 3. GANZ WICHTIG:
+
+             * Erst nachdem JA größer geworden ist,
+             * neue sichere Position berechnen.
              */
 
-            requestAnimationFrame(
-                () => {
+            requestAnimationFrame(() => {
 
 
-                    /*
-                     * Sichere Route suchen.
-                     */
+                teleportNoButton();
 
-                    const route =
-                        findSafeFlight();
-
-
-
-                    /*
-                     * Route gefunden?
-                     */
-
-                    if (
-                        route === null
-                    ) {
-
-                        isFlying = false;
-
-                        return;
-
-                    }
-
-
-
-                    /*
-                     * FLIEGEN! 🚀
-                     */
-
-                    flyNoButton(
-                        route
-                    );
-
-                }
-            );
+            });
 
         }
 
 
 
         /* =====================================================
-           JA GEKLICKT
+           JA BUTTON
         ===================================================== */
 
         function sayYes() {
 
 
-            document
-                .getElementById(
-                    "mainCard"
-                )
-                .style.display =
+            /*
+             * Hauptseite ausblenden.
+             */
+
+            mainCard.style.display =
                 "none";
 
 
-            noButton.style.display =
-                "none";
+            /*
+             * Erfolgsseite anzeigen.
+             */
 
-
-            document
-                .getElementById(
-                    "success"
-                )
-                .style.display =
+            success.style.display =
                 "flex";
 
+
+            /*
+             * Herzen.
+             */
 
             createHearts();
 
@@ -2050,7 +1792,7 @@
         function createHearts() {
 
 
-            const hearts = [
+            const heartTypes = [
 
                 "❤️",
                 "💕",
@@ -2069,90 +1811,190 @@
             ) {
 
 
-                setTimeout(
-                    () => {
+                setTimeout(() => {
 
 
-                        const heart =
-                            document.createElement(
-                                "div"
-                            );
+                    const heart =
+                        document.createElement(
+                            "div"
+                        );
 
 
-                        heart.className =
-                            "floating-heart";
+                    heart.className =
+                        "floating-heart";
 
 
-                        heart.innerText =
+                    heart.innerText =
 
-                            hearts[
-                                Math.floor(
-                                    Math.random()
-                                    *
-                                    hearts.length
-                                )
-                            ];
+                        heartTypes[
+                            Math.floor(
+                                Math.random()
+                                *
+                                heartTypes.length
+                            )
+                        ];
 
 
-                        heart.style.left =
+                    heart.style.left =
 
+                        (
                             Math.random()
                             *
                             100
+                        )
+                        +
+                        "vw";
+
+
+                    heart.style.fontSize =
+
+                        (
+                            18
                             +
-                            "vw";
+                            Math.random()
+                            *
+                            25
+                        )
+                        +
+                        "px";
 
 
-                        heart.style.fontSize =
+                    heart.style.animationDuration =
 
-                            (
-                                18
-                                +
-                                Math.random()
-                                *
-                                25
-                            )
+                        (
+                            3
                             +
-                            "px";
+                            Math.random()
+                            *
+                            3
+                        )
+                        +
+                        "s";
 
 
-                        heart.style.animationDuration =
-
-                            (
-                                3
-                                +
-                                Math.random()
-                                *
-                                3
-                            )
-                            +
-                            "s";
+                    document.body.appendChild(
+                        heart
+                    );
 
 
-                        document.body.appendChild(
-                            heart
-                        );
+                    setTimeout(() => {
+
+                        heart.remove();
+
+                    }, 6500);
 
 
-                        setTimeout(
-                            () => {
-
-                                heart.remove();
-
-                            },
-
-                            6500
-                        );
-
-
-                    },
-
-                    i * 70
-                );
+                }, i * 70);
 
             }
 
         }
+
+
+
+        /* =====================================================
+           BUTTONS BEIM LADEN
+
+           Die Startpositionen werden bereits
+           vom CSS vorgegeben:
+
+           JA = 38%
+           NEIN = 70%
+
+           Dadurch liegen sie beim ersten Laden
+           nebeneinander.
+
+        ===================================================== */
+
+        window.addEventListener(
+            "load",
+            () => {
+
+                /*
+                 * Absichtlich NICHTS verschieben.
+                 *
+                 * Das ist wichtig für den
+                 * sauberen Startzustand.
+                 */
+
+            }
+        );
+
+
+
+        /* =====================================================
+           RESIZE
+
+           Wenn z.B. das Handy gedreht wird,
+           prüfen wir nur, ob NEIN noch innerhalb
+           der Stage liegt.
+
+           Wir bewegen ihn NICHT automatisch,
+           solange die Seite gerade erst geladen wurde.
+        ===================================================== */
+
+        window.addEventListener(
+            "resize",
+            () => {
+
+
+                /*
+                 * Erst prüfen:
+                 * aktuelle Position.
+                 */
+
+                const rect =
+                    noButton.getBoundingClientRect();
+
+
+                const stageRect =
+                    stage.getBoundingClientRect();
+
+
+                const stagePosition = {
+
+                    left:
+                        rect.left
+                        -
+                        stageRect.left,
+
+                    top:
+                        rect.top
+                        -
+                        stageRect.top,
+
+                    right:
+                        rect.right
+                        -
+                        stageRect.left,
+
+                    bottom:
+                        rect.bottom
+                        -
+                        stageRect.top
+
+                };
+
+
+                /*
+                 * Nur wenn der Button
+                 * außerhalb geraten ist,
+                 * wird eine sichere Position
+                 * gesucht.
+                 */
+
+                if (
+                    !isInsideStage(
+                        stagePosition
+                    )
+                ) {
+
+                    teleportNoButton();
+
+                }
+
+            }
+        );
 
     </script>
 
