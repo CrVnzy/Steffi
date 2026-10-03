@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Eine letzte Frage ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(circle at top left, rgba(255, 80, 150, 0.20), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(130, 80, 255, 0.20), transparent 35%),
+                linear-gradient(135deg, #090910, #11111c 50%, #0b0b14);
+
+            color: white;
+
+            overflow: hidden;
+        }
+
+        .card {
+            position: relative;
+            z-index: 10;
+
+            width: min(700px, 100%);
+            padding: 55px 35px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.45),
+                0 0 60px rgba(255, 80, 150, 0.10);
+
+            animation: fadeIn 0.8s ease;
+        }
+
+        .heart {
+            font-size: 60px;
+            margin-bottom: 15px;
+
+            animation: heartbeat 2s infinite;
+        }
+
+        .eyebrow {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff9acb;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(34px, 7vw, 54px);
+            line-height: 1.15;
+            margin-bottom: 25px;
+
+            background: linear-gradient(90deg, #ff78b7, #c78cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .question {
+            font-size: 21px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.92);
+
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 16px 28px;
+
+            border-radius: 999px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .yes-button {
+            background: linear-gradient(90deg, #ff5fa7, #c978ff);
+            color: white;
+
+            box-shadow:
+                0 10px 30px rgba(255, 95, 167, 0.30);
+        }
+
+        .no-button {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        button:hover {
+            transform: translateY(-4px) scale(1.04);
+        }
+
+        .success {
+            display: none;
+            animation: successAppear 1s ease;
+        }
+
+        .success h2 {
+            font-size: clamp(34px, 7vw, 52px);
+            margin-bottom: 20px;
+
+            background: linear-gradient(90deg, #ff78b7, #c78cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .success p {
+            font-size: 19px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.90);
+
+            margin-bottom: 25px;
+        }
+
+        .big-heart {
+            font-size: 75px;
+            margin-bottom: 15px;
+
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .firework-message {
+            margin-top: 20px;
+
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        /* Feuerwerk-Canvas */
+        #fireworks {
+            position: fixed;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+
+            z-index: 5;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes successAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            10% {
+                transform: scale(1.10);
+            }
+
+            20% {
+                transform: scale(1);
+            }
+
+            30% {
+                transform: scale(1.08);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .card {
+                padding: 45px 22px;
+            }
+
+            .question {
+                font-size: 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="fireworks"></canvas>
+
+
+    <main class="card">
+
+        <div class="heart">❤️</div>
+
+        <div class="eyebrow">
+            Jetzt wird es ernst...
+        </div>
+
+        <h1>
+            Willst du meine Freundin sein?
+        </h1>
+
+        <p class="question">
+            Ich habe in der kurzen Zeit mit dir schon so viele
+            wunderschöne Momente erlebt.
+            <br><br>
+            Und ich würde unglaublich gerne
+            noch ganz viele davon mit dir sammeln. 🥰❤️
+        </p>
+
+
+        <div class="buttons" id="buttons">
+
+            <button class="yes-button" id="yesButton">
+                Ja, ich will ❤️
+            </button>
+
+            <button class="no-button" id="noButton">
+                Nein 🙈
+            </button>
+
+        </div>
+
+
+        <!-- Erfolg -->
+
+        <div class="success" id="success">
+
+            <div class="big-heart">
+                ❤️
+            </div>
+
+            <h2>
+                JAAAA! 🥹❤️
+            </h2>
+
+            <p>
+                Jetzt sind wir offiziell. 🥰
+                <br><br>
+                Ich freue mich auf alles,
+                was noch vor uns liegt.
+                <br>
+                Auf unsere Dates, unser Lachen,
+                das Kuscheln und auf all die
+                kleinen Momente mit dir. ❤️
+            </p>
+
+            <div class="firework-message">
+                Das musste natürlich gefeiert werden. 🎆✨
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        const yesButton = document.getElementById("yesButton");
+        const noButton = document.getElementById("noButton");
+
+        const buttons = document.getElementById("buttons");
+        const success = document.getElementById("success");
+
+        const canvas = document.getElementById("fireworks");
+        const ctx = canvas.getContext("2d");
+
+        let fireworks = [];
+        let particles = [];
+
+
+        /* =========================
+           CANVAS GRÖSSE
+        ========================= */
+
+        function resizeCanvas() {
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+        }
+
+        resizeCanvas();
+
+        window.addEventListener("resize", resizeCanvas);
+
+
+        /* =========================
+           FEUERWERK
+        ========================= */
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+
+        class Firework {
+
+            constructor(x, targetY) {
+
+                this.x = x;
+                this.y = canvas.height;
+
+                this.targetY = targetY;
+
+                this.speed = random(7, 10);
+
+                this.angle = -Math.PI / 2;
+
+                this.exploded = false;
+
+                this.color = `hsl(${random(0, 360)}, 100%, 65%)`;
+
+            }
+
+
+            update() {
+
+                this.y -= this.speed;
+
+                if (this.y <= this.targetY) {
+
+                    this.explode();
+
+                    return true;
+
+                }
+
+                return false;
+
+            }
+
+
+            draw() {
+
+                ctx.beginPath();
+
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+
+                ctx.fillStyle = this.color;
+
+                ctx.fill();
+
+            }
+
+
+            explode() {
+
+                const particleCount = 80;
+
+                for (let i = 0; i < particleCount; i++) {
+
+                    const angle =
+                        (Math.PI * 2 / particleCount) * i;
+
+                    const speed = random(2, 7);
+
+                    particles.push(
+                        new Particle(
+                            this.x,
+                            this.y,
+                            angle,
+                            speed,
+                            this.color
+                        )
+                    );
+
+                }
+
+                this.exploded = true;
+
+            }
+
+        }
+
+
+        class Particle {
+
+            constructor(x, y, angle, speed, color) {
+
+                this.x = x;
+                this.y = y;
+
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+
+                this.alpha = 1;
+
+                this.decay = random(0.012, 0.022);
+
+                this.gravity = 0.08;
+
+                this.color = color;
+
+                this.size = random(1.5, 3.5);
+
+            }
+
+
+            update() {
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                this.vy += this.gravity;
+
+                this.vx *= 0.985;
+                this.vy *= 0.985;
+
+                this.alpha -= this.decay;
+
+                return this.alpha <= 0;
+
+            }
+
+
+            draw() {
+
+                ctx.save();
+
+                ctx.globalAlpha = this.alpha;
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    this.x,
+                    this.y,
+                    this.size,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle = this.color;
+
+                ctx.fill();
+
+                ctx.restore();
+
+            }
+
+        }
+
+
+        /* =========================
+           ANIMATION
+        ========================= */
+
+        function animate() {
+
+            ctx.fillStyle = "rgba(9, 9, 16, 0.18)";
+
+            ctx.fillRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            /* Feuerwerke */
+
+            fireworks = fireworks.filter(firework => {
+
+                const done = firework.update();
+
+                if (!done) {
+                    firework.draw();
+                }
+
+                return !done;
+
+            });
+
+
+            /* Partikel */
+
+            particles = particles.filter(particle => {
+
+                const done = particle.update();
+
+                if (!done) {
+                    particle.draw();
+                }
+
+                return !done;
+
+            });
+
+
+            requestAnimationFrame(animate);
+
+        }
+
+        animate();
+
+
+        /* =========================
+           NEUES FEUERWERK
+        ========================= */
+
+        function launchFirework() {
+
+            const x = random(
+                canvas.width * 0.15,
+                canvas.width * 0.85
+            );
+
+            const targetY = random(
+                canvas.height * 0.15,
+                canvas.height * 0.55
+            );
+
+            fireworks.push(
+                new Firework(x, targetY)
+            );
+
+        }
+
+
+        function bigFireworkShow() {
+
+            /* Erste große Salve */
+
+            for (let i = 0; i < 10; i++) {
+
+                setTimeout(() => {
+                    launchFirework();
+                }, i * 250);
+
+            }
+
+
+            /* Danach noch einzelne Feuerwerke */
+
+            for (let i = 0; i < 15; i++) {
+
+                setTimeout(() => {
+                    launchFirework();
+                }, 2800 + i * 450);
+
+            }
+
+        }
+
+
+        /* =========================
+           JA
+        ========================= */
+
+        yesButton.addEventListener("click", () => {
+
+            buttons.style.display = "none";
+
+            success.style.display = "block";
+
+            bigFireworkShow();
+
+        });
+
+
+        /* =========================
+           NEIN
+        ========================= */
+
+        noButton.addEventListener("click", () => {
+
+            noButton.textContent = "Bist du sicher? 🙈";
+
+            setTimeout(() => {
+
+                noButton.textContent = "Denk nochmal nach... 🥺";
+
+            }, 1200);
+
+        });
+
+    </script>
+
+</body>
+</html>
