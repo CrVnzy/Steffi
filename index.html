@@ -3,16 +3,724 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eine kleine Überraschung ❤️</title>
+
+    <title>Eine kleine Frage ❤️</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 74, 130, 0.25), transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(187, 61, 255, 0.20), transparent 30%),
+                linear-gradient(135deg, #10070d, #1b0713, #090509);
+        }
+
+        /* Hintergrund */
+
+        .background-glow {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: floating 8s ease-in-out infinite;
+        }
+
+        .glow-1 {
+            width: 300px;
+            height: 300px;
+            background: #ff2f68;
+            top: -100px;
+            left: -80px;
+        }
+
+        .glow-2 {
+            width: 300px;
+            height: 300px;
+            background: #9c27ff;
+            bottom: -100px;
+            right: -80px;
+            animation-delay: 2s;
+        }
+
+        /* Hauptkarte */
+
+        .card {
+            position: relative;
+            z-index: 2;
+
+            width: min(700px, 90%);
+            min-height: 500px;
+
+            padding: 60px 40px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+
+            border-radius: 35px;
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 30px 100px rgba(0, 0, 0, 0.45),
+                inset 0 0 30px rgba(255, 255, 255, 0.02);
+
+            animation: cardAppear 1s ease forwards;
+        }
+
+        /* Herz */
+
+        .heart {
+            font-size: 70px;
+
+            margin-bottom: 20px;
+
+            animation: heartbeat 1.8s ease-in-out infinite;
+        }
+
+        /* Text */
+
+        .small-text {
+            margin-bottom: 15px;
+
+            color: #ff9db8;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(42px, 8vw, 75px);
+            line-height: 1;
+
+            margin-bottom: 25px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #ffb0c7
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .question-text {
+            max-width: 520px;
+
+            margin-bottom: 45px;
+
+            color: rgba(255, 255, 255, 0.75);
+
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* Button Bereich */
+
+        .button-area {
+            position: relative;
+
+            width: 100%;
+            height: 150px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 25px;
+        }
+
+        /* Allgemeiner Button */
+
+        button {
+            border: none;
+            outline: none;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            border-radius: 999px;
+
+            padding: 17px 35px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease,
+                left 0.35s ease,
+                top 0.35s ease;
+        }
+
+        /* JA */
+
+        #yesButton {
+            position: relative;
+
+            z-index: 3;
+
+            color: white;
+
+            background: linear-gradient(
+                135deg,
+                #ff2f68,
+                #ff6d99
+            );
+
+            box-shadow:
+                0 10px 30px rgba(255, 47, 104, 0.35);
+
+            transform: scale(1);
+        }
+
+        #yesButton:hover {
+            box-shadow:
+                0 15px 40px rgba(255, 47, 104, 0.55);
+
+            transform: scale(
+                calc(var(--yes-scale) + 0.03)
+            );
+        }
+
+        /* NEIN */
+
+        #noButton {
+            position: absolute;
+
+            z-index: 4;
+
+            color: white;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        #noButton:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Kleine Info */
+
+        .hint {
+            position: absolute;
+
+            bottom: 20px;
+
+            color: rgba(255, 255, 255, 0.35);
+
+            font-size: 13px;
+        }
+
+        /* Erfolg */
+
+        .success {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 20;
+
+            display: none;
+
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 47, 104, 0.25),
+                    rgba(0, 0, 0, 0.95)
+                );
+        }
+
+        .success-content {
+            animation: successAppear 1s ease forwards;
+        }
+
+        .success-heart {
+            font-size: 110px;
+
+            margin-bottom: 25px;
+
+            animation: heartbeat 1s infinite;
+        }
+
+        .success h2 {
+            font-size: clamp(45px, 9vw, 90px);
+
+            margin-bottom: 20px;
+
+            background: linear-gradient(
+                90deg,
+                #ff5c8a,
+                #ffc2d4
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .success p {
+            font-size: 21px;
+
+            color: rgba(255, 255, 255, 0.8);
+
+            line-height: 1.7;
+        }
+
+        /* Herzen */
+
+        .floating-heart {
+            position: fixed;
+
+            bottom: -50px;
+
+            z-index: 30;
+
+            font-size: 25px;
+
+            pointer-events: none;
+
+            animation: floatHeart 5s linear forwards;
+        }
+
+        /* Animationen */
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(35px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes successAppear {
+
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes floatHeart {
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(-110vh)
+                    rotate(360deg);
+
+                opacity: 0;
+            }
+        }
+
+        /* Handy */
+
+        @media (max-width: 600px) {
+
+            .card {
+                min-height: 460px;
+
+                padding:
+                    45px 20px;
+            }
+
+            .heart {
+                font-size: 60px;
+            }
+
+            .button-area {
+                height: 170px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 15px 27px;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <h1>Hey du ❤️</h1>
+    <!-- Hintergrund -->
 
-    <p>
-        Das hier ist meine kleine Überraschung für dich.
-    </p>
+    <div class="background-glow">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+
+    <!-- Hauptkarte -->
+
+    <div class="card" id="mainCard">
+
+        <div class="heart">
+            ❤️
+        </div>
+
+        <div class="small-text">
+            Eine kleine Frage
+        </div>
+
+        <h1>
+            Magst du mich?
+        </h1>
+
+        <p class="question-text">
+            Bevor wir hier weitermachen,
+            muss ich natürlich erstmal
+            eine ganz wichtige Sache wissen... 🤭
+        </p>
+
+
+        <div class="button-area" id="buttonArea">
+
+            <button
+                id="yesButton"
+                onclick="sayYes()">
+
+                Ja ❤️
+
+            </button>
+
+
+            <button
+                id="noButton"
+                onclick="sayNo()">
+
+                Nein 🙈
+
+            </button>
+
+        </div>
+
+
+        <div class="hint">
+            Eine Antwort macht mich glücklich... 🥰
+        </div>
+
+    </div>
+
+
+    <!-- Erfolgsseite -->
+
+    <div class="success" id="success">
+
+        <div class="success-content">
+
+            <div class="success-heart">
+                ❤️
+            </div>
+
+            <h2>
+                Jaaaa! 🥰
+            </h2>
+
+            <p>
+                Ich wusste doch,
+                dass du mich magst. ❤️
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /*
+         * Wie stark der JA-Button
+         * wachsen soll.
+         *
+         * 1.00 = normale Größe
+         * 1.12 = 12 % größer
+         */
+
+        let yesScale = 1;
+
+        const yesButton =
+            document.getElementById("yesButton");
+
+        const noButton =
+            document.getElementById("noButton");
+
+        const buttonArea =
+            document.getElementById("buttonArea");
+
+
+        /*
+         * NEIN wurde gedrückt
+         */
+
+        function sayNo() {
+
+            /*
+             * JA wird jedes Mal
+             * um 12 % größer
+             */
+
+            yesScale *= 1.12;
+
+            yesButton.style.transform =
+                `scale(${yesScale})`;
+
+            yesButton.style.setProperty(
+                "--yes-scale",
+                yesScale
+            );
+
+
+            /*
+             * Größe des Bereichs,
+             * in dem NEIN herumspringen darf
+             */
+
+            const areaWidth =
+                buttonArea.clientWidth;
+
+            const areaHeight =
+                buttonArea.clientHeight;
+
+
+            /*
+             * Größe des Buttons
+             */
+
+            const buttonWidth =
+                noButton.offsetWidth;
+
+            const buttonHeight =
+                noButton.offsetHeight;
+
+
+            /*
+             * Neue zufällige Position
+             */
+
+            const maxX =
+                areaWidth - buttonWidth;
+
+            const maxY =
+                areaHeight - buttonHeight;
+
+
+            const randomX =
+                Math.random() * maxX;
+
+            const randomY =
+                Math.random() * maxY;
+
+
+            /*
+             * Button bewegen
+             */
+
+            noButton.style.left =
+                `${randomX}px`;
+
+            noButton.style.top =
+                `${randomY}px`;
+
+
+            /*
+             * Text vom Nein-Button
+             * wird etwas frecher 😏
+             */
+
+            const texts = [
+                "Nein 🙈",
+                "Bist du sicher? 🤭",
+                "Wirklich? 🥺",
+                "Denk nochmal nach 😏",
+                "Ganz sicher? ❤️",
+                "Letzte Chance 😂"
+            ];
+
+
+            const randomText =
+                texts[
+                    Math.floor(
+                        Math.random() * texts.length
+                    )
+                ];
+
+
+            noButton.innerText = randomText;
+
+        }
+
+
+        /*
+         * JA wurde gedrückt
+         */
+
+        function sayYes() {
+
+            document
+                .getElementById("mainCard")
+                .style.display = "none";
+
+
+            document
+                .getElementById("success")
+                .style.display = "flex";
+
+
+            createHearts();
+
+        }
+
+
+        /*
+         * Herzen erzeugen
+         */
+
+        function createHearts() {
+
+            for (
+                let i = 0;
+                i < 45;
+                i++
+            ) {
+
+                setTimeout(() => {
+
+                    const heart =
+                        document.createElement("div");
+
+
+                    heart.className =
+                        "floating-heart";
+
+
+                    const heartTypes = [
+                        "❤️",
+                        "💕",
+                        "💗",
+                        "💖",
+                        "💘"
+                    ];
+
+
+                    heart.innerText =
+                        heartTypes[
+                            Math.floor(
+                                Math.random() *
+                                heartTypes.length
+                            )
+                        ];
+
+
+                    heart.style.left =
+                        Math.random() * 100 + "vw";
+
+
+                    heart.style.animationDuration =
+                        (3 + Math.random() * 3) + "s";
+
+
+                    document.body.appendChild(
+                        heart
+                    );
+
+
+                    setTimeout(() => {
+
+                        heart.remove();
+
+                    }, 6000);
+
+                }, i * 80);
+
+            }
+
+        }
+
+    </script>
 
 </body>
 </html>
