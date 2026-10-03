@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Unsere Geschichte ❤️</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            overflow-x: hidden;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(255, 60, 120, 0.22),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 90% 30%,
+                    rgba(166, 70, 255, 0.18),
+                    transparent 28%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #10070d,
+                    #1b0814,
+                    #080409
+                );
+        }
+
+
+
+        /* =====================================================
+           DEKORATIVE GLOW-ELEMENTE
+        ===================================================== */
+
+        .background {
+
+            position: fixed;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        .glow {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(110px);
+
+            opacity: 0.3;
+        }
+
+
+        .glow.one {
+
+            width: 350px;
+            height: 350px;
+
+            background: #ff2f68;
+
+            top: -120px;
+            left: -120px;
+        }
+
+
+        .glow.two {
+
+            width: 350px;
+            height: 350px;
+
+            background: #9c27ff;
+
+            right: -120px;
+            bottom: 10%;
+        }
+
+
+
+        /* =====================================================
+           HAUPTBEREICH
+        ===================================================== */
+
+        .page {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: min(
+                1100px,
+                92%
+            );
+
+            margin: 0 auto;
+
+            padding:
+                90px 0 120px;
+        }
+
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+
+            text-align: center;
+
+            margin-bottom: 100px;
+
+            animation:
+                fadeUp 0.9s ease;
+        }
+
+
+        .heart {
+
+            font-size: 64px;
+
+            margin-bottom: 20px;
+
+            animation:
+                heartbeat 1.8s ease-in-out infinite;
+        }
+
+
+        .eyebrow {
+
+            margin-bottom: 15px;
+
+            color: #ff9db8;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+        }
+
+
+        h1 {
+
+            margin-bottom: 25px;
+
+            font-size:
+                clamp(
+                    45px,
+                    8vw,
+                    80px
+                );
+
+
+            line-height: 1;
+
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #ffb4ca
+                );
+
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+        .intro {
+
+            width: min(
+                650px,
+                100%
+            );
+
+            margin: 0 auto;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.72
+                );
+
+            font-size: 18px;
+
+            line-height: 1.8;
+        }
+
+
+
+        /* =====================================================
+           TIMELINE
+        ===================================================== */
+
+        .timeline {
+
+            position: relative;
+
+            width: 100%;
+
+            margin: 0 auto;
+        }
+
+
+        /*
+         * Die mittlere Linie.
+         */
+
+        .timeline::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            bottom: 0;
+
+            left: 50%;
+
+            width: 3px;
+
+            transform:
+                translateX(-50%);
+
+            background:
+
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    #ff5c8a 8%,
+                    #ff5c8a 92%,
+                    transparent
+                );
+
+            opacity: 0.65;
+
+            box-shadow:
+                0 0 20px
+                rgba(
+                    255,
+                    92,
+                    138,
+                    0.4
+                );
+        }
+
+
+
+        /* =====================================================
+           EIN TIMELINE-ELEMENT
+        ===================================================== */
+
+        .timeline-item {
+
+            position: relative;
+
+            width: 50%;
+
+            padding-bottom: 100px;
+
+            opacity: 0;
+
+            transform:
+                translateY(40px);
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+
+        .timeline-item.visible {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        /*
+         * Links.
+         */
+
+        .timeline-item.left {
+
+            left: 0;
+
+            padding-right: 70px;
+
+            text-align: right;
+        }
+
+
+        /*
+         * Rechts.
+         */
+
+        .timeline-item.right {
+
+            left: 50%;
+
+            padding-left: 70px;
+
+            text-align: left;
+        }
+
+
+
+        /* =====================================================
+           TIMELINE PUNKT
+        ===================================================== */
+
+        .timeline-dot {
+
+            position: absolute;
+
+            top: 5px;
+
+            width: 24px;
+
+            height: 24px;
+
+            border-radius: 50%;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #ff2f68,
+                    #ff8baa
+                );
+
+            border:
+                4px solid #1a0912;
+
+            box-shadow:
+
+                0 0 0 5px
+                rgba(
+                    255,
+                    92,
+                    138,
+                    0.12
+                ),
+
+                0 0 25px
+                rgba(
+                    255,
+                    92,
+                    138,
+                    0.55
+                );
+
+            z-index: 3;
+        }
+
+
+        .timeline-item.left .timeline-dot {
+
+            right:
+                -12px;
+        }
+
+
+        .timeline-item.right .timeline-dot {
+
+            left:
+                -12px;
+        }
+
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .story-card {
+
+            position: relative;
+
+            display: inline-block;
+
+            width: 100%;
+
+            max-width: 470px;
+
+            padding: 32px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.065
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.13
+                );
+
+            border-radius: 28px;
+
+            backdrop-filter:
+                blur(18px);
+
+            box-shadow:
+                0 20px 60px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.25
+                );
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease;
+        }
+
+
+        .story-card:hover {
+
+            transform:
+                translateY(-6px);
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.09
+                );
+        }
+
+
+        .story-emoji {
+
+            font-size: 46px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .story-title {
+
+            margin-bottom: 12px;
+
+            color: white;
+
+            font-size: 27px;
+
+            line-height: 1.2;
+        }
+
+
+        .story-date {
+
+            margin-bottom: 18px;
+
+            color: #ff91ae;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+        .story-text {
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.70
+                );
+
+            font-size: 16px;
+
+            line-height: 1.75;
+        }
+
+
+
+        /* =====================================================
+           ABSCHLUSS
+        ===================================================== */
+
+        .ending {
+
+            max-width: 750px;
+
+            margin:
+                30px auto 0;
+
+            padding-top: 80px;
+
+            text-align: center;
+        }
+
+
+        .ending-heart {
+
+            font-size: 70px;
+
+            margin-bottom: 20px;
+
+            animation:
+                heartbeat 1.8s
+                ease-in-out
+                infinite;
+        }
+
+
+        .ending h2 {
+
+            margin-bottom: 20px;
+
+            font-size:
+                clamp(
+                    38px,
+                    6vw,
+                    58px
+                );
+
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #ffb6cb
+                );
+
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+        .ending p {
+
+            margin-bottom: 35px;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.72
+                );
+
+            font-size: 18px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           WEITER BUTTON
+        ===================================================== */
+
+        .next-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            padding:
+                16px 30px;
+
+
+            color: white;
+
+            text-decoration: none;
+
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+
+            border-radius: 999px;
+
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #ff2f68,
+                    #ff6d99
+                );
+
+
+            box-shadow:
+
+                0 12px 35px
+                rgba(
+                    255,
+                    47,
+                    104,
+                    0.35
+                );
+
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .next-button:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+
+                0 18px 45px
+                rgba(
+                    255,
+                    47,
+                    104,
+                    0.50
+                );
+        }
+
+
+
+        /* =====================================================
+           ANIMATIONEN
+        ===================================================== */
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(1);
+            }
+
+
+            50% {
+
+                transform:
+                    scale(1.12);
+            }
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(30px);
+            }
+
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (
+            max-width: 700px
+        ) {
+
+            .page {
+
+                padding:
+                    55px 0 80px;
+            }
+
+
+            .header {
+
+                margin-bottom: 70px;
+            }
+
+
+            .intro {
+
+                font-size: 16px;
+            }
+
+
+            /*
+             * Auf dem Handy befindet sich
+             * die Timeline links.
+             */
+
+            .timeline::before {
+
+                left: 18px;
+
+                transform:
+                    translateX(-50%);
+            }
+
+
+            .timeline-item {
+
+                width: 100%;
+
+                left: 0 !important;
+
+                padding-bottom: 60px;
+
+                padding-left: 55px !important;
+
+                padding-right: 0 !important;
+
+                text-align: left !important;
+            }
+
+
+            .timeline-item.left .timeline-dot,
+            .timeline-item.right .timeline-dot {
+
+                left: 6px;
+
+                right: auto;
+            }
+
+
+            .story-card {
+
+                max-width: none;
+
+                padding: 25px;
+
+                border-radius: 22px;
+            }
+
+
+            .story-title {
+
+                font-size: 23px;
+            }
+
+
+            .story-text {
+
+                font-size: 15px;
+
+                line-height: 1.65;
+            }
+
+
+            .ending {
+
+                padding-top: 40px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+    <!-- =====================================================
+         HINTERGRUND
+    ===================================================== -->
+
+    <div class="background">
+
+        <div class="glow one"></div>
+
+        <div class="glow two"></div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SEITE
+    ===================================================== -->
+
+    <main class="page">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="header">
+
+
+            <div class="heart">
+                ❤️
+            </div>
+
+
+            <div class="eyebrow">
+                Ein paar schöne Momente
+            </div>
+
+
+            <h1>
+                Unsere Geschichte
+            </h1>
+
+
+            <p class="intro">
+
+                Eigentlich kennen wir uns noch gar
+                nicht so lange...
+
+                und trotzdem haben wir in kurzer Zeit
+                schon einige schöne Momente gesammelt. ❤️
+
+            </p>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             TIMELINE
+        ================================================== -->
+
+        <section class="timeline">
+
+
+
+            <!-- =================================================
+                 1 — KAFFEE
+            ================================================== -->
+
+            <article
+                class="timeline-item left"
+            >
+
+
+                <div class="timeline-dot"></div>
+
+
+                <div class="story-card">
+
+
+                    <div class="story-emoji">
+                        ☕
+                    </div>
+
+
+                    <div class="story-date">
+                        Der Anfang
+                    </div>
+
+
+                    <h2 class="story-title">
+                        Unser erstes Kaffee-Date
+                    </h2>
+
+
+                    <p class="story-text">
+
+                        Zwei Menschen, ein Kaffee
+                        und ziemlich viele Gespräche.
+
+                        Und ich glaube,
+                        spätestens da habe ich gemerkt,
+                        dass ich dich wirklich gerne um mich habe. ❤️
+
+                    </p>
+
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 2 — KOCHEN
+            ================================================== -->
+
+            <article
+                class="timeline-item right"
+            >
+
+
+                <div class="timeline-dot"></div>
+
+
+                <div class="story-card">
+
+
+                    <div class="story-emoji">
+                        🍝
+                    </div>
+
+
+                    <div class="story-date">
+                        Ein schöner Abend
+                    </div>
+
+
+                    <h2 class="story-title">
+                        Zusammen kochen
+                    </h2>
+
+
+                    <p class="story-text">
+
+                        Eigentlich wollten wir einfach
+                        nur zusammen kochen.
+
+                        Dass daraus ein Abend wurde,
+                        an dem wir einfach unglaublich
+                        viel Spaß hatten, war dann doch
+                        noch schöner. 🥰
+
+                    </p>
+
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 3 — FILM
+            ================================================== -->
+
+            <article
+                class="timeline-item left"
+            >
+
+
+                <div class="timeline-dot"></div>
+
+
+                <div class="story-card">
+
+
+                    <div class="story-emoji">
+                        🎬
+                    </div>
+
+
+                    <div class="story-date">
+                        Der Film
+                    </div>
+
+
+                    <h2 class="story-title">
+                        Ein Filmabend
+                    </h2>
+
+
+                    <p class="story-text">
+
+                        Wir wollten einen Film schauen.
+
+                        Was genau darin passiert ist,
+                        weiß ich ehrlich gesagt nicht mehr
+                        ganz so genau. 🤭
+
+                        Dafür weiß ich noch ziemlich gut,
+                        dass ich den Abend mit dir
+                        wunderschön fand. ❤️
+
+                    </p>
+
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 4 — BADMINTON
+            ================================================== -->
+
+            <article
+                class="timeline-item right"
+            >
+
+
+                <div class="timeline-dot"></div>
+
+
+                <div class="story-card">
+
+
+                    <div class="story-emoji">
+                        🏸
+                    </div>
+
+
+                    <div class="story-date">
+                        Das nächste Abenteuer
+                    </div>
+
+
+                    <h2 class="story-title">
+                        Badminton
+                    </h2>
+
+
+                    <p class="story-text">
+
+                        Bald wird sich herausstellen,
+                        wer von uns beiden eigentlich
+                        sportlicher ist. 😏
+
+                        Ich bin gespannt,
+                        ob du mich komplett fertig machst
+                        oder ob ich doch eine kleine Chance
+                        bekomme. 😂
+
+                    </p>
+
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 5 — LATE NIGHT SHOPPING
+            ================================================== -->
+
+            <article
+                class="timeline-item left"
+            >
+
+
+                <div class="timeline-dot"></div>
+
+
+                <div class="story-card">
+
+
+                    <div class="story-emoji">
+                        🛍️
+                    </div>
+
+
+                    <div class="story-date">
+                        Gemeinsam unterwegs
+                    </div>
+
+
+                    <h2 class="story-title">
+                        Late Night Shopping
+                    </h2>
+
+
+                    <p class="story-text">
+
+                        Zusammen durch die Läden,
+                        ein bisschen schauen,
+                        ein bisschen quatschen...
+
+                        und wahrscheinlich am Ende
+                        mehr Sachen anschauen
+                        als tatsächlich kaufen. 🤭
+
+                    </p>
+
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 6 — KLEINE MOMENTE
+            ================================================== -->
+
+            <article
+                class="timeline-item right"
+            >
+
+
+                <div class="timeline-dot"></div>
+
+
+                <div class="story-card">
+
+
+                    <div class="story-emoji">
+                        🥰
+                    </div>
+
+
+                    <div class="story-date">
+                        Und das Wichtigste
+                    </div>
+
+
+                    <h2 class="story-title">
+                        All die kleinen Momente
+                    </h2>
+
+
+                    <p class="story-text">
+
+                        Am Ende sind es gar nicht nur
+                        die großen Dates.
+
+                        Es sind die kleinen Nachrichten,
+                        das Lachen,
+                        das Kuscheln,
+                        das Wiedersehen...
+
+                        und dieses Gefühl,
+                        dass ich mich jedes Mal
+                        auf dich freue. ❤️
+
+                    </p>
+
+
+                </div>
+
+
+            </article>
+
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ABSCHLUSS
+        ================================================== -->
+
+        <section class="ending">
+
+
+            <div class="ending-heart">
+                ❤️
+            </div>
+
+
+            <h2>
+                Und das war erst der Anfang.
+            </h2>
+
+
+            <p>
+
+                Ich glaube,
+                da warten noch ziemlich viele
+                schöne Momente auf uns.
+
+            </p>
+
+
+            <!--
+                VORLÄUFIG führt der Button
+                zur nächsten Seite.
+                
+                Die Datei können wir später erstellen.
+            -->
+
+            <a
+                class="next-button"
+                href="frage.html"
+            >
+
+                Weiter
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        /* =====================================================
+           SCROLL-ANIMATION
+        ===================================================== */
+
+        const items =
+            document.querySelectorAll(
+                ".timeline-item"
+            );
+
+
+        const observer =
+            new IntersectionObserver(
+
+                (entries) => {
+
+                    entries.forEach(
+                        (entry) => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target
+                                    .classList
+                                    .add(
+                                        "visible"
+                                    );
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                {
+
+                    threshold: 0.15
+
+                }
+
+            );
+
+
+        items.forEach(
+            (item) => {
+
+                observer.observe(
+                    item
+                );
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
