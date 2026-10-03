@@ -15,6 +15,7 @@
 
         html {
             min-height: 100%;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -204,7 +205,7 @@
         }
 
         /* =========================
-           ERFOLG
+           ERFOLGSBEREICH
         ========================= */
 
         .success {
@@ -218,10 +219,10 @@
 
             line-height: 1.15;
 
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        /* NUR JAAAA! BEKOMMT GRADIENT */
+        /* Nur JAAAA! bekommt den Gradient */
 
         .success-title {
             background: linear-gradient(
@@ -234,9 +235,63 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Die Emojis bleiben normale Emojis */
+        /* =========================
+           STEFFI & YANNIK
+        ========================= */
 
-        .success p {
+        .couple-name {
+            margin-top: 10px;
+            margin-bottom: 18px;
+
+            font-size: clamp(28px, 6vw, 42px);
+
+            font-weight: bold;
+
+            letter-spacing: 0.5px;
+
+            color: white;
+
+            text-shadow:
+                0 0 20px rgba(255, 120, 183, 0.25);
+        }
+
+        .official {
+            font-size: 18px;
+
+            color: rgba(255, 255, 255, 0.82);
+
+            margin-bottom: 18px;
+        }
+
+        /* =========================
+           DATUM / UHRZEIT
+        ========================= */
+
+        .date-time {
+            display: inline-block;
+
+            margin: 8px 0 25px;
+
+            padding: 10px 18px;
+
+            border-radius: 999px;
+
+            background: rgba(255, 255, 255, 0.07);
+
+            border: 1px solid rgba(255, 255, 255, 0.10);
+
+            color: rgba(255, 255, 255, 0.72);
+
+            font-size: 15px;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* =========================
+           ERFOLGSTEXT
+        ========================= */
+
+        .success-text {
             font-size: 19px;
 
             line-height: 1.7;
@@ -246,6 +301,10 @@
             margin-bottom: 25px;
         }
 
+        /* =========================
+           GROSSES HERZ
+        ========================= */
+
         .big-heart {
             font-size: 75px;
 
@@ -254,12 +313,64 @@
             animation: heartbeat 1.5s infinite;
         }
 
+        /* =========================
+           KAPITEL
+        ========================= */
+
+        .chapter-box {
+            margin-top: 28px;
+            padding: 22px 20px;
+
+            border-radius: 22px;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .chapter-small {
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            color: #ff9acb;
+
+            margin-bottom: 8px;
+        }
+
+        .chapter-main {
+            font-size: 20px;
+
+            line-height: 1.5;
+
+            font-weight: bold;
+
+            color: white;
+        }
+
+        .chapter-main span {
+            background: linear-gradient(
+                90deg,
+                #ff78b7,
+                #c78cff
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* =========================
+           KLEINER FEUERWERK-TEXT
+        ========================= */
+
         .firework-message {
-            margin-top: 20px;
+            margin-top: 22px;
 
             font-size: 16px;
 
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 255, 255, 0.62);
 
             line-height: 1.5;
         }
@@ -383,12 +494,24 @@
                 font-size: 38px;
             }
 
-            .success p {
+            .couple-name {
+                font-size: 32px;
+            }
+
+            .official {
+                font-size: 17px;
+            }
+
+            .success-text {
                 font-size: 17px;
             }
 
             .big-heart {
                 font-size: 65px;
+            }
+
+            .chapter-main {
+                font-size: 18px;
             }
 
         }
@@ -411,6 +534,10 @@
                 font-size: 34px;
             }
 
+            .couple-name {
+                font-size: 29px;
+            }
+
         }
     </style>
 </head>
@@ -431,7 +558,7 @@
 
     <main class="card">
 
-        <!-- Herz -->
+        <!-- Oberes Herz -->
 
         <div class="heart">
             ❤️
@@ -452,7 +579,7 @@
         </h1>
 
 
-        <!-- Text -->
+        <!-- Persönlicher Text -->
 
         <p class="question">
             Ich habe in der kurzen Zeit mit dir schon so viele
@@ -492,7 +619,7 @@
 
 
         <!-- =========================
-             ERFOLGSSEITE
+             ERFOLGSBEREICH
         ========================= -->
 
         <div
@@ -500,37 +627,76 @@
             id="success"
         >
 
-            <!-- Großes Emoji -->
+            <!-- Großes Herz -->
 
             <div class="big-heart">
                 ❤️
             </div>
 
 
-            <!-- NUR DER TEXT HAT GRADIENT -->
+            <!-- Überschrift -->
 
             <h2>
                 <span class="success-title">JAAAA!</span> 🥹❤️
             </h2>
 
 
-            <!-- Text -->
+            <!-- Namen -->
 
-            <p>
+            <div class="couple-name">
+                Steffi &amp; Yannik ❤️
+            </div>
+
+
+            <!-- Offiziell -->
+
+            <div class="official">
+                Seit heute offiziell. 🥰
+            </div>
+
+
+            <!-- Datum + Uhrzeit -->
+
+            <div
+                class="date-time"
+                id="dateTime"
+            >
+                <!-- Wird automatisch eingefügt -->
+            </div>
+
+
+            <!-- Persönlicher Text -->
+
+            <p class="success-text">
                 Jetzt sind wir offiziell. 🥰
                 <br><br>
-
                 Ich freue mich auf alles,
                 was noch vor uns liegt.
                 <br>
-
                 Auf unsere Dates, unser Lachen,
                 das Kuscheln und auf all die
                 kleinen Momente mit dir. ❤️
             </p>
 
 
-            <!-- Abschluss -->
+            <!-- Kapitel -->
+
+            <div class="chapter-box">
+
+                <div class="chapter-small">
+                    Ein neues Kapitel
+                </div>
+
+                <div class="chapter-main">
+                    Kapitel 1 abgeschlossen.
+                    <br>
+                    <span>Kapitel 2 beginnt jetzt. ❤️</span>
+                </div>
+
+            </div>
+
+
+            <!-- Feuerwerk Hinweis -->
 
             <div class="firework-message">
                 Das musste natürlich gefeiert werden. 🎆✨
@@ -559,6 +725,9 @@
         const success =
             document.getElementById("success");
 
+        const dateTime =
+            document.getElementById("dateTime");
+
         const canvas =
             document.getElementById("fireworks");
 
@@ -567,7 +736,7 @@
 
 
         /* =========================
-           ARRAYS
+           FEUERWERK VARIABLEN
         ========================= */
 
         let fireworks = [];
@@ -598,7 +767,7 @@
 
 
         /* =========================
-           ZUFALL
+           RANDOM FUNKTION
         ========================= */
 
         function random(min, max) {
@@ -611,14 +780,15 @@
 
 
         /* =========================
-           FEUERWERK
+           FEUERWERK-KLASSE
         ========================= */
 
         class Firework {
 
             constructor(x, targetY) {
 
-                this.x = x;
+                this.x =
+                    x;
 
                 this.y =
                     canvas.height;
@@ -729,7 +899,7 @@
 
 
         /* =========================
-           PARTIKEL
+           PARTIKEL-KLASSE
         ========================= */
 
         class Particle {
@@ -742,9 +912,11 @@
                 color
             ) {
 
-                this.x = x;
+                this.x =
+                    x;
 
-                this.y = y;
+                this.y =
+                    y;
 
 
                 this.vx =
@@ -820,13 +992,10 @@
 
                 ctx.save();
 
-
                 ctx.globalAlpha =
                     this.alpha;
 
-
                 ctx.beginPath();
-
 
                 ctx.arc(
                     this.x,
@@ -836,13 +1005,10 @@
                     Math.PI * 2
                 );
 
-
                 ctx.fillStyle =
                     this.color;
 
-
                 ctx.fill();
-
 
                 ctx.restore();
 
@@ -858,9 +1024,8 @@
         function animate() {
 
             /*
-             * Transparenter Hintergrund,
-             * damit die Feuerwerksspuren
-             * leicht sichtbar bleiben.
+             * Leichter transparenter
+             * Hintergrund für schöne Spuren
              */
 
             ctx.fillStyle =
@@ -886,7 +1051,9 @@
 
 
                         if (!done) {
+
                             firework.draw();
+
                         }
 
 
@@ -907,7 +1074,9 @@
 
 
                         if (!done) {
+
                             particle.draw();
+
                         }
 
 
@@ -928,7 +1097,7 @@
 
 
         /* =========================
-           FEUERWERK STARTEN
+           EIN FEUERWERK
         ========================= */
 
         function launchFirework() {
@@ -969,7 +1138,7 @@
 
             for (
                 let i = 0;
-                i < 10;
+                i < 12;
                 i++
             ) {
 
@@ -986,12 +1155,12 @@
 
 
             /*
-             * Danach weitere Feuerwerke
+             * Zweite Salve
              */
 
             for (
                 let i = 0;
-                i < 15;
+                i < 18;
                 i++
             ) {
 
@@ -1001,11 +1170,62 @@
                         launchFirework();
 
                     },
-                    2800 +
-                    i * 450
+                    3000 +
+                    i * 400
                 );
 
             }
+
+        }
+
+
+        /* =========================
+           DATUM & UHRZEIT
+        ========================= */
+
+        function setCurrentDateTime() {
+
+            /*
+             * Genau der Zeitpunkt,
+             * an dem auf JA geklickt wird.
+             */
+
+            const now =
+                new Date();
+
+
+            /*
+             * Datum:
+             * z.B. 03.10.2026
+             */
+
+            const datum =
+                now.toLocaleDateString(
+                    "de-DE"
+                );
+
+
+            /*
+             * Uhrzeit:
+             * z.B. 16:27
+             */
+
+            const uhrzeit =
+                now.toLocaleTimeString(
+                    "de-DE",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+
+
+            /*
+             * Anzeige
+             */
+
+            dateTime.textContent =
+                `${datum} · ${uhrzeit} Uhr`;
 
         }
 
@@ -1019,7 +1239,15 @@
             () => {
 
                 /*
-                 * Buttons ausblenden
+                 * Datum und Uhrzeit
+                 * sofort erfassen
+                 */
+
+                setCurrentDateTime();
+
+
+                /*
+                 * Buttons verschwinden
                  */
 
                 buttons.style.display =
@@ -1039,6 +1267,25 @@
                  */
 
                 bigFireworkShow();
+
+
+                /*
+                 * Karte leicht nach oben
+                 * scrollen, damit der Erfolg
+                 * sofort sichtbar ist
+                 */
+
+                setTimeout(
+                    () => {
+
+                        success.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+
+                    },
+                    100
+                );
 
             }
         );
