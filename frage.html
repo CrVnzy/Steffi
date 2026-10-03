@@ -15,30 +15,35 @@
 
         body {
             min-height: 100vh;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             padding: 20px;
 
             font-family: Arial, Helvetica, sans-serif;
+            color: white;
 
             background:
                 radial-gradient(circle at top left, rgba(255, 80, 150, 0.18), transparent 35%),
                 radial-gradient(circle at bottom right, rgba(130, 80, 255, 0.18), transparent 35%),
                 linear-gradient(135deg, #090910, #11111c 50%, #0b0b14);
 
-            color: white;
             overflow-x: hidden;
         }
 
         .card {
             width: min(650px, 100%);
+
             padding: 50px 35px;
 
             text-align: center;
 
             background: rgba(255, 255, 255, 0.07);
+
             border: 1px solid rgba(255, 255, 255, 0.12);
+
             border-radius: 30px;
 
             backdrop-filter: blur(15px);
@@ -60,26 +65,35 @@
 
         .eyebrow {
             font-size: 14px;
+
             text-transform: uppercase;
             letter-spacing: 2px;
+
             color: #ff9acb;
+
             margin-bottom: 14px;
         }
 
         h1 {
             font-size: clamp(30px, 6vw, 46px);
+
             line-height: 1.15;
-            margin-bottom: 25px;
+
+            margin-bottom: 30px;
 
             background: linear-gradient(90deg, #ff78b7, #c78cff);
+
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .question {
             font-size: 21px;
+
             line-height: 1.7;
+
             color: rgba(255, 255, 255, 0.92);
+
             margin-bottom: 35px;
         }
 
@@ -89,39 +103,48 @@
 
         .buttons {
             display: flex;
+
             justify-content: center;
+            align-items: center;
+
             gap: 15px;
+
             flex-wrap: wrap;
         }
 
         button,
         .next-button {
             border: none;
+
             text-decoration: none;
 
             padding: 15px 24px;
+
             border-radius: 999px;
 
             font-size: 16px;
+
             font-weight: bold;
 
             cursor: pointer;
 
             transition:
                 transform 0.25s ease,
-                box-shadow 0.25s ease,
-                opacity 0.25s ease;
+                box-shadow 0.25s ease;
         }
 
         .yes-button {
             background: linear-gradient(90deg, #ff5fa7, #c978ff);
+
             color: white;
 
-            box-shadow: 0 10px 25px rgba(255, 95, 167, 0.25);
+            box-shadow:
+                0 10px 25px rgba(255, 95, 167, 0.25);
         }
 
         .no-button {
             background: rgba(255, 255, 255, 0.08);
+
             color: white;
 
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -134,26 +157,33 @@
 
         .response {
             display: none;
+
             margin-top: 30px;
 
             padding: 25px;
+
             border-radius: 22px;
 
             background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border: 1px solid rgba(255, 255, 255, 0.10);
 
             animation: fadeIn 0.5s ease;
         }
 
         .response h2 {
             font-size: 28px;
+
             margin-bottom: 15px;
         }
 
         .response p {
             font-size: 17px;
+
             line-height: 1.7;
+
             color: rgba(255, 255, 255, 0.85);
+
             margin-bottom: 22px;
         }
 
@@ -161,20 +191,27 @@
             display: inline-block;
 
             background: linear-gradient(90deg, #ff5fa7, #c978ff);
+
             color: white;
 
-            box-shadow: 0 10px 25px rgba(255, 95, 167, 0.2);
+            box-shadow:
+                0 10px 25px rgba(255, 95, 167, 0.20);
         }
 
         .small-heart {
             position: fixed;
+
             font-size: 20px;
+
             pointer-events: none;
+
             animation: floatUp 4s linear forwards;
+
             opacity: 0.8;
         }
 
         @keyframes fadeIn {
+
             from {
                 opacity: 0;
                 transform: translateY(15px);
@@ -184,9 +221,11 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+
         }
 
         @keyframes heartbeat {
+
             0%, 100% {
                 transform: scale(1);
             }
@@ -206,21 +245,27 @@
             40% {
                 transform: scale(1);
             }
+
         }
 
         @keyframes floatUp {
+
             from {
                 transform: translateY(0) scale(1);
+
                 opacity: 0.8;
             }
 
             to {
                 transform: translateY(-100vh) scale(1.5);
+
                 opacity: 0;
             }
+
         }
 
         @media (max-width: 600px) {
+
             .card {
                 padding: 40px 22px;
             }
@@ -237,6 +282,7 @@
             .next-button {
                 width: 100%;
             }
+
         }
     </style>
 </head>
@@ -245,7 +291,9 @@
 
     <main class="card">
 
-        <div class="heart">❤️</div>
+        <div class="heart">
+            ❤️
+        </div>
 
         <div class="eyebrow">
             Eine kleine Frage noch
@@ -261,22 +309,34 @@
             <strong>bevor wir das zwischen uns fest machen?</strong> 🙈❤️
         </p>
 
+
+        <!-- BUTTONS -->
+
         <div class="buttons" id="buttons">
 
-            <button class="yes-button" id="yesButton">
+            <button
+                class="yes-button"
+                id="yesButton"
+            >
                 Ja, ein bisschen 🙈
             </button>
 
-            <button class="no-button" id="noButton">
+            <button
+                class="no-button"
+                id="noButton"
+            >
                 Nein 🥰
             </button>
 
         </div>
 
 
-        <!-- Antwort JA -->
+        <!-- ANTWORT JA -->
 
-        <div class="response" id="yesResponse">
+        <div
+            class="response"
+            id="yesResponse"
+        >
 
             <h2>
                 Das ist vollkommen okay. ❤️
@@ -288,21 +348,29 @@
                 <br><br>
                 Ich möchte dich sowieso noch besser kennenlernen
                 und noch viele schöne Momente mit dir erleben. 🥰
+                <br><br>
+                Ich habe es überhaupt nicht eilig.
             </p>
 
-            <a href="timeline.html" class="next-button">
-                Noch ein bisschen Zeit zusammen ❤️
+            <a
+                href="entscheidung.html"
+                class="next-button"
+            >
+                Trotzdem weiter ❤️
             </a>
 
         </div>
 
 
-        <!-- Antwort NEIN -->
+        <!-- ANTWORT NEIN -->
 
-        <div class="response" id="noResponse">
+        <div
+            class="response"
+            id="noResponse"
+        >
 
             <h2>
-                Dann hätte ich noch eine Frage… 👀❤️
+                Dann weiß ich ja, was jetzt kommt… 👀❤️
             </h2>
 
             <p>
@@ -310,7 +378,10 @@
                 worauf ich hinaus möchte. 🤭
             </p>
 
-            <a href="entscheidung.html" class="next-button">
+            <a
+                href="entscheidung.html"
+                class="next-button"
+            >
                 Weiter ❤️
             </a>
 
@@ -321,19 +392,28 @@
 
     <script>
 
-        const yesButton = document.getElementById("yesButton");
-        const noButton = document.getElementById("noButton");
+        const yesButton =
+            document.getElementById("yesButton");
 
-        const buttons = document.getElementById("buttons");
+        const noButton =
+            document.getElementById("noButton");
 
-        const yesResponse = document.getElementById("yesResponse");
-        const noResponse = document.getElementById("noResponse");
+        const buttons =
+            document.getElementById("buttons");
+
+        const yesResponse =
+            document.getElementById("yesResponse");
+
+        const noResponse =
+            document.getElementById("noResponse");
 
 
-        // Antwort "Ja"
+        /* JA */
+
         yesButton.addEventListener("click", () => {
 
             buttons.style.display = "none";
+
             yesResponse.style.display = "block";
 
             createHearts();
@@ -341,10 +421,12 @@
         });
 
 
-        // Antwort "Nein"
+        /* NEIN */
+
         noButton.addEventListener("click", () => {
 
             buttons.style.display = "none";
+
             noResponse.style.display = "block";
 
             createHearts();
@@ -352,24 +434,29 @@
         });
 
 
-        // Kleine Herzen erzeugen
+        /* HERZEN */
+
         function createHearts() {
 
             for (let i = 0; i < 15; i++) {
 
                 setTimeout(() => {
 
-                    const heart = document.createElement("div");
+                    const heart =
+                        document.createElement("div");
 
                     heart.classList.add("small-heart");
 
-                    heart.textContent = Math.random() > 0.5
-                        ? "❤️"
-                        : "💗";
+                    heart.textContent =
+                        Math.random() > 0.5
+                            ? "❤️"
+                            : "💗";
 
-                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.left =
+                        Math.random() * 100 + "vw";
 
-                    heart.style.bottom = "-30px";
+                    heart.style.bottom =
+                        "-30px";
 
                     heart.style.animationDuration =
                         (3 + Math.random() * 2) + "s";
@@ -378,12 +465,15 @@
 
 
                     setTimeout(() => {
+
                         heart.remove();
+
                     }, 5000);
 
                 }, i * 120);
 
             }
+
         }
 
     </script>
