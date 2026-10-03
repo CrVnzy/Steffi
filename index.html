@@ -35,8 +35,7 @@
 
         body {
 
-            width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
 
             overflow: hidden;
 
@@ -45,12 +44,10 @@
             justify-content: center;
             align-items: center;
 
-
             font-family:
                 Arial,
                 Helvetica,
                 sans-serif;
-
 
             color: white;
 
@@ -89,11 +86,10 @@
 
             inset: 0;
 
-            overflow: hidden;
-
             pointer-events: none;
 
             z-index: 0;
+
         }
 
 
@@ -109,38 +105,45 @@
 
             animation:
                 floating 8s ease-in-out infinite;
+
         }
 
 
         .glow-1 {
 
             width: 320px;
+
             height: 320px;
 
             background: #ff2f68;
 
-            top: -120px;
             left: -100px;
+
+            top: -120px;
+
         }
 
 
         .glow-2 {
 
             width: 320px;
+
             height: 320px;
 
             background: #9c27ff;
 
             right: -100px;
+
             bottom: -100px;
 
             animation-delay: 2s;
+
         }
 
 
 
         /* =====================================================
-           HAUPTKARTE
+           KARTE
         ===================================================== */
 
         .card {
@@ -149,14 +152,11 @@
 
             z-index: 2;
 
-
             width: min(700px, 90%);
 
             min-height: 540px;
 
-
-            padding:
-                60px 40px;
+            padding: 60px 40px;
 
 
             display: flex;
@@ -172,12 +172,12 @@
 
 
             background:
-                rgba(255, 255, 255, 0.07);
+                rgba(255,255,255,0.07);
 
 
             border:
                 1px solid
-                rgba(255, 255, 255, 0.13);
+                rgba(255,255,255,0.13);
 
 
             border-radius: 35px;
@@ -190,14 +190,15 @@
             box-shadow:
 
                 0 30px 100px
-                rgba(0, 0, 0, 0.45),
+                rgba(0,0,0,0.45),
 
                 inset 0 0 30px
-                rgba(255, 255, 255, 0.02);
+                rgba(255,255,255,0.02);
 
 
             animation:
                 cardAppear 1s ease forwards;
+
         }
 
 
@@ -214,6 +215,7 @@
 
             animation:
                 heartbeat 1.8s ease-in-out infinite;
+
         }
 
 
@@ -235,6 +237,7 @@
             letter-spacing: 3px;
 
             text-transform: uppercase;
+
         }
 
 
@@ -243,9 +246,7 @@
             font-size:
                 clamp(42px, 8vw, 75px);
 
-
             line-height: 1;
-
 
             margin-bottom: 25px;
 
@@ -262,6 +263,7 @@
             -webkit-background-clip: text;
 
             -webkit-text-fill-color: transparent;
+
         }
 
 
@@ -271,14 +273,13 @@
 
             margin-bottom: 35px;
 
-
             color:
-                rgba(255, 255, 255, 0.75);
-
+                rgba(255,255,255,0.75);
 
             font-size: 18px;
 
             line-height: 1.7;
+
         }
 
 
@@ -286,16 +287,10 @@
         /* =====================================================
            BUTTON-BEREICH
 
-           Beim ersten Laden liegen BEIDE Buttons
-           nebeneinander und exakt mittig.
+           Beim Start liegen beide Buttons hier nebeneinander.
         ===================================================== */
 
         .button-area {
-
-            width: 100%;
-
-            min-height: 100px;
-
 
             display: flex;
 
@@ -303,14 +298,18 @@
 
             align-items: center;
 
-
             gap: 24px;
+
+            width: 100%;
+
+            min-height: 100px;
+
         }
 
 
 
         /* =====================================================
-           BUTTON GRUNDSTYLE
+           BUTTONS
         ===================================================== */
 
         button {
@@ -319,38 +318,33 @@
 
             outline: none;
 
-
             font-family: inherit;
 
             font-size: 18px;
 
             font-weight: bold;
 
-
             border-radius: 999px;
 
-
-            padding:
-                17px 35px;
-
+            padding: 17px 35px;
 
             cursor: pointer;
 
-
             user-select: none;
+
         }
 
 
 
         /* =====================================================
-           JA BUTTON
+           JA
         ===================================================== */
 
         #yesButton {
 
             position: relative;
 
-            z-index: 3;
+            z-index: 10;
 
 
             transform:
@@ -376,14 +370,13 @@
             box-shadow:
 
                 0 10px 30px
-                rgba(255, 47, 104, 0.35);
+                rgba(255,47,104,0.35);
 
 
             transition:
-
                 transform 0.35s ease,
-
                 box-shadow 0.35s ease;
+
         }
 
 
@@ -392,20 +385,21 @@
             box-shadow:
 
                 0 15px 40px
-                rgba(255, 47, 104, 0.55);
+                rgba(255,47,104,0.55);
+
         }
 
 
 
         /* =====================================================
-           NEIN BUTTON
+           NEIN
         ===================================================== */
 
         #noButton {
 
             position: relative;
 
-            z-index: 1000;
+            z-index: 20;
 
 
             color: white;
@@ -413,31 +407,22 @@
 
             background:
 
-                rgba(255, 255, 255, 0.10);
+                rgba(255,255,255,0.10);
 
 
             border:
 
                 1px solid
-                rgba(255, 255, 255, 0.18);
+                rgba(255,255,255,0.18);
 
-
-            transition:
-
-                transform 0.15s ease,
-
-                background 0.2s ease;
         }
 
 
         #noButton:hover {
 
             background:
-                rgba(255, 255, 255, 0.16);
+                rgba(255,255,255,0.16);
 
-
-            transform:
-                scale(1.05);
         }
 
 
@@ -452,18 +437,17 @@
 
             bottom: 20px;
 
-
             color:
-                rgba(255, 255, 255, 0.35);
-
+                rgba(255,255,255,0.35);
 
             font-size: 13px;
+
         }
 
 
 
         /* =====================================================
-           ERFOLGSSEITE
+           ERFOLG
         ===================================================== */
 
         .success {
@@ -472,17 +456,13 @@
 
             inset: 0;
 
-
             z-index: 5000;
 
-
             display: none;
-
 
             justify-content: center;
 
             align-items: center;
-
 
             text-align: center;
 
@@ -491,9 +471,10 @@
 
                 radial-gradient(
                     circle,
-                    rgba(255, 47, 104, 0.25),
-                    rgba(0, 0, 0, 0.96)
+                    rgba(255,47,104,0.25),
+                    rgba(0,0,0,0.96)
                 );
+
         }
 
 
@@ -501,9 +482,9 @@
 
             padding: 30px;
 
-
             animation:
                 successAppear 1s ease forwards;
+
         }
 
 
@@ -513,17 +494,16 @@
 
             margin-bottom: 25px;
 
-
             animation:
                 heartbeat 1s infinite;
+
         }
 
 
         .success h2 {
 
             font-size:
-                clamp(45px, 9vw, 90px);
-
+                clamp(45px,9vw,90px);
 
             margin-bottom: 20px;
 
@@ -540,6 +520,7 @@
             -webkit-background-clip: text;
 
             -webkit-text-fill-color: transparent;
+
         }
 
 
@@ -547,12 +528,11 @@
 
             font-size: 21px;
 
-
             color:
-                rgba(255, 255, 255, 0.8);
-
+                rgba(255,255,255,0.8);
 
             line-height: 1.7;
+
         }
 
 
@@ -565,21 +545,17 @@
 
             position: fixed;
 
-
             bottom: -50px;
-
 
             z-index: 6000;
 
-
             pointer-events: none;
-
 
             font-size: 25px;
 
-
             animation:
                 floatHeart 5s linear forwards;
+
         }
 
 
@@ -598,6 +574,7 @@
             50% {
                 transform: scale(1.15);
             }
+
         }
 
 
@@ -605,14 +582,13 @@
 
             0%,
             100% {
-                transform:
-                    translateY(0);
+                transform: translateY(0);
             }
 
             50% {
-                transform:
-                    translateY(-30px);
+                transform: translateY(-30px);
             }
+
         }
 
 
@@ -622,26 +598,22 @@
 
                 opacity: 0;
 
-
                 transform:
-
                     translateY(35px)
-
                     scale(0.96);
-            }
 
+            }
 
             to {
 
                 opacity: 1;
 
-
                 transform:
-
                     translateY(0)
-
                     scale(1);
+
             }
+
         }
 
 
@@ -651,20 +623,18 @@
 
                 opacity: 0;
 
+                transform: scale(0.8);
 
-                transform:
-                    scale(0.8);
             }
-
 
             to {
 
                 opacity: 1;
 
+                transform: scale(1);
 
-                transform:
-                    scale(1);
             }
+
         }
 
 
@@ -673,27 +643,23 @@
             0% {
 
                 transform:
-
                     translateY(0)
-
                     rotate(0deg);
 
-
                 opacity: 1;
-            }
 
+            }
 
             100% {
 
                 transform:
-
                     translateY(-110vh)
-
                     rotate(360deg);
 
-
                 opacity: 0;
+
             }
+
         }
 
 
@@ -710,14 +676,13 @@
 
                 min-height: 520px;
 
-
                 padding:
                     40px 20px;
+
             }
 
 
             .heart {
-
                 font-size: 60px;
             }
 
@@ -727,12 +692,14 @@
                 font-size: 16px;
 
                 margin-bottom: 25px;
+
             }
 
 
             .button-area {
 
                 gap: 15px;
+
             }
 
 
@@ -742,12 +709,14 @@
 
                 padding:
                     15px 27px;
+
             }
 
 
             .hint {
 
                 bottom: 15px;
+
             }
 
         }
@@ -775,7 +744,7 @@
 
 
     <!-- =====================================================
-         HAUPTKARTE
+         KARTE
     ===================================================== -->
 
     <div
@@ -810,10 +779,9 @@
 
 
         <!-- =================================================
-             BUTTONS
+             BEIDE BUTTONS
 
-             Beide sind beim Start im Flex-Layout.
-             Dadurch liegen sie exakt auf gleicher Höhe.
+             Beim Start exakt nebeneinander.
         ================================================== -->
 
         <div
@@ -825,9 +793,7 @@
                 id="yesButton"
                 onclick="sayYes()"
             >
-
                 Ja ❤️
-
             </button>
 
 
@@ -835,9 +801,7 @@
                 id="noButton"
                 onclick="sayNo()"
             >
-
                 Nein 🙈
-
             </button>
 
         </div>
@@ -855,7 +819,7 @@
 
 
     <!-- =====================================================
-         ERFOLGSSEITE
+         ERFOLG
     ===================================================== -->
 
     <div
@@ -863,9 +827,7 @@
         id="success"
     >
 
-
         <div class="success-content">
-
 
             <div class="success-heart">
                 ❤️
@@ -882,7 +844,6 @@
                 dass du mich magst. ❤️
             </p>
 
-
         </div>
 
     </div>
@@ -897,15 +858,10 @@
         ===================================================== */
 
         const yesButton =
-            document.getElementById(
-                "yesButton"
-            );
-
+            document.getElementById("yesButton");
 
         const noButton =
-            document.getElementById(
-                "noButton"
-            );
+            document.getElementById("noButton");
 
 
 
@@ -917,49 +873,42 @@
 
         let noClicks = 0;
 
+        let hasStartedFlying = false;
+
+        let isFlying = false;
+
 
         /*
-         * Wie stark JA wächst.
+         * JA wächst um 10 %.
          */
 
         const growthFactor = 1.10;
 
 
         /*
-         * Maximale Größe von JA.
+         * Maximale Größe.
          */
 
-        const maxYesScale = 2.6;
+        const maxYesScale = 2.5;
 
 
         /*
-         * Sicherheitsabstand zwischen
-         * JA und NEIN.
+         * Sicherheitsabstand.
          */
 
-        const safetyGap = 45;
+        const safetyGap = 50;
 
 
         /*
          * Abstand vom Bildschirmrand.
          */
 
-        const screenPadding = 15;
-
-
-
-        /*
-         * Damit NEIN nicht während
-         * einer laufenden Flugbahn erneut
-         * gestartet werden kann.
-         */
-
-        let isFlying = false;
+        const screenPadding = 20;
 
 
 
         /* =====================================================
-           NEIN-TEXTE
+           TEXTE
         ===================================================== */
 
         const noTexts = [
@@ -978,9 +927,9 @@
 
             "Okay... wirklich Nein? 🥺",
 
-            "Warum nur? 😭",
+            "Warum? 😭",
 
-            "Ich lauf dann mal weg 😂",
+            "Ich lauf weg 😂",
 
             "Du bekommst mich nicht 😏"
 
@@ -989,21 +938,20 @@
 
 
         /* =====================================================
-           HILFSFUNKTION:
-
-           Prüft, ob zwei Rechtecke sich überschneiden.
+           RECHTECK VERGLEICHEN
         ===================================================== */
 
-        function rectanglesOverlap(
+        function overlaps(
             a,
-            b
+            b,
+            gap
         ) {
 
             return !(
-                a.right < b.left ||
-                a.left > b.right ||
-                a.bottom < b.top ||
-                a.top > b.bottom
+                a.right + gap < b.left ||
+                a.left - gap > b.right ||
+                a.bottom + gap < b.top ||
+                a.top - gap > b.bottom
             );
 
         }
@@ -1011,178 +959,20 @@
 
 
         /* =====================================================
-           HILFSFUNKTION:
-
-           Prüft, ob ein LINENSEGMENT das Hindernis schneidet.
-
-           Das Hindernis ist der JA-Button.
+           PUNKT IST IM RECHTECK?
         ===================================================== */
 
-        function lineIntersectsRect(
-            p1,
-            p2,
+        function pointInsideRect(
+            point,
             rect
         ) {
 
-
-            /*
-             * Wenn Start oder Ende bereits
-             * im Hindernis liegt → unsicher.
-             */
-
-            if (
-                p1.x >= rect.left &&
-                p1.x <= rect.right &&
-                p1.y >= rect.top &&
-                p1.y <= rect.bottom
-            ) {
-                return true;
-            }
-
-
-            if (
-                p2.x >= rect.left &&
-                p2.x <= rect.right &&
-                p2.y >= rect.top &&
-                p2.y <= rect.bottom
-            ) {
-                return true;
-            }
-
-
-
-            /*
-             * Wir prüfen den Schnitt mit
-             * allen vier Seiten.
-             */
-
-            function lineIntersectsLine(
-                a,
-                b,
-                c,
-                d
-            ) {
-
-
-                const denominator =
-
-                    (d.y - c.y) *
-                    (b.x - a.x)
-
-                    -
-
-                    (d.x - c.x) *
-                    (b.y - a.y);
-
-
-                if (
-                    denominator === 0
-                ) {
-                    return false;
-                }
-
-
-                const ua =
-
-                    (
-                        (d.x - c.x) *
-                        (a.y - c.y)
-
-                        -
-
-                        (d.y - c.y) *
-                        (a.x - c.x)
-                    )
-                    /
-                    denominator;
-
-
-                const ub =
-
-                    (
-                        (b.x - a.x) *
-                        (a.y - c.y)
-
-                        -
-
-                        (b.y - a.y) *
-                        (a.x - c.x)
-                    )
-                    /
-                    denominator;
-
-
-                return (
-                    ua >= 0 &&
-                    ua <= 1 &&
-                    ub >= 0 &&
-                    ub <= 1
-                );
-
-            }
-
-
-
-            const topLeft = {
-                x: rect.left,
-                y: rect.top
-            };
-
-
-            const topRight = {
-                x: rect.right,
-                y: rect.top
-            };
-
-
-            const bottomLeft = {
-                x: rect.left,
-                y: rect.bottom
-            };
-
-
-            const bottomRight = {
-                x: rect.right,
-                y: rect.bottom
-            };
-
-
-
             return (
 
-                lineIntersectsLine(
-                    p1,
-                    p2,
-                    topLeft,
-                    topRight
-                )
-
-                ||
-
-                lineIntersectsLine(
-                    p1,
-                    p2,
-                    topRight,
-                    bottomRight
-                )
-
-                ||
-
-                lineIntersectsLine(
-                    p1,
-                    p2,
-                    bottomRight,
-                    bottomLeft
-                )
-
-                ||
-
-                lineIntersectsLine(
-                    p1,
-                    p2,
-                    bottomLeft,
-                    topLeft
-                )
+                point.x >= rect.left &&
+                point.x <= rect.right &&
+                point.y >= rect.top &&
+                point.y <= rect.bottom
 
             );
 
@@ -1191,25 +981,19 @@
 
 
         /* =====================================================
-           SICHEREN PFAD BERECHNEN
-
-           Der JA Button ist das Hindernis.
-
-           Der NEIN Button bekommt einen Flugweg
-           um dieses Hindernis herum.
+           BERECHNET SICHERE POSITION
         ===================================================== */
 
-        function calculateSafePath() {
+        function getSafeTarget() {
 
 
             /*
-             * JA-Button:
-             * aktuelle, sichtbare Größe.
+             * Aktuelle tatsächliche Größe
+             * des JA Buttons.
              */
 
             const yesRect =
                 yesButton.getBoundingClientRect();
-
 
 
             /*
@@ -1225,92 +1009,8 @@
 
 
             /*
-             * Aktuelles Rechteck von NEIN.
-             */
-
-            const noRect =
-                noButton.getBoundingClientRect();
-
-
-
-            /*
-             * Wir arbeiten mit dem Mittelpunkt
-             * des NEIN Buttons.
-             */
-
-            const start = {
-
-                x:
-                    noRect.left +
-                    noRect.width / 2,
-
-                y:
-                    noRect.top +
-                    noRect.height / 2
-
-            };
-
-
-
-            /*
-             * Zufälliges Ziel.
-             */
-
-            const target = {
-
-
-                x:
-
-                    screenPadding
-                    +
-
-                    Math.random()
-                    *
-                    (
-                        window.innerWidth
-                        -
-                        noWidth
-                        -
-                        screenPadding * 2
-                    )
-
-
-                    +
-
-                    noWidth / 2,
-
-
-                y:
-
-                    screenPadding
-                    +
-
-                    Math.random()
-                    *
-                    (
-                        window.innerHeight
-                        -
-                        noHeight
-                        -
-                        screenPadding * 2
-                    )
-
-
-                    +
-
-                    noHeight / 2
-
-            };
-
-
-
-            /*
-             * JA-Rechteck vergrößern.
-
-             * Dadurch muss der MITTELPUNKT
-             * von NEIN zusätzlich Abstand
-             * halten, damit die komplette
-             * Buttonfläche nicht mit JA kollidiert.
+             * Das Hindernis wird um den
+             * Sicherheitsabstand erweitert.
              */
 
             const obstacle = {
@@ -1322,18 +1022,18 @@
                     -
                     safetyGap,
 
-                right:
-                    yesRect.right
-                    +
-                    noWidth / 2
-                    +
-                    safetyGap,
-
                 top:
                     yesRect.top
                     -
                     noHeight / 2
                     -
+                    safetyGap,
+
+                right:
+                    yesRect.right
+                    +
+                    noWidth / 2
+                    +
                     safetyGap,
 
                 bottom:
@@ -1348,453 +1048,512 @@
 
 
             /*
-             * Prüfen:
-
-             * Direkter Weg möglich?
+             * Wir suchen zufällig eine Position.
              */
-
-            if (
-                !lineIntersectsRect(
-                    start,
-                    target,
-                    obstacle
-                )
-            ) {
-
-                return [
-                    start,
-                    target
-                ];
-
-            }
-
-
-
-            /*
-             * Wenn der direkte Weg nicht geht,
-             * bauen wir vier sichere Eckpunkte
-             * um JA herum.
-             */
-
-            const margin = 12;
-
-
-            const corners = [
-
-                /*
-                 * Oben links
-                 */
-
-                {
-                    x:
-                        obstacle.left - margin,
-
-                    y:
-                        obstacle.top - margin
-                },
-
-
-                /*
-                 * Oben rechts
-                 */
-
-                {
-                    x:
-                        obstacle.right + margin,
-
-                    y:
-                        obstacle.top - margin
-                },
-
-
-                /*
-                 * Unten rechts
-                 */
-
-                {
-                    x:
-                        obstacle.right + margin,
-
-                    y:
-                        obstacle.bottom + margin
-                },
-
-
-                /*
-                 * Unten links
-                 */
-
-                {
-                    x:
-                        obstacle.left - margin,
-
-                    y:
-                        obstacle.bottom + margin
-                }
-
-            ];
-
-
-
-            /*
-             * Nur Punkte behalten,
-             * die innerhalb des Bildschirms liegen.
-             */
-
-            const validCorners =
-                corners.filter(
-                    point => (
-
-                        point.x >= screenPadding &&
-
-                        point.x <=
-                            window.innerWidth
-                            -
-                            screenPadding &&
-
-                        point.y >= screenPadding &&
-
-                        point.y <=
-                            window.innerHeight
-                            -
-                            screenPadding
-
-                    )
-                );
-
-
-
-            /*
-             * Kandidaten für den Pfad.
-
-             * Start
-             * Ecken
-             * Ziel
-             */
-
-            const nodes = [
-
-                start,
-
-                ...validCorners,
-
-                target
-
-            ];
-
-
-
-            /*
-             * Einfachster Weg:
-             *
-             * Wir probieren alle möglichen
-             * Knotenverbindungen und wählen
-             * den kürzesten validen Weg.
-             */
-
-            const graph =
-                nodes.map(
-                    () => []
-                );
-
-
 
             for (
                 let i = 0;
-                i < nodes.length;
+                i < 5000;
                 i++
             ) {
 
 
-                for (
-                    let j = i + 1;
-                    j < nodes.length;
-                    j++
-                ) {
+                const x =
+
+                    screenPadding
+                    +
+                    Math.random()
+                    *
+                    (
+                        window.innerWidth
+                        -
+                        noWidth
+                        -
+                        screenPadding * 2
+                    );
 
 
-                    const a =
-                        nodes[i];
+                const y =
 
-                    const b =
-                        nodes[j];
-
-
-                    /*
-                     * Ist die Verbindung
-                     * frei vom JA-Button?
-                     */
-
-                    if (
-                        !lineIntersectsRect(
-                            a,
-                            b,
-                            obstacle
-                        )
-                    ) {
-
-
-                        const distance =
-
-                            Math.hypot(
-                                b.x - a.x,
-                                b.y - a.y
-                            );
-
-
-                        graph[i].push({
-                            node: j,
-                            distance
-                        });
-
-
-                        graph[j].push({
-                            node: i,
-                            distance
-                        });
-
-                    }
-
-                }
-
-            }
+                    screenPadding
+                    +
+                    Math.random()
+                    *
+                    (
+                        window.innerHeight
+                        -
+                        noHeight
+                        -
+                        screenPadding * 2
+                    );
 
 
 
-            /*
-             * Dijkstra / kürzester Weg.
-             */
+                const candidate = {
 
-            const distances =
-                Array(nodes.length)
-                .fill(Infinity);
+                    left: x,
 
+                    top: y,
 
-            const previous =
-                Array(nodes.length)
-                .fill(null);
+                    right:
+                        x + noWidth,
 
+                    bottom:
+                        y + noHeight
 
-            const visited =
-                Array(nodes.length)
-                .fill(false);
-
-
-            distances[0] = 0;
+                };
 
 
 
-            for (
-                let step = 0;
-                step < nodes.length;
-                step++
-            ) {
-
-
-                let current = -1;
-
-
-                let smallest =
-                    Infinity;
-
-
-                for (
-                    let i = 0;
-                    i < nodes.length;
-                    i++
-                ) {
-
-
-                    if (
-                        !visited[i] &&
-                        distances[i] < smallest
-                    ) {
-
-                        smallest =
-                            distances[i];
-
-                        current = i;
-
-                    }
-
-                }
-
+                /*
+                 * Ist NEIN dort sicher?
+                 */
 
                 if (
-                    current === -1
+                    !overlaps(
+                        candidate,
+                        yesRect,
+                        safetyGap
+                    )
                 ) {
 
-                    break;
-
-                }
-
-
-                visited[current] = true;
-
-
-
-                for (
-                    const edge
-                    of graph[current]
-                ) {
-
-
-                    const newDistance =
-
-                        distances[current]
-                        +
-                        edge.distance;
-
-
-                    if (
-                        newDistance
-                        <
-                        distances[edge.node]
-                    ) {
-
-                        distances[edge.node] =
-                            newDistance;
-
-
-                        previous[edge.node] =
-                            current;
-
-                    }
+                    return {
+                        x,
+                        y
+                    };
 
                 }
 
             }
 
 
-
             /*
-             * Ziel ist der letzte Node.
+             * Falls nichts gefunden wurde:
+             * ganz oben links versuchen.
              */
 
-            const path = [];
+            return {
 
+                x: screenPadding,
 
-            let current =
-                nodes.length - 1;
+                y: screenPadding
 
-
-            while (
-                current !== null
-                &&
-                current !== undefined
-            ) {
-
-
-                path.unshift(
-                    nodes[current]
-                );
-
-
-                current =
-                    previous[current];
-
-            }
-
-
-
-            /*
-             * Falls kein Weg gefunden wurde,
-             * benutzen wir den direkten Weg.
-
-             * Das sollte nur passieren,
-             * wenn der JA Button nahezu
-             * den kompletten Bildschirm
-             * einnimmt.
-             */
-
-            if (
-                path.length === 0
-            ) {
-
-                return [
-                    start,
-                    target
-                ];
-
-            }
-
-
-            return path;
+            };
 
         }
 
 
 
         /* =====================================================
-           FLUG ENTLANG DES PFADES
+           FLUGWEG PRÜFEN
         ===================================================== */
 
-        function flyAlongPath(
-            path
+        function pathIsSafe(
+            start,
+            end
         ) {
 
 
-            if (
-                path.length < 2
-            ) {
+            const yesRect =
+                yesButton.getBoundingClientRect();
 
-                isFlying = false;
 
-                noButton.style.pointerEvents =
-                    "auto";
+            const noWidth =
+                noButton.offsetWidth;
 
-                return;
-
-            }
+            const noHeight =
+                noButton.offsetHeight;
 
 
 
             /*
-             * Gesamtstrecke berechnen.
+             * JA Hindernis erweitern.
+
+             * Dadurch berücksichtigen wir die
+             * komplette Größe von NEIN.
              */
 
-            let totalDistance = 0;
+            const obstacle = {
+
+                left:
+                    yesRect.left
+                    -
+                    noWidth / 2
+                    -
+                    safetyGap,
+
+                top:
+                    yesRect.top
+                    -
+                    noHeight / 2
+                    -
+                    safetyGap,
+
+                right:
+                    yesRect.right
+                    +
+                    noWidth / 2
+                    +
+                    safetyGap,
+
+                bottom:
+                    yesRect.bottom
+                    +
+                    noHeight / 2
+                    +
+                    safetyGap
+
+            };
+
+
+
+            /*
+             * Wir prüfen viele Punkte
+             * entlang des Flugweges.
+             */
+
+            const steps = 100;
 
 
             for (
-                let i = 1;
-                i < path.length;
+                let i = 0;
+                i <= steps;
                 i++
             ) {
 
 
-                totalDistance +=
+                const progress =
+                    i / steps;
 
-                    Math.hypot(
 
-                        path[i].x
+                const x =
+
+                    start.x
+                    +
+                    (
+                        end.x
                         -
-                        path[i - 1].x,
+                        start.x
+                    )
+                    *
+                    progress;
 
-                        path[i].y
+
+                const y =
+
+                    start.y
+                    +
+                    (
+                        end.y
                         -
-                        path[i - 1].y
+                        start.y
+                    )
+                    *
+                    progress;
 
-                    );
+
+
+                if (
+                    pointInsideRect(
+                        { x, y },
+                        obstacle
+                    )
+                ) {
+
+                    return false;
+
+                }
+
+            }
+
+
+            return true;
+
+        }
+
+
+
+        /* =====================================================
+           SICHEREN FLUGWEG SUCHEN
+        ===================================================== */
+
+        function findFlightPath() {
+
+
+            /*
+             * aktuelle Position
+             * Mittelpunkt NEIN
+             */
+
+            const currentRect =
+                noButton.getBoundingClientRect();
+
+
+            const start = {
+
+                x:
+                    currentRect.left
+                    +
+                    currentRect.width / 2,
+
+                y:
+                    currentRect.top
+                    +
+                    currentRect.height / 2
+
+            };
+
+
+
+            /*
+             * 100 zufällige Ziele ausprobieren.
+             */
+
+            for (
+                let i = 0;
+                i < 100;
+                i++
+            ) {
+
+
+                const target =
+                    getSafeTarget();
+
+
+                /*
+                 * Direkter Weg sicher?
+                 */
+
+                if (
+                    pathIsSafe(
+                        start,
+                        {
+                            x:
+                                target.x
+                                +
+                                noButton.offsetWidth
+                                / 2,
+
+                            y:
+                                target.y
+                                +
+                                noButton.offsetHeight
+                                / 2
+                        }
+                    )
+                ) {
+
+                    return {
+
+                        start,
+
+                        end: {
+
+                            x:
+                                target.x
+                                +
+                                noButton.offsetWidth
+                                / 2,
+
+                            y:
+                                target.y
+                                +
+                                noButton.offsetHeight
+                                / 2
+
+                        }
+
+                    };
+
+                }
 
             }
 
 
 
             /*
-             * Fluggeschwindigkeit.
+             * Kein direkter Weg gefunden.
 
-             * Je länger der Weg,
-             * desto länger der Flug.
+             * Wir fliegen außen herum:
              */
+
+            const yesRect =
+                yesButton.getBoundingClientRect();
+
+
+            const noWidth =
+                noButton.offsetWidth;
+
+            const noHeight =
+                noButton.offsetHeight;
+
+
+
+            const margin = 70;
+
+
+
+            /*
+             * Oberhalb des JA Buttons.
+             */
+
+            const topTarget = {
+
+                x:
+                    yesRect.left
+                    -
+                    margin
+                    +
+                    Math.random()
+                    *
+                    (
+                        yesRect.width
+                        +
+                        margin * 2
+                    ),
+
+                y:
+                    Math.max(
+                        screenPadding,
+                        yesRect.top
+                        -
+                        noHeight
+                        -
+                        margin
+                    )
+
+            };
+
+
+
+            /*
+             * Unterhalb des JA Buttons.
+             */
+
+            const bottomTarget = {
+
+                x:
+                    yesRect.left
+                    -
+                    margin
+                    +
+                    Math.random()
+                    *
+                    (
+                        yesRect.width
+                        +
+                        margin * 2
+                    ),
+
+                y:
+                    Math.min(
+                        window.innerHeight
+                        -
+                        noHeight
+                        -
+                        screenPadding,
+
+                        yesRect.bottom
+                        +
+                        margin
+                )
+
+            };
+
+
+
+            const chosen =
+                Math.random() < 0.5
+                    ? topTarget
+                    : bottomTarget;
+
+
+
+            return {
+
+                start,
+
+                end: {
+
+                    x:
+                        Math.max(
+                            noWidth / 2,
+                            Math.min(
+                                window.innerWidth
+                                -
+                                noWidth / 2,
+                                chosen.x
+                                +
+                                noWidth / 2
+                            )
+                        ),
+
+                    y:
+                        Math.max(
+                            noHeight / 2,
+                            Math.min(
+                                window.innerHeight
+                                -
+                                noHeight / 2,
+                                chosen.y
+                                +
+                                noHeight / 2
+                            )
+                        )
+
+                }
+
+            };
+
+        }
+
+
+
+        /* =====================================================
+           NEIN FLIEGT
+        ===================================================== */
+
+        function flyNoButton() {
+
+
+            /*
+             * Flugweg bestimmen.
+             */
+
+            const path =
+                findFlightPath();
+
+
+            const start =
+                path.start;
+
+
+            const end =
+                path.end;
+
+
+
+            /*
+             * Flugdauer.
+
+             * Längere Strecke = längerer Flug.
+             */
+
+            const distance =
+
+                Math.hypot(
+                    end.x - start.x,
+                    end.y - start.y
+                );
+
 
             const duration =
 
-                Math.min(
-                    1600,
-                    Math.max(
-                        650,
-                        totalDistance * 1.1
+                Math.max(
+                    700,
+                    Math.min(
+                        1800,
+                        distance * 2
                     )
                 );
 
@@ -1829,17 +1588,12 @@
 
 
                 /*
-                 * Smoothstep / Ease-In-Out.
-
-                 * Dadurch startet und endet
-                 * der Button schön weich.
+                 * Smooth Ease In / Ease Out
                  */
 
                 const eased =
 
-                    progress
-                    <
-                    0.5
+                    progress < 0.5
 
                         ?
 
@@ -1849,8 +1603,7 @@
 
                         :
 
-                    1
-                    -
+                    1 -
                     Math.pow(
                         -2 * progress + 2,
                         2
@@ -1861,134 +1614,78 @@
 
 
                 /*
-                 * Position entlang
-                 * des gesamten Pfades bestimmen.
+                 * Aktuelle Position.
                  */
 
-                const desiredDistance =
-                    totalDistance * eased;
+                const x =
+
+                    start.x
+                    +
+                    (
+                        end.x
+                        -
+                        start.x
+                    )
+                    *
+                    eased;
 
 
-                let travelled = 0;
+                const y =
 
-
-                let x =
-                    path[0].x;
-
-
-                let y =
-                    path[0].y;
-
-
-
-                for (
-                    let i = 1;
-                    i < path.length;
-                    i++
-                ) {
-
-
-                    const segmentLength =
-
-                        Math.hypot(
-
-                            path[i].x
-                            -
-                            path[i - 1].x,
-
-                            path[i].y
-                            -
-                            path[i - 1].y
-
-                        );
-
-
-
-                    if (
-                        travelled
-                        +
-                        segmentLength
-                        >=
-                        desiredDistance
-                    ) {
-
-
-                        const segmentProgress =
-
-                            (
-                                desiredDistance
-                                -
-                                travelled
-                            )
-                            /
-                            segmentLength;
-
-
-                        x =
-
-                            path[i - 1].x
-                            +
-
-                            (
-                                path[i].x
-                                -
-                                path[i - 1].x
-                            )
-                            *
-                            segmentProgress;
-
-
-                        y =
-
-                            path[i - 1].y
-                            +
-
-                            (
-                                path[i].y
-                                -
-                                path[i - 1].y
-                            )
-                            *
-                            segmentProgress;
-
-
-                        break;
-
-                    }
-
-
-                    travelled +=
-                        segmentLength;
-
-                }
+                    start.y
+                    +
+                    (
+                        end.y
+                        -
+                        start.y
+                    )
+                    *
+                    eased;
 
 
 
                 /*
-                 * Button position setzen.
+                 * Button positionieren.
 
-                 * Wir arbeiten mit dem Mittelpunkt.
+                 * FIXED bleibt während des
+                 * gesamten Fluges bestehen.
                  */
 
                 noButton.style.left =
-                    `${x - noButton.offsetWidth / 2}px`;
+                    (
+                        x
+                        -
+                        noButton.offsetWidth / 2
+                    )
+                    +
+                    "px";
 
 
                 noButton.style.top =
-                    `${y - noButton.offsetHeight / 2}px`;
+                    (
+                        y
+                        -
+                        noButton.offsetHeight / 2
+                    )
+                    +
+                    "px";
 
 
 
                 /*
-                 * Beim Fliegen ein klein
-                 * wenig drehen.
+                 * Kleine Drehbewegung.
                  */
 
                 const rotation =
                     Math.sin(
-                        progress * Math.PI * 4
+                        progress
+                        *
+                        Math.PI
+                        *
+                        4
                     )
-                    * 6;
+                    *
+                    5;
 
 
                 noButton.style.transform =
@@ -1997,7 +1694,7 @@
 
 
                 /*
-                 * Noch nicht fertig?
+                 * Noch nicht am Ziel?
                  */
 
                 if (
@@ -2009,6 +1706,7 @@
                     );
 
                 }
+
                 else {
 
                     /*
@@ -2039,15 +1737,14 @@
 
 
         /* =====================================================
-           NEIN BUTTON
+           NEIN GEKLICKT
         ===================================================== */
 
         function sayNo() {
 
 
             /*
-             * Während eines Fluges
-             * nicht mehrfach auslösen.
+             * Mehrfachklick während Flug verhindern.
              */
 
             if (
@@ -2061,38 +1758,11 @@
 
             isFlying = true;
 
-
             noButton.style.pointerEvents =
                 "none";
 
 
-
             noClicks++;
-
-
-
-            /* =================================================
-               AKTUELLE POSITION MERKEN
-
-               Bevor wir position: fixed setzen,
-               merken wir uns die aktuelle
-               Bildschirmposition.
-            ================================================= */
-
-            const currentRect =
-                noButton.getBoundingClientRect();
-
-
-            noButton.style.position =
-                "fixed";
-
-
-            noButton.style.left =
-                `${currentRect.left}px`;
-
-
-            noButton.style.top =
-                `${currentRect.top}px`;
 
 
 
@@ -2100,8 +1770,7 @@
              * JA größer machen.
              */
 
-            yesScale *=
-                growthFactor;
+            yesScale *= growthFactor;
 
 
             if (
@@ -2115,15 +1784,12 @@
 
 
             yesButton.style.transform =
-                `
-                translate(-50%, -50%)
-                scale(${yesScale})
-                `;
+                `scale(${yesScale})`;
 
 
 
             /*
-             * Text des NEIN Buttons.
+             * Text ändern.
              */
 
             const textIndex =
@@ -2140,79 +1806,98 @@
 
 
             /*
-             * WICHTIG:
-
-             * Erst wenn JA seine neue Größe
-             * erreicht hat, berechnen wir
-             * die Flugbahn.
-
-             * Dadurch basiert der Sicherheitsabstand
-             * auf der tatsächlichen endgültigen
-             * Größe von JA.
+             * Beim ersten Klick:
+             *
+             * Button exakt von seiner
+             * bisherigen Position übernehmen.
              */
 
-            setTimeout(
-                () => {
-
-                    const path =
-                        calculateSafePath();
+            if (
+                !hasStartedFlying
+            ) {
 
 
-                    flyAlongPath(
-                        path
-                    );
+                const rect =
+                    noButton.getBoundingClientRect();
 
-                },
 
-                360
-            );
+                noButton.style.position =
+                    "fixed";
+
+
+                noButton.style.left =
+                    rect.left + "px";
+
+
+                noButton.style.top =
+                    rect.top + "px";
+
+
+                /*
+                 * Unser fixed Button benutzt
+                 * die linke obere Ecke.
+                 *
+                 * Deshalb muss die Ausgangsposition
+                 * exakt erhalten bleiben.
+                 */
+
+                noButton.style.margin =
+                    "0";
+
+
+                hasStartedFlying = true;
+
+            }
+
+
+
+            /*
+             * Warten, damit JA seine
+             * neue Größe übernommen hat.
+             */
+
+            requestAnimationFrame(() => {
+
+
+                requestAnimationFrame(() => {
+
+
+                    /*
+                     * Jetzt Flug starten.
+                     */
+
+                    flyNoButton();
+
+                });
+
+            });
 
         }
 
 
 
         /* =====================================================
-           JA BUTTON
+           JA GEKLICKT
         ===================================================== */
 
         function sayYes() {
 
 
-            /*
-             * Karte verstecken.
-             */
-
             document
-                .getElementById(
-                    "mainCard"
-                )
+                .getElementById("mainCard")
                 .style.display =
                 "none";
 
-
-            /*
-             * NEIN verstecken.
-             */
 
             noButton.style.display =
                 "none";
 
 
-            /*
-             * Erfolg zeigen.
-             */
-
             document
-                .getElementById(
-                    "success"
-                )
+                .getElementById("success")
                 .style.display =
                 "flex";
 
-
-            /*
-             * Herzen erzeugen.
-             */
 
             createHearts();
 
@@ -2227,7 +1912,7 @@
         function createHearts() {
 
 
-            const heartTypes = [
+            const hearts = [
 
                 "❤️",
                 "💕",
@@ -2246,122 +1931,76 @@
             ) {
 
 
-                setTimeout(
-                    () => {
+                setTimeout(() => {
 
 
-                        const heart =
-                            document.createElement(
-                                "div"
-                            );
+                    const heart =
+                        document.createElement(
+                            "div"
+                        );
 
 
-                        heart.className =
-                            "floating-heart";
+                    heart.className =
+                        "floating-heart";
 
 
-                        heart.innerText =
+                    heart.innerText =
+                        hearts[
+                            Math.floor(
+                                Math.random()
+                                *
+                                hearts.length
+                            )
+                        ];
 
-                            heartTypes[
-                                Math.floor(
-                                    Math.random()
-                                    *
-                                    heartTypes.length
-                                )
-                            ];
+
+                    heart.style.left =
+                        Math.random()
+                        *
+                        100
+                        +
+                        "vw";
 
 
-                        heart.style.left =
-
+                    heart.style.fontSize =
+                        (
+                            18
+                            +
                             Math.random()
-                            * 100
+                            * 25
+                        )
+                        +
+                        "px";
+
+
+                    heart.style.animationDuration =
+                        (
+                            3
                             +
-                            "vw";
+                            Math.random()
+                            * 3
+                        )
+                        +
+                        "s";
 
 
-                        heart.style.fontSize =
-
-                            (
-                                18
-                                +
-                                Math.random()
-                                * 25
-                            )
-                            +
-                            "px";
+                    document.body.appendChild(
+                        heart
+                    );
 
 
-                        heart.style.animationDuration =
+                    setTimeout(() => {
 
-                            (
-                                3
-                                +
-                                Math.random()
-                                * 3
-                            )
-                            +
-                            "s";
+                        heart.remove();
+
+                    }, 6500);
 
 
-                        document.body.appendChild(
-                            heart
-                        );
-
-
-                        setTimeout(
-                            () => {
-
-                                heart.remove();
-
-                            },
-
-                            6500
-                        );
-
-
-                    },
-
-                    i * 80
-                );
+                }, i * 70);
 
             }
 
         }
-
-
-
-        /* =====================================================
-           START
-
-           Nichts berechnen!
-
-           Der Button liegt durch Flexbox automatisch
-           exakt neben JA und auf gleicher Höhe.
-        ===================================================== */
-
-        window.addEventListener(
-            "load",
-            () => {
-
-                /*
-                 * Absichtlich leer.
-
-                 * NEIN bleibt ganz normal
-                 * neben JA.
-                 */
-
-            }
-        );
-
-
-
-        /* =====================================================
-           FENSTERGRÖSSE
-
-           Wenn während eines bereits gestarteten
-           Spiels das Browserfenster verändert wird,
-           wird keine unnötige Bewegung ausgelöst.
-        ===================================================== */
 
     </script>
 
