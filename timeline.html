@@ -31,6 +31,10 @@
         }
 
 
+        /* =====================================================
+           BODY
+        ===================================================== */
+
         body {
 
             min-height: 100vh;
@@ -70,7 +74,7 @@
 
 
         /* =====================================================
-           DEKORATIVE GLOW-ELEMENTE
+           HINTERGRUND
         ===================================================== */
 
         .background {
@@ -95,7 +99,7 @@
 
             filter: blur(110px);
 
-            opacity: 0.3;
+            opacity: 0.30;
         }
 
 
@@ -158,7 +162,9 @@
             margin-bottom: 100px;
 
             animation:
-                fadeUp 0.9s ease;
+                fadeUp
+                0.9s
+                ease;
         }
 
 
@@ -169,7 +175,10 @@
             margin-bottom: 20px;
 
             animation:
-                heartbeat 1.8s ease-in-out infinite;
+                heartbeat
+                1.8s
+                ease-in-out
+                infinite;
         }
 
 
@@ -199,7 +208,6 @@
                     8vw,
                     80px
                 );
-
 
             line-height: 1;
 
@@ -259,7 +267,7 @@
 
 
         /*
-         * Die mittlere Linie.
+         * Mittlere Linie
          */
 
         .timeline::before {
@@ -279,6 +287,7 @@
             transform:
                 translateX(-50%);
 
+
             background:
 
                 linear-gradient(
@@ -289,9 +298,12 @@
                     transparent
                 );
 
+
             opacity: 0.65;
 
+
             box-shadow:
+
                 0 0 20px
                 rgba(
                     255,
@@ -304,7 +316,7 @@
 
 
         /* =====================================================
-           EIN TIMELINE-ELEMENT
+           TIMELINE ITEM
         ===================================================== */
 
         .timeline-item {
@@ -321,7 +333,9 @@
                 translateY(40px);
 
             transition:
+
                 opacity 0.8s ease,
+
                 transform 0.8s ease;
         }
 
@@ -335,9 +349,9 @@
         }
 
 
-        /*
-         * Links.
-         */
+        /* =====================================================
+           LINKER EINTRAG
+        ===================================================== */
 
         .timeline-item.left {
 
@@ -349,9 +363,9 @@
         }
 
 
-        /*
-         * Rechts.
-         */
+        /* =====================================================
+           RECHTER EINTRAG
+        ===================================================== */
 
         .timeline-item.right {
 
@@ -380,6 +394,7 @@
 
             border-radius: 50%;
 
+
             background:
 
                 linear-gradient(
@@ -388,8 +403,10 @@
                     #ff8baa
                 );
 
+
             border:
                 4px solid #1a0912;
+
 
             box-shadow:
 
@@ -409,18 +426,21 @@
                     0.55
                 );
 
+
             z-index: 3;
         }
 
 
-        .timeline-item.left .timeline-dot {
+        .timeline-item.left
+        .timeline-dot {
 
             right:
                 -12px;
         }
 
 
-        .timeline-item.right .timeline-dot {
+        .timeline-item.right
+        .timeline-dot {
 
             left:
                 -12px;
@@ -429,7 +449,7 @@
 
 
         /* =====================================================
-           CARD
+           STORY CARD
         ===================================================== */
 
         .story-card {
@@ -444,13 +464,16 @@
 
             padding: 32px;
 
+
             background:
+
                 rgba(
                     255,
                     255,
                     255,
                     0.065
                 );
+
 
             border:
                 1px solid
@@ -461,12 +484,16 @@
                     0.13
                 );
 
+
             border-radius: 28px;
+
 
             backdrop-filter:
                 blur(18px);
 
+
             box-shadow:
+
                 0 20px 60px
                 rgba(
                     0,
@@ -475,8 +502,11 @@
                     0.25
                 );
 
+
             transition:
+
                 transform 0.3s ease,
+
                 background 0.3s ease;
         }
 
@@ -486,7 +516,9 @@
             transform:
                 translateY(-6px);
 
+
             background:
+
                 rgba(
                     255,
                     255,
@@ -496,6 +528,11 @@
         }
 
 
+
+        /* =====================================================
+           EMOJI
+        ===================================================== */
+
         .story-emoji {
 
             font-size: 46px;
@@ -503,6 +540,11 @@
             margin-bottom: 18px;
         }
 
+
+
+        /* =====================================================
+           TITEL
+        ===================================================== */
 
         .story-title {
 
@@ -515,6 +557,11 @@
             line-height: 1.2;
         }
 
+
+
+        /* =====================================================
+           DATUM / KLEINER TEXT
+        ===================================================== */
 
         .story-date {
 
@@ -531,6 +578,11 @@
             text-transform: uppercase;
         }
 
+
+
+        /* =====================================================
+           STORY TEXT
+        ===================================================== */
 
         .story-text {
 
@@ -573,7 +625,8 @@
             margin-bottom: 20px;
 
             animation:
-                heartbeat 1.8s
+                heartbeat
+                1.8s
                 ease-in-out
                 infinite;
         }
@@ -625,6 +678,7 @@
         }
 
 
+
         /* =====================================================
            WEITER BUTTON
         ===================================================== */
@@ -638,6 +692,7 @@
             justify-content: center;
 
             gap: 10px;
+
 
             padding:
                 16px 30px;
@@ -677,7 +732,9 @@
 
 
             transition:
+
                 transform 0.25s ease,
+
                 box-shadow 0.25s ease;
         }
 
@@ -686,6 +743,7 @@
 
             transform:
                 translateY(-3px);
+
 
             box-shadow:
 
@@ -745,7 +803,7 @@
 
 
         /* =====================================================
-           MOBILE
+           HANDY
         ===================================================== */
 
         @media (
@@ -772,8 +830,7 @@
 
 
             /*
-             * Auf dem Handy befindet sich
-             * die Timeline links.
+             * Timeline links
              */
 
             .timeline::before {
@@ -801,8 +858,11 @@
             }
 
 
-            .timeline-item.left .timeline-dot,
-            .timeline-item.right .timeline-dot {
+            .timeline-item.left
+            .timeline-dot,
+
+            .timeline-item.right
+            .timeline-dot {
 
                 left: 6px;
 
@@ -917,13 +977,12 @@
 
 
             <!-- =================================================
-                 1 — KAFFEE
+                 1 — INSTAGRAM
             ================================================== -->
 
             <article
                 class="timeline-item left"
             >
-
 
                 <div class="timeline-dot"></div>
 
@@ -932,7 +991,7 @@
 
 
                     <div class="story-emoji">
-                        ☕
+                        📱
                     </div>
 
 
@@ -942,37 +1001,37 @@
 
 
                     <h2 class="story-title">
-                        Unser erstes Kaffee-Date
+                        Schreiben auf Instagram
                     </h2>
 
 
                     <p class="story-text">
 
-                        Zwei Menschen, ein Kaffee
-                        und ziemlich viele Gespräche.
+                        Eigentlich fing alles ganz
+                        unspektakulär mit dem Schreiben
+                        auf Instagram an. 📱
 
-                        Und ich glaube,
-                        spätestens da habe ich gemerkt,
-                        dass ich dich wirklich gerne um mich habe. ❤️
+                        Aus ein paar Nachrichten wurden
+                        immer mehr Gespräche, viel Lachen
+                        und irgendwann dann unser erstes
+                        Treffen. 🤭❤️
 
                     </p>
 
 
                 </div>
 
-
             </article>
 
 
 
             <!-- =================================================
-                 2 — KOCHEN
+                 2 — ERSTES DATE
             ================================================== -->
 
             <article
                 class="timeline-item right"
             >
-
 
                 <div class="timeline-dot"></div>
 
@@ -981,48 +1040,101 @@
 
 
                     <div class="story-emoji">
-                        🍝
+                        ❤️
                     </div>
 
 
                     <div class="story-date">
-                        Ein schöner Abend
+                        Unser erstes Date
                     </div>
 
 
                     <h2 class="story-title">
-                        Zusammen kochen
+                        Unser erstes Date
                     </h2>
 
 
                     <p class="story-text">
 
-                        Eigentlich wollten wir einfach
-                        nur zusammen kochen.
+                        Zwei Menschen, die sich überhaupt
+                        nicht kannten, ein Abend im Enchilada
+                        und ziemlich viele Gespräche.
 
-                        Dass daraus ein Abend wurde,
-                        an dem wir einfach unglaublich
-                        viel Spaß hatten, war dann doch
-                        noch schöner. 🥰
+                        Und ich war am Anfang sehr nervös,
+                        aber durch deine offene Art hat sich
+                        das schnell gelegt.
+
+                        Da habe ich gemerkt:
+                        Ich will dich wieder sehen. 🙈
 
                     </p>
 
 
                 </div>
 
-
             </article>
 
 
 
             <!-- =================================================
-                 3 — FILM
+                 3 — KAFFEE / SPAZIEREN / BILLARD
+                     + KOCHEN
             ================================================== -->
 
             <article
                 class="timeline-item left"
             >
 
+                <div class="timeline-dot"></div>
+
+
+                <div class="story-card">
+
+
+                    <div class="story-emoji">
+                        ☕🎱
+                    </div>
+
+
+                    <div class="story-date">
+                        Unser zweites Date
+                    </div>
+
+
+                    <h2 class="story-title">
+                        Billard spielen?
+                    </h2>
+
+
+                    <p class="story-text">
+
+                        Eigentlich war der Plan:
+                        Kaffee trinken, spazieren und
+                        Billard spielen.
+
+                        Dass wir dann durch deinen Vorschlag
+                        zu mir gegangen sind, hat mich sehr
+                        gefreut.
+
+                        Mit dem gemeinsamen Kochen hat es
+                        das Ganze dann noch abgerundet. 🥰
+
+                    </p>
+
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 4 — FILM
+            ================================================== -->
+
+            <article
+                class="timeline-item right"
+            >
 
                 <div class="timeline-dot"></div>
 
@@ -1036,45 +1148,43 @@
 
 
                     <div class="story-date">
-                        Der Film
+                        Ein besonderer Abend
                     </div>
 
 
                     <h2 class="story-title">
-                        Ein Filmabend
+                        Der Filmabend
                     </h2>
 
 
                     <p class="story-text">
 
-                        Wir wollten einen Film schauen.
+                        Wir wollten eigentlich ganz
+                        entspannt einen Film schauen.
 
-                        Was genau darin passiert ist,
-                        weiß ich ehrlich gesagt nicht mehr
-                        ganz so genau. 🤭
+                        Vom Film haben wir am Ende
+                        erstaunlich wenig mitbekommen. 🤭
 
-                        Dafür weiß ich noch ziemlich gut,
-                        dass ich den Abend mit dir
-                        wunderschön fand. ❤️
+                        Dafür gab es ziemlich viel
+                        Kuscheln, Küssen und einfach
+                        eine wunderschöne Zeit mit dir. ❤️
 
                     </p>
 
 
                 </div>
 
-
             </article>
 
 
 
             <!-- =================================================
-                 4 — BADMINTON
+                 5 — BADMINTON
             ================================================== -->
 
             <article
-                class="timeline-item right"
+                class="timeline-item left"
             >
-
 
                 <div class="timeline-dot"></div>
 
@@ -1088,7 +1198,7 @@
 
 
                     <div class="story-date">
-                        Das nächste Abenteuer
+                        Gemeinsam aktiv
                     </div>
 
 
@@ -1099,33 +1209,32 @@
 
                     <p class="story-text">
 
-                        Bald wird sich herausstellen,
-                        wer von uns beiden eigentlich
-                        sportlicher ist. 😏
+                        Beim Badminton hatten wir zusammen
+                        jede Menge Spaß.
 
-                        Ich bin gespannt,
-                        ob du mich komplett fertig machst
-                        oder ob ich doch eine kleine Chance
-                        bekomme. 😂
+                        Ein bisschen Ehrgeiz, ein bisschen
+                        gegenseitig aufziehen und ganz viel
+                        lachen.
+
+                        Genau solche Momente mit dir
+                        liebe ich. ❤️
 
                     </p>
 
 
                 </div>
 
-
             </article>
 
 
 
             <!-- =================================================
-                 5 — LATE NIGHT SHOPPING
+                 6 — LATE NIGHT SHOPPING
             ================================================== -->
 
             <article
-                class="timeline-item left"
+                class="timeline-item right"
             >
-
 
                 <div class="timeline-dot"></div>
 
@@ -1150,32 +1259,30 @@
 
                     <p class="story-text">
 
-                        Zusammen durch die Läden,
-                        ein bisschen schauen,
-                        ein bisschen quatschen...
+                        Beim Late Night Shopping wurde
+                        dann aus „nur ein bisschen bummeln“
+                        ganz schnell ein schöner Abend mit dir. 🤭
 
-                        und wahrscheinlich am Ende
-                        mehr Sachen anschauen
-                        als tatsächlich kaufen. 🤭
+                        Zusammen shoppen, quatschen und
+                        natürlich viel mehr anschauen,
+                        als wir am Ende wirklich kaufen. 😂❤️
 
                     </p>
 
 
                 </div>
 
-
             </article>
 
 
 
             <!-- =================================================
-                 6 — KLEINE MOMENTE
+                 7 — KLEINE MOMENTE
             ================================================== -->
 
             <article
-                class="timeline-item right"
+                class="timeline-item left"
             >
-
 
                 <div class="timeline-dot"></div>
 
@@ -1204,19 +1311,16 @@
                         die großen Dates.
 
                         Es sind die kleinen Nachrichten,
-                        das Lachen,
-                        das Kuscheln,
+                        das Lachen, das Kuscheln,
                         das Wiedersehen...
 
-                        und dieses Gefühl,
-                        dass ich mich jedes Mal
-                        auf dich freue. ❤️
+                        und dieses Gefühl, dass ich mich
+                        jedes Mal auf dich freue. ❤️
 
                     </p>
 
 
                 </div>
-
 
             </article>
 
@@ -1252,13 +1356,6 @@
             </p>
 
 
-            <!--
-                VORLÄUFIG führt der Button
-                zur nächsten Seite.
-                
-                Die Datei können wir später erstellen.
-            -->
-
             <a
                 class="next-button"
                 href="frage.html"
@@ -1281,7 +1378,6 @@
 
 
     <script>
-
 
         /* =====================================================
            SCROLL-ANIMATION
@@ -1319,9 +1415,7 @@
                 },
 
                 {
-
                     threshold: 0.15
-
                 }
 
             );
