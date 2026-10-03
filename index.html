@@ -611,32 +611,28 @@
         }
 
 
-        .success h2 {
+.success h2 {
+    margin-bottom: 20px;
 
-            margin-bottom: 20px;
+    font-size:
+        clamp(
+            48px,
+            9vw,
+            90px
+        );
+}
 
-            font-size:
-                clamp(
-                    48px,
-                    9vw,
-                    90px
-                );
+.success-title {
+    background:
+        linear-gradient(
+            90deg,
+            #ff5c8a,
+            #ffc5d6
+        );
 
-
-            background:
-
-                linear-gradient(
-                    90deg,
-                    #ff5c8a,
-                    #ffc5d6
-                );
-
-
-            -webkit-background-clip: text;
-
-            -webkit-text-fill-color:
-                transparent;
-        }
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
 
         .success p {
@@ -987,8 +983,8 @@
 
 
             <h2>
-                Jaaaa! 🥰
-            </h2>
+    <span class="success-title">Jaaaa!</span> 🥰
+           </h2>
 
 
             <p>
