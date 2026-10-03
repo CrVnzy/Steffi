@@ -13,17 +13,37 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             min-height: 100vh;
-            padding: 40px 20px;
+
+            padding: 40px 20px 60px;
 
             font-family: Arial, Helvetica, sans-serif;
             color: white;
 
             background:
-                radial-gradient(circle at top left, rgba(255, 80, 150, 0.18), transparent 35%),
-                radial-gradient(circle at bottom right, rgba(130, 80, 255, 0.18), transparent 35%),
-                linear-gradient(135deg, #090910, #11111c 50%, #0b0b14);
+                radial-gradient(
+                    circle at top left,
+                    rgba(255, 80, 150, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(130, 80, 255, 0.18),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #090910,
+                    #11111c 50%,
+                    #0b0b14
+                );
+
+            overflow-x: hidden;
         }
 
         .container {
@@ -31,9 +51,15 @@
             margin: 0 auto;
         }
 
+        /* =========================
+           HEADER
+        ========================= */
+
         .header {
             text-align: center;
             margin-bottom: 55px;
+
+            animation: fadeIn 0.8s ease;
         }
 
         .header-heart {
@@ -45,33 +71,51 @@
 
         .eyebrow {
             color: #ff9acb;
+
             font-size: 14px;
+
             text-transform: uppercase;
             letter-spacing: 2px;
+
             margin-bottom: 12px;
         }
 
         h1 {
             font-size: clamp(38px, 7vw, 58px);
+
+            line-height: 1.15;
+
             margin-bottom: 20px;
 
-            background: linear-gradient(90deg, #ff78b7, #c78cff);
+            background: linear-gradient(
+                90deg,
+                #ff78b7,
+                #c78cff
+            );
+
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .intro {
             max-width: 650px;
+
             margin: 0 auto;
 
             font-size: 18px;
+
             line-height: 1.7;
 
             color: rgba(255, 255, 255, 0.82);
         }
 
+        /* =========================
+           TIMELINE
+        ========================= */
+
         .timeline {
             position: relative;
+
             margin-top: 40px;
         }
 
@@ -81,8 +125,10 @@
             content: "";
 
             position: absolute;
+
             top: 0;
             bottom: 0;
+
             left: 50%;
 
             width: 2px;
@@ -98,13 +144,19 @@
             transform: translateX(-50%);
         }
 
+        /* =========================
+           EVENT
+        ========================= */
+
         .event {
             position: relative;
 
             width: 50%;
+
             padding: 0 35px 55px;
 
             opacity: 0;
+
             transform: translateY(40px);
 
             transition:
@@ -114,21 +166,33 @@
 
         .event.visible {
             opacity: 1;
+
             transform: translateY(0);
         }
 
+        /* Linke Seite */
+
         .event:nth-child(odd) {
             left: 0;
+
             text-align: right;
         }
 
+        /* Rechte Seite */
+
         .event:nth-child(even) {
             left: 50%;
+
             text-align: left;
         }
 
+        /* =========================
+           PUNKT
+        ========================= */
+
         .event-dot {
             position: absolute;
+
             top: 5px;
 
             width: 18px;
@@ -136,7 +200,11 @@
 
             border-radius: 50%;
 
-            background: linear-gradient(135deg, #ff78b7, #c78cff);
+            background: linear-gradient(
+                135deg,
+                #ff78b7,
+                #c78cff
+            );
 
             box-shadow:
                 0 0 15px rgba(255, 120, 183, 0.7),
@@ -150,6 +218,10 @@
         .event:nth-child(even) .event-dot {
             left: -9px;
         }
+
+        /* =========================
+           EVENT KARTE
+        ========================= */
 
         .event-card {
             padding: 25px;
@@ -166,49 +238,86 @@
             box-shadow:
                 0 15px 35px rgba(0, 0, 0, 0.25),
                 0 0 30px rgba(255, 80, 150, 0.04);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.30),
+                0 0 35px rgba(255, 80, 150, 0.08);
         }
 
         .event-emoji {
             font-size: 32px;
+
             margin-bottom: 10px;
         }
 
         .event-title {
             font-size: 24px;
+
             margin-bottom: 14px;
+
+            color: white;
         }
 
         .event-text {
             font-size: 16px;
+
             line-height: 1.7;
+
             color: rgba(255, 255, 255, 0.82);
 
             white-space: pre-line;
         }
 
+        /* =========================
+           ABSCHLUSS
+        ========================= */
+
         .ending {
             text-align: center;
+
             margin-top: 15px;
+
             padding-top: 25px;
         }
 
         .ending-title {
             font-size: 28px;
+
             margin-bottom: 12px;
 
-            background: linear-gradient(90deg, #ff78b7, #c78cff);
+            background: linear-gradient(
+                90deg,
+                #ff78b7,
+                #c78cff
+            );
+
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .ending-text {
             color: rgba(255, 255, 255, 0.75);
+
             line-height: 1.7;
+
             font-size: 17px;
         }
 
+        /* =========================
+           BUTTON
+        ========================= */
+
         .next-area {
             text-align: center;
+
             margin-top: 35px;
         }
 
@@ -219,12 +328,18 @@
 
             border-radius: 999px;
 
-            background: linear-gradient(90deg, #ff5fa7, #c978ff);
+            background: linear-gradient(
+                90deg,
+                #ff5fa7,
+                #c978ff
+            );
 
             color: white;
+
             text-decoration: none;
 
             font-size: 16px;
+
             font-weight: bold;
 
             box-shadow:
@@ -242,13 +357,34 @@
                 0 15px 35px rgba(255, 95, 167, 0.35);
         }
 
+        /* =========================
+           ANIMATIONEN
+        ========================= */
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+
+        }
+
         @keyframes heartbeat {
+
             0%, 100% {
                 transform: scale(1);
             }
 
             10% {
-                transform: scale(1.1);
+                transform: scale(1.10);
             }
 
             20% {
@@ -262,12 +398,17 @@
             40% {
                 transform: scale(1);
             }
+
         }
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
             body {
-                padding: 25px 15px;
+                padding: 25px 15px 45px;
             }
 
             .header {
@@ -282,6 +423,7 @@
             .event:nth-child(odd),
             .event:nth-child(even) {
                 width: 100%;
+
                 left: 0;
 
                 padding:
@@ -311,15 +453,30 @@
             .event-text {
                 font-size: 15px;
             }
+
+            .ending-title {
+                font-size: 25px;
+            }
+
+            .ending-text {
+                font-size: 16px;
+            }
+
+            .next-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
+
 
 <body>
 
     <div class="container">
 
-        <!-- HEADER -->
+        <!-- =========================
+             HEADER
+        ========================= -->
 
         <header class="header">
 
@@ -344,12 +501,16 @@
         </header>
 
 
-        <!-- TIMELINE -->
+        <!-- =========================
+             TIMELINE
+        ========================= -->
 
         <div class="timeline">
 
 
-            <!-- Instagram -->
+            <!-- =========================
+                 INSTAGRAM
+            ========================= -->
 
             <div class="event">
 
@@ -377,7 +538,9 @@ viel Lachen und irgendwann dann unser erstes Treffen. 🤭❤️
             </div>
 
 
-            <!-- Erstes Date -->
+            <!-- =========================
+                 ERSTES DATE
+            ========================= -->
 
             <div class="event">
 
@@ -410,7 +573,9 @@ Ich will dich wieder sehen. 🙈
             </div>
 
 
-            <!-- Billard -->
+            <!-- =========================
+                 BILLARD
+            ========================= -->
 
             <div class="event">
 
@@ -444,7 +609,9 @@ das Ganze dann noch abgerundet. 🥰
             </div>
 
 
-            <!-- Filmabend -->
+            <!-- =========================
+                 FILMABEND
+            ========================= -->
 
             <div class="event">
 
@@ -477,7 +644,9 @@ eine wunderschöne Zeit mit dir. ❤️
             </div>
 
 
-            <!-- Badminton -->
+            <!-- =========================
+                 BADMINTON
+            ========================= -->
 
             <div class="event">
 
@@ -510,7 +679,9 @@ liebe ich. ❤️
             </div>
 
 
-            <!-- Late Night Shopping -->
+            <!-- =========================
+                 LATE NIGHT SHOPPING
+            ========================= -->
 
             <div class="event">
 
@@ -541,7 +712,9 @@ als wir am Ende wirklich kaufen. 😂❤️
             </div>
 
 
-            <!-- Kleine Momente -->
+            <!-- =========================
+                 KLEINE MOMENTE
+            ========================= -->
 
             <div class="event">
 
@@ -576,7 +749,9 @@ jedes Mal auf dich freue. ❤️
         </div>
 
 
-        <!-- ENDE -->
+        <!-- =========================
+             ABSCHLUSS
+        ========================= -->
 
         <div class="ending">
 
@@ -592,11 +767,16 @@ jedes Mal auf dich freue. ❤️
         </div>
 
 
-        <!-- WEITER -->
+        <!-- =========================
+             WEITER ZU MAG.HTML
+        ========================= -->
 
         <div class="next-area">
 
-            <a href="frage.html" class="next-button">
+            <a
+                href="mag.html"
+                class="next-button"
+            >
                 Weiter →
             </a>
 
@@ -605,35 +785,50 @@ jedes Mal auf dich freue. ❤️
     </div>
 
 
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
     <script>
 
-        const events = document.querySelectorAll(".event");
+        const events =
+            document.querySelectorAll(".event");
 
-        const observer = new IntersectionObserver(
-            (entries) => {
 
-                entries.forEach(entry => {
+        const observer =
+            new IntersectionObserver(
+                (entries) => {
 
-                    if (entry.isIntersecting) {
+                    entries.forEach(
+                        entry => {
 
-                        entry.target.classList.add("visible");
+                            if (
+                                entry.isIntersecting
+                            ) {
 
-                    }
+                                entry.target.classList.add(
+                                    "visible"
+                                );
 
-                });
+                            }
 
-            },
-            {
-                threshold: 0.15
+                        }
+                    );
+
+                },
+                {
+                    threshold: 0.15
+                }
+            );
+
+
+        events.forEach(
+            event => {
+
+                observer.observe(event);
+
             }
         );
-
-
-        events.forEach(event => {
-
-            observer.observe(event);
-
-        });
 
     </script>
 
