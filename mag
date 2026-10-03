@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Was ich an dir mag ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+
+            padding: 30px 20px 50px;
+
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(255, 80, 150, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(130, 80, 255, 0.18),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #090910,
+                    #11111c 50%,
+                    #0b0b14
+                );
+        }
+
+        .container {
+            width: min(850px, 100%);
+            margin: 0 auto;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+
+            animation: fadeIn 0.8s ease;
+        }
+
+        .heart {
+            font-size: 60px;
+            margin-bottom: 15px;
+
+            animation: heartbeat 2s infinite;
+        }
+
+        .eyebrow {
+            font-size: 14px;
+
+            text-transform: uppercase;
+            letter-spacing: 2px;
+
+            color: #ff9acb;
+
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: clamp(38px, 7vw, 58px);
+
+            line-height: 1.15;
+
+            margin-bottom: 20px;
+
+            background: linear-gradient(
+                90deg,
+                #ff78b7,
+                #c78cff
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro {
+            max-width: 650px;
+            margin: 0 auto;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.80);
+        }
+
+        /* =========================
+           KARTEN
+        ========================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            padding: 28px;
+
+            background: rgba(255, 255, 255, 0.07);
+
+            border: 1px solid rgba(255, 255, 255, 0.11);
+
+            border-radius: 24px;
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.25);
+
+            opacity: 0;
+            transform: translateY(30px);
+
+            animation: cardAppear 0.7s ease forwards;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0.15s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.30s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.45s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.60s;
+        }
+
+        .card:nth-child(5) {
+            animation-delay: 0.75s;
+        }
+
+        .card:nth-child(6) {
+            animation-delay: 0.90s;
+        }
+
+        .emoji {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        /* =========================
+           ABSCHLUSS
+        ========================= */
+
+        .ending {
+            margin-top: 45px;
+
+            padding: 30px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            border: 1px solid rgba(255, 255, 255, 0.09);
+
+            border-radius: 24px;
+        }
+
+        .ending h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .ending p {
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.76);
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .next-area {
+            text-align: center;
+
+            margin-top: 30px;
+        }
+
+        .next-button {
+            display: inline-block;
+
+            padding: 15px 28px;
+
+            border-radius: 999px;
+
+            background: linear-gradient(
+                90deg,
+                #ff5fa7,
+                #c978ff
+            );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 10px 30px rgba(255, 95, 167, 0.25);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .next-button:hover {
+            transform: translateY(-4px) scale(1.03);
+
+            box-shadow:
+                0 15px 35px rgba(255, 95, 167, 0.35);
+        }
+
+        /* =========================
+           ANIMATIONEN
+        ========================= */
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes heartbeat {
+
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            10% {
+                transform: scale(1.10);
+            }
+
+            20% {
+                transform: scale(1);
+            }
+
+            30% {
+                transform: scale(1.08);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+
+        }
+
+        /* =========================
+           HANDY
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 20px 15px 40px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .card h2 {
+                font-size: 22px;
+            }
+
+            .card p {
+                font-size: 15px;
+            }
+
+            .ending {
+                padding: 25px 20px;
+            }
+
+            .next-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <!-- =========================
+             HEADER
+        ========================= -->
+
+        <header class="header">
+
+            <div class="heart">
+                ❤️
+            </div>
+
+            <div class="eyebrow">
+                Ein paar Dinge...
+            </div>
+
+            <h1>
+                Was ich an dir mag
+            </h1>
+
+            <p class="intro">
+                Es sind gar nicht nur die großen Dinge.
+                Es sind vor allem die kleinen Sachen,
+                durch die du für mich besonders geworden bist. ❤️
+            </p>
+
+        </header>
+
+
+        <!-- =========================
+             KARTEN
+        ========================= -->
+
+        <section class="cards">
+
+
+            <!-- 1 -->
+
+            <div class="card">
+
+                <div class="emoji">
+                    🥰
+                </div>
+
+                <h2>
+                    Deine offene Art
+                </h2>
+
+                <p>
+                    Ich mag, wie offen und locker du bist.
+                    Gerade beim ersten Treffen hat mir das
+                    sofort geholfen, meine Nervosität zu verlieren.
+                </p>
+
+            </div>
+
+
+            <!-- 2 -->
+
+            <div class="card">
+
+                <div class="emoji">
+                    😂
+                </div>
+
+                <h2>
+                    Dein Lachen
+                </h2>
+
+                <p>
+                    Ich liebe es, mit dir zu lachen und
+                    wie schnell aus irgendeinem kleinen
+                    Spruch ein kompletter Lachanfall werden kann.
+                </p>
+
+            </div>
+
+
+            <!-- 3 -->
+
+            <div class="card">
+
+                <div class="emoji">
+                    🤭
+                </div>
+
+                <h2>
+                    Dass wir uns gegenseitig aufziehen
+                </h2>
+
+                <p>
+                    Dieses gegenseitige Necken finde ich
+                    einfach schön.
+                    Ein bisschen frech, ein bisschen albern
+                    und irgendwie genau unser Ding.
+                </p>
+
+            </div>
+
+
+            <!-- 4 -->
+
+            <div class="card">
+
+                <div class="emoji">
+                    ❤️
+                </div>
+
+                <h2>
+                    Wie wohl ich mich bei dir fühle
+                </h2>
+
+                <p>
+                    Obwohl wir uns noch gar nicht so lange kennen,
+                    fühlt sich die Zeit mit dir unglaublich
+                    leicht und vertraut an.
+                </p>
+
+            </div>
+
+
+            <!-- 5 -->
+
+            <div class="card">
+
+                <div class="emoji">
+                    🥹
+                </div>
+
+                <h2>
+                    Wie sehr ich mich auf dich freue
+                </h2>
+
+                <p>
+                    Ich merke inzwischen richtig,
+                    wie ich mich schon auf das nächste Treffen
+                    freue, sobald wir uns verabschiedet haben.
+                </p>
+
+            </div>
+
+
+            <!-- 6 -->
+
+            <div class="card">
+
+                <div class="emoji">
+                    ✨
+                </div>
+
+                <h2>
+                    Unsere kleinen Momente
+                </h2>
+
+                <p>
+                    Kaffee trinken, zusammen kochen,
+                    kuscheln, quatschen, Badminton spielen
+                    oder einfach nur zusammen sein.
+                    Genau diese Momente mag ich mit dir.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ABSCHLUSS
+        ========================= -->
+
+        <div class="ending">
+
+            <h2>
+                Und das Schöne daran… ❤️
+            </h2>
+
+            <p>
+                Wir kennen uns noch gar nicht so lange
+                und trotzdem gibt es schon so viele Dinge,
+                die ich an dir mag.
+                <br><br>
+                Und ich bin gespannt,
+                was ich noch alles an dir entdecken werde. 🥰
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             WEITER
+        ========================= -->
+
+        <div class="next-area">
+
+            <a
+                href="frage.html"
+                class="next-button"
+            >
+                Weiter ❤️
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
