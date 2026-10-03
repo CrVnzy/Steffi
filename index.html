@@ -8,10 +8,6 @@
 
     <style>
 
-        /* =========================
-           GRUNDLEGENDES
-        ========================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -33,7 +29,6 @@
             align-items: center;
 
             font-family: Arial, Helvetica, sans-serif;
-
             color: white;
 
             background:
@@ -65,7 +60,6 @@
             inset: 0;
 
             overflow: hidden;
-
             pointer-events: none;
 
             z-index: 0;
@@ -77,11 +71,9 @@
             border-radius: 50%;
 
             filter: blur(100px);
-
             opacity: 0.35;
 
-            animation:
-                floating 8s ease-in-out infinite;
+            animation: floating 8s ease-in-out infinite;
         }
 
         .glow-1 {
@@ -117,7 +109,7 @@
             z-index: 2;
 
             width: min(700px, 90%);
-            min-height: 520px;
+            min-height: 540px;
 
             padding: 60px 40px;
 
@@ -174,7 +166,6 @@
             font-weight: bold;
 
             letter-spacing: 3px;
-
             text-transform: uppercase;
         }
 
@@ -200,7 +191,7 @@
         .question-text {
             max-width: 520px;
 
-            margin-bottom: 45px;
+            margin-bottom: 35px;
 
             color:
                 rgba(255, 255, 255, 0.75);
@@ -212,38 +203,28 @@
 
 
         /* =========================
-           BUTTON BEREICH
+           BUTTON-BEREICH
         ========================= */
 
         .button-area {
             position: relative;
 
             width: 100%;
-
             max-width: 560px;
 
-            height: 180px;
-
-            display: flex;
-
-            justify-content: center;
-            align-items: center;
-
-            gap: 25px;
+            height: 220px;
         }
 
 
         /* =========================
-           BUTTONS
+           ALLGEMEINE BUTTONS
         ========================= */
 
         button {
             border: none;
-
             outline: none;
 
             font-size: 18px;
-
             font-weight: bold;
 
             border-radius: 999px;
@@ -253,10 +234,10 @@
             cursor: pointer;
 
             transition:
-                transform 0.35s ease,
-                box-shadow 0.35s ease,
                 left 0.35s ease,
-                top 0.35s ease;
+                top 0.35s ease,
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
         }
 
 
@@ -265,9 +246,18 @@
         ========================= */
 
         #yesButton {
-            position: relative;
+            position: absolute;
 
             z-index: 3;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%)
+                scale(1);
+
+            transform-origin: center center;
 
             color: white;
 
@@ -281,8 +271,6 @@
             box-shadow:
                 0 10px 30px
                 rgba(255, 47, 104, 0.35);
-
-            transform: scale(1);
         }
 
         #yesButton:hover {
@@ -297,7 +285,7 @@
         ========================= */
 
         #noButton {
-            position: relative;
+            position: absolute;
 
             z-index: 4;
 
@@ -334,7 +322,7 @@
 
 
         /* =========================
-           ERFOLGSSEITE
+           ERFOLG
         ========================= */
 
         .success {
@@ -515,7 +503,7 @@
             .card {
                 width: 92%;
 
-                min-height: 500px;
+                min-height: 520px;
 
                 padding:
                     40px 20px;
@@ -528,11 +516,11 @@
             .question-text {
                 font-size: 16px;
 
-                margin-bottom: 30px;
+                margin-bottom: 25px;
             }
 
             .button-area {
-                height: 190px;
+                height: 230px;
             }
 
             button {
@@ -569,7 +557,7 @@
 
 
     <!-- =========================
-         HAUPTSEITE
+         HAUPTKARTE
     ========================= -->
 
     <div
@@ -593,16 +581,14 @@
 
 
         <p class="question-text">
-
             Bevor wir hier weitermachen,
             muss ich natürlich erstmal
             eine ganz wichtige Sache wissen... 🤭
-
         </p>
 
 
 
-        <!-- BUTTON BEREICH -->
+        <!-- BUTTON-BEREICH -->
 
         <div
             class="button-area"
@@ -625,7 +611,6 @@
             </button>
 
         </div>
-
 
 
         <div class="hint">
@@ -651,11 +636,9 @@
                 ❤️
             </div>
 
-
             <h2>
                 Jaaaa! 🥰
             </h2>
-
 
             <p>
                 Ich wusste doch,
@@ -674,13 +657,10 @@
 
     <script>
 
-        /* -------------------------
-           VARIABLEN
-        ------------------------- */
-
         let yesScale = 1;
 
         let noClickCount = 0;
+
 
         const yesButton =
             document.getElementById("yesButton");
@@ -692,34 +672,236 @@
             document.getElementById("buttonArea");
 
 
-
-        /* -------------------------
-           NEIN-TEXTE
-        ------------------------- */
+        /*
+         * Texte des NEIN-Buttons
+         */
 
         const noTexts = [
-
             "Nein 🙈",
-
             "Bist du sicher? 🤭",
-
             "Wirklich? 🥺",
-
             "Denk nochmal nach 😏",
-
             "Ganz sicher? ❤️",
-
             "Letzte Chance 😂",
-
             "Okay... wirklich Nein? 🥺"
-
         ];
 
 
+        /*
+         * Prüft, ob sich zwei
+         * Rechtecke überschneiden.
+         *
+         * gap = Sicherheitsabstand
+         */
 
-        /* -------------------------
-           NEIN BUTTON
-        ------------------------- */
+        function rectanglesOverlap(
+            rect1,
+            rect2,
+            gap = 15
+        ) {
+
+            return !(
+                rect1.right + gap < rect2.left ||
+                rect1.left - gap > rect2.right ||
+                rect1.bottom + gap < rect2.top ||
+                rect1.top - gap > rect2.bottom
+            );
+
+        }
+
+
+        /*
+         * Sucht eine sichere Position
+         * für den NEIN-Button.
+         */
+
+        function findSafePosition() {
+
+            const areaRect =
+                buttonArea.getBoundingClientRect();
+
+            const yesRect =
+                yesButton.getBoundingClientRect();
+
+            const noWidth =
+                noButton.offsetWidth;
+
+            const noHeight =
+                noButton.offsetHeight;
+
+
+            const padding = 15;
+
+
+            const maxX =
+                areaRect.width -
+                noWidth -
+                padding * 2;
+
+            const maxY =
+                areaRect.height -
+                noHeight -
+                padding * 2;
+
+
+            /*
+             * Wir probieren viele
+             * zufällige Positionen.
+             */
+
+            for (
+                let attempt = 0;
+                attempt < 1000;
+                attempt++
+            ) {
+
+                const x =
+                    padding +
+                    Math.random() *
+                    Math.max(maxX, 0);
+
+                const y =
+                    padding +
+                    Math.random() *
+                    Math.max(maxY, 0);
+
+
+                /*
+                 * Position des möglichen
+                 * NEIN-Buttons berechnen.
+                 */
+
+                const noRect = {
+
+                    left:
+                        areaRect.left + x,
+
+                    top:
+                        areaRect.top + y,
+
+                    right:
+                        areaRect.left +
+                        x +
+                        noWidth,
+
+                    bottom:
+                        areaRect.top +
+                        y +
+                        noHeight
+
+                };
+
+
+                /*
+                 * Prüfen, ob NEIN
+                 * den JA-Button berührt.
+                 */
+
+                const collision =
+                    rectanglesOverlap(
+                        noRect,
+                        yesRect,
+                        18
+                    );
+
+
+                /*
+                 * Keine Kollision?
+                 *
+                 * Dann verwenden wir
+                 * diese Position.
+                 */
+
+                if (!collision) {
+
+                    return {
+                        x: x,
+                        y: y
+                    };
+
+                }
+
+            }
+
+
+            /*
+             * Falls zufällig keine
+             * Position gefunden wurde,
+             * suchen wir systematisch
+             * nach einer Position.
+             */
+
+            const step = 10;
+
+
+            for (
+                let y = padding;
+                y <= maxY + padding;
+                y += step
+            ) {
+
+                for (
+                    let x = padding;
+                    x <= maxX + padding;
+                    x += step
+                ) {
+
+                    const noRect = {
+
+                        left:
+                            areaRect.left + x,
+
+                        top:
+                            areaRect.top + y,
+
+                        right:
+                            areaRect.left +
+                            x +
+                            noWidth,
+
+                        bottom:
+                            areaRect.top +
+                            y +
+                            noHeight
+
+                    };
+
+
+                    const collision =
+                        rectanglesOverlap(
+                            noRect,
+                            yesRect,
+                            18
+                        );
+
+
+                    if (!collision) {
+
+                        return {
+                            x: x,
+                            y: y
+                        };
+
+                    }
+
+                }
+
+            }
+
+
+            /*
+             * Eigentlich sollte dieser
+             * Fall kaum auftreten.
+             */
+
+            return null;
+
+        }
+
+
+        /*
+         * NEIN wurde gedrückt
+         */
 
         function sayNo() {
 
@@ -727,117 +909,36 @@
 
 
             /*
-             * JA BUTTON VERGRÖSSERN
-             *
-             * Jede Betätigung:
-             * vorherige Größe × 1.12
+             * JA wird größer.
              */
 
             yesScale *= 1.12;
 
 
             /*
-             * Maximale Größe festlegen,
-             * damit der Button nicht
-             * irgendwann komplett eskaliert.
+             * Maximale Größe.
              */
 
-            if (yesScale > 3.2) {
-                yesScale = 3.2;
+            if (yesScale > 3.0) {
+
+                yesScale = 3.0;
+
             }
 
 
+            /*
+             * JA-Button skalieren.
+             */
+
             yesButton.style.transform =
-                `scale(${yesScale})`;
-
-
-
-            /*
-             * NEIN BUTTON MUSS
-             * HERUMSPRINGEN
-             */
-
-            const areaWidth =
-                buttonArea.clientWidth;
-
-            const areaHeight =
-                buttonArea.clientHeight;
-
-
-            const buttonWidth =
-                noButton.offsetWidth;
-
-            const buttonHeight =
-                noButton.offsetHeight;
-
+                `
+                translate(-50%, -50%)
+                scale(${yesScale})
+                `;
 
 
             /*
-             * Sicherheitsabstand
-             */
-
-            const padding = 10;
-
-
-            /*
-             * Maximale Position
-             */
-
-            const maxX =
-                areaWidth -
-                buttonWidth -
-                padding * 2;
-
-            const maxY =
-                areaHeight -
-                buttonHeight -
-                padding * 2;
-
-
-
-            /*
-             * Zufällige Position
-             */
-
-            let randomX =
-                padding +
-                Math.random() *
-                Math.max(maxX, 0);
-
-            let randomY =
-                padding +
-                Math.random() *
-                Math.max(maxY, 0);
-
-
-
-            /*
-             * Transform entfernen,
-             * damit left/top sauber
-             * funktionieren.
-             */
-
-            noButton.style.transform =
-                "none";
-
-
-            /*
-             * Position setzen
-             */
-
-            noButton.style.position =
-                "absolute";
-
-            noButton.style.left =
-                `${randomX}px`;
-
-            noButton.style.top =
-                `${randomY}px`;
-
-
-
-            /*
-             * Text ändern
+             * Text ändern.
              */
 
             const textIndex =
@@ -850,59 +951,74 @@
             noButton.innerText =
                 noTexts[textIndex];
 
+
+            /*
+             * Warten, bis der Browser
+             * die neue Buttongröße
+             * berechnet hat.
+             */
+
+            requestAnimationFrame(() => {
+
+                const position =
+                    findSafePosition();
+
+
+                /*
+                 * Nur wenn tatsächlich
+                 * eine sichere Position
+                 * gefunden wurde.
+                 */
+
+                if (position !== null) {
+
+                    noButton.style.left =
+                        `${position.x}px`;
+
+                    noButton.style.top =
+                        `${position.y}px`;
+
+                }
+
+            });
+
         }
 
 
-
-        /* -------------------------
-           JA BUTTON
-        ------------------------- */
+        /*
+         * JA wurde gedrückt
+         */
 
         function sayYes() {
-
-            /*
-             * Hauptkarte ausblenden
-             */
 
             document
                 .getElementById("mainCard")
                 .style.display = "none";
 
 
-            /*
-             * Erfolgsseite anzeigen
-             */
-
             document
                 .getElementById("success")
                 .style.display = "flex";
 
-
-            /*
-             * Herzen starten
-             */
 
             createHearts();
 
         }
 
 
-
-        /* -------------------------
-           HERZEN ERSTELLEN
-        ------------------------- */
+        /*
+         * Herzen erzeugen
+         */
 
         function createHearts() {
 
             const heartTypes = [
-
                 "❤️",
                 "💕",
                 "💗",
                 "💖",
                 "💘",
                 "💞"
-
             ];
 
 
@@ -922,10 +1038,6 @@
                         "floating-heart";
 
 
-                    /*
-                     * Zufälliges Herz
-                     */
-
                     heart.innerText =
                         heartTypes[
                             Math.floor(
@@ -935,35 +1047,24 @@
                         ];
 
 
-                    /*
-                     * Zufällige X-Position
-                     */
-
                     heart.style.left =
                         Math.random() *
                         100 +
                         "vw";
 
 
-                    /*
-                     * Zufällige Größe
-                     */
-
                     heart.style.fontSize =
-                        (18 +
-                        Math.random() * 25)
-                        + "px";
+                        (
+                            18 +
+                            Math.random() * 25
+                        ) + "px";
 
-
-                    /*
-                     * Zufällige
-                     * Animationsdauer
-                     */
 
                     heart.style.animationDuration =
-                        (3 +
-                        Math.random() * 3)
-                        + "s";
+                        (
+                            3 +
+                            Math.random() * 3
+                        ) + "s";
 
 
                     document.body.appendChild(
@@ -971,23 +1072,149 @@
                     );
 
 
-                    /*
-                     * Nach der Animation
-                     * wieder entfernen
-                     */
-
                     setTimeout(() => {
 
                         heart.remove();
 
                     }, 6500);
 
-
                 }, i * 80);
 
             }
 
         }
+
+
+        /*
+         * Beim Laden eine erste
+         * sichere Position finden.
+         */
+
+        window.addEventListener(
+            "load",
+            () => {
+
+                const areaRect =
+                    buttonArea.getBoundingClientRect();
+
+                const yesRect =
+                    yesButton.getBoundingClientRect();
+
+                const noWidth =
+                    noButton.offsetWidth;
+
+                const noHeight =
+                    noButton.offsetHeight;
+
+
+                /*
+                 * Wir versuchen zuerst,
+                 * NEIN rechts vom JA-Button
+                 * zu positionieren.
+                 */
+
+                const preferredX =
+                    areaRect.width * 0.68 -
+                    noWidth / 2;
+
+                const preferredY =
+                    areaRect.height * 0.5 -
+                    noHeight / 2;
+
+
+                const preferredRect = {
+
+                    left:
+                        areaRect.left +
+                        preferredX,
+
+                    top:
+                        areaRect.top +
+                        preferredY,
+
+                    right:
+                        areaRect.left +
+                        preferredX +
+                        noWidth,
+
+                    bottom:
+                        areaRect.top +
+                        preferredY +
+                        noHeight
+
+                };
+
+
+                if (
+                    !rectanglesOverlap(
+                        preferredRect,
+                        yesRect,
+                        18
+                    )
+                ) {
+
+                    noButton.style.left =
+                        `${preferredX}px`;
+
+                    noButton.style.top =
+                        `${preferredY}px`;
+
+                }
+                else {
+
+                    /*
+                     * Falls die Standardposition
+                     * nicht passt, suchen wir
+                     * automatisch eine andere.
+                     */
+
+                    const position =
+                        findSafePosition();
+
+
+                    if (position !== null) {
+
+                        noButton.style.left =
+                            `${position.x}px`;
+
+                        noButton.style.top =
+                            `${position.y}px`;
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Wenn das Fenster verändert
+         * wird, z.B. Handy drehen,
+         * suchen wir erneut eine
+         * sichere Position.
+         */
+
+        window.addEventListener(
+            "resize",
+            () => {
+
+                const position =
+                    findSafePosition();
+
+
+                if (position !== null) {
+
+                    noButton.style.left =
+                        `${position.x}px`;
+
+                    noButton.style.top =
+                        `${position.y}px`;
+
+                }
+
+            }
+        );
 
     </script>
 
