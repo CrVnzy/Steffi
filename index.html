@@ -16,7 +16,7 @@
     <style>
 
         /* =====================================================
-           RESET
+           GRUNDLAGEN
         ===================================================== */
 
         * {
@@ -33,10 +33,6 @@
         }
 
 
-        /* =====================================================
-           BODY
-        ===================================================== */
-
         body {
 
             min-height: 100vh;
@@ -48,12 +44,10 @@
             justify-content: center;
             align-items: center;
 
-
             font-family:
                 Arial,
                 Helvetica,
                 sans-serif;
-
 
             color: white;
 
@@ -91,8 +85,6 @@
             position: fixed;
 
             inset: 0;
-
-            overflow: hidden;
 
             pointer-events: none;
 
@@ -150,41 +142,48 @@
 
             position: relative;
 
-            z-index: 5;
-
+            z-index: 2;
 
             width: min(
                 700px,
                 92vw
             );
 
-
             min-height: 540px;
 
-
             padding:
-                55px 35px;
+                45px 30px;
 
 
             display: flex;
 
             flex-direction: column;
 
-            align-items: center;
-
             justify-content: center;
+
+            align-items: center;
 
 
             text-align: center;
 
 
             background:
-                rgba(255,255,255,0.07);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.07
+                );
 
 
             border:
                 1px solid
-                rgba(255,255,255,0.13);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.13
+                );
 
 
             border-radius: 32px;
@@ -197,14 +196,24 @@
             box-shadow:
 
                 0 30px 100px
-                rgba(0,0,0,0.45),
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.45
+                ),
 
                 inset 0 0 30px
-                rgba(255,255,255,0.02);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.02
+                );
 
 
             animation:
-                appear 0.8s ease;
+                cardAppear 0.8s ease;
         }
 
 
@@ -219,9 +228,11 @@
 
             margin-bottom: 15px;
 
-
             animation:
-                heartbeat 1.8s ease-in-out infinite;
+                heartbeat
+                1.8s
+                ease-in-out
+                infinite;
         }
 
 
@@ -234,18 +245,14 @@
 
             margin-bottom: 12px;
 
-
-            color: #ff9db8;
-
+            color:
+                #ff9db8;
 
             font-size: 13px;
 
-
             font-weight: bold;
 
-
             letter-spacing: 3px;
-
 
             text-transform: uppercase;
         }
@@ -260,14 +267,12 @@
 
             margin-bottom: 20px;
 
-
             font-size:
                 clamp(
                     42px,
                     8vw,
                     75px
                 );
-
 
             line-height: 1;
 
@@ -283,22 +288,21 @@
 
             -webkit-background-clip: text;
 
-            -webkit-text-fill-color: transparent;
+            -webkit-text-fill-color:
+                transparent;
         }
 
 
 
         /* =====================================================
-           BESCHREIBUNG
+           TEXT
         ===================================================== */
 
         .description {
 
             max-width: 520px;
 
-
-            margin-bottom: 25px;
-
+            margin-bottom: 20px;
 
             color:
                 rgba(
@@ -308,9 +312,7 @@
                     0.75
                 );
 
-
             font-size: 18px;
-
 
             line-height: 1.7;
         }
@@ -320,47 +322,31 @@
         /* =====================================================
            BUTTON-STAGE
 
-           DAS IST DER GESAMTE SICHERHEITSBEREICH.
-
-           NEIN DARF NUR INNERHALB DIESES ELEMENTS
-           TELEPORTIEREN.
+           NUR HIER DARF NEIN HERUMSPRINGEN.
         ===================================================== */
 
         .button-stage {
 
             position: relative;
 
-
             width: min(
                 560px,
                 100%
             );
 
-
-            /*
-             * Auf Desktop etwas größer.
-             */
-
             height: 220px;
-
 
             margin-top: 5px;
 
-
-            border-radius: 24px;
-
-
-            /*
-             * Unsichtbare Begrenzung.
-             */
-
             overflow: hidden;
+
+            border-radius: 25px;
         }
 
 
 
         /* =====================================================
-           BUTTON BASIS
+           BUTTON-GRUNDSTYLING
         ===================================================== */
 
         button {
@@ -369,31 +355,22 @@
 
             outline: none;
 
-
             font-family: inherit;
-
 
             font-size: 18px;
 
-
             font-weight: bold;
 
-
             border-radius: 999px;
-
 
             padding:
                 16px 32px;
 
-
             cursor: pointer;
-
 
             user-select: none;
 
-
             white-space: nowrap;
-
 
             -webkit-tap-highlight-color:
                 transparent;
@@ -403,17 +380,13 @@
 
         /* =====================================================
            JA BUTTON
-
-           Immer ungefähr in der Mitte.
         ===================================================== */
 
         #yesButton {
 
             position: absolute;
 
-
-            left: 38%;
-
+            left: 36%;
 
             top: 50%;
 
@@ -485,22 +458,13 @@
 
         /* =====================================================
            NEIN BUTTON
-
-           IMPORTANT:
-           position: absolute
-           innerhalb der Stage.
-
-           Kein fixed.
-           Keine Bildschirmkoordinaten.
         ===================================================== */
 
         #noButton {
 
             position: absolute;
 
-
-            left: 70%;
-
+            left: 64%;
 
             top: 50%;
 
@@ -569,7 +533,6 @@
 
             margin-top: 5px;
 
-
             color:
                 rgba(
                     255,
@@ -577,7 +540,6 @@
                     255,
                     0.35
                 );
-
 
             font-size: 13px;
         }
@@ -592,26 +554,19 @@
 
             position: fixed;
 
-
             inset: 0;
-
 
             z-index: 100;
 
-
             display: none;
-
 
             justify-content: center;
 
-
             align-items: center;
 
+            padding: 25px;
 
             text-align: center;
-
-
-            padding: 25px;
 
 
             background:
@@ -624,6 +579,7 @@
                         104,
                         0.28
                     ),
+
                     rgba(
                         0,
                         0,
@@ -638,7 +594,7 @@
 
             animation:
                 successAppear
-                0.9s ease;
+                0.8s ease;
         }
 
 
@@ -648,17 +604,16 @@
 
             margin-bottom: 20px;
 
-
             animation:
                 heartbeat
-                1s infinite;
+                1s
+                infinite;
         }
 
 
         .success h2 {
 
             margin-bottom: 20px;
-
 
             font-size:
                 clamp(
@@ -679,7 +634,8 @@
 
             -webkit-background-clip: text;
 
-            -webkit-text-fill-color: transparent;
+            -webkit-text-fill-color:
+                transparent;
         }
 
 
@@ -693,9 +649,7 @@
                     0.8
                 );
 
-
             font-size: 20px;
-
 
             line-height: 1.7;
         }
@@ -710,26 +664,20 @@
 
             position: fixed;
 
-
-            left: 50%;
-
-
             bottom: -40px;
-
 
             z-index: 500;
 
-
             pointer-events: none;
 
-
             font-size: 25px;
-
 
             animation:
 
                 floatHeart
-                5s linear forwards;
+                5s
+                linear
+                forwards;
         }
 
 
@@ -774,7 +722,7 @@
         }
 
 
-        @keyframes appear {
+        @keyframes cardAppear {
 
             from {
 
@@ -843,10 +791,7 @@
 
 
         /* =====================================================
-           MOBILE
-
-           Der Flugbereich wird höher,
-           damit genug Platz vorhanden ist.
+           HANDY
         ===================================================== */
 
         @media (
@@ -857,48 +802,54 @@
 
                 width: 92vw;
 
-                min-height: 540px;
+                min-height: 550px;
 
                 padding:
-                    40px 18px;
+                    35px 16px;
             }
 
 
             .heart {
 
                 font-size: 55px;
-
-                margin-bottom: 12px;
             }
 
 
             .description {
 
-                font-size: 16px;
-
                 max-width: 90%;
 
-                margin-bottom: 15px;
+                font-size: 16px;
+
+                line-height: 1.6;
             }
 
+
+            /*
+             * Höherer Bereich fürs Handy.
+             */
 
             .button-stage {
 
                 width: 100%;
 
-                height: 250px;
+                height: 280px;
             }
 
 
+            /*
+             * Startpositionen Handy.
+             */
+
             #yesButton {
 
-                left: 38%;
+                left: 35%;
             }
 
 
             #noButton {
 
-                left: 70%;
+                left: 65%;
             }
 
 
@@ -977,7 +928,7 @@
 
 
         <!-- =================================================
-             SICHERHEITSBEREICH
+             BUTTON BEREICH
         ================================================== -->
 
         <div
@@ -986,8 +937,6 @@
         >
 
 
-            <!-- JA -->
-
             <button
                 id="yesButton"
                 type="button"
@@ -995,9 +944,6 @@
                 Ja ❤️
             </button>
 
-
-
-            <!-- NEIN -->
 
             <button
                 id="noButton"
@@ -1012,7 +958,9 @@
 
 
         <div class="hint">
+
             Eine Antwort macht mich glücklich... 🥰
+
         </div>
 
 
@@ -1021,7 +969,7 @@
 
 
     <!-- =====================================================
-         ERFOLGSSEITE
+         ERFOLG
     ===================================================== -->
 
     <section
@@ -1102,47 +1050,53 @@
 
         let yesScale = 1;
 
-
         let noClicks = 0;
 
 
+
+        /* =====================================================
+           EINSTELLUNGEN
+        ===================================================== */
+
         /*
-         * JA wächst bei jedem NEIN
+         * JA wächst bei jedem NEIN-Klick
          * um 12 %.
          */
 
-        const growthFactor = 1.12;
+        const growthFactor =
+            1.12;
 
 
         /*
-         * Maximal 220 %.
-         *
-         * Damit bleibt auf Handys
-         * genug Platz.
+         * Maximale Größe.
          */
 
-        const maxYesScale = 2.2;
+        const maximumYesScale =
+            2.2;
 
 
         /*
-         * Mindestabstand zwischen
-         * JA und NEIN.
+         * Abstand zwischen JA
+         * und NEIN.
          */
 
-        const safetyGap = 25;
+        const safetyGap =
+            30;
 
 
         /*
-         * Abstand zum Rand der
-         * button-stage.
+         * Abstand vom Rand
+         * der Button-Stage.
          */
 
-        const stagePadding = 10;
+        const stagePadding =
+            12;
 
 
-        /*
-         * Texte für NEIN.
-         */
+
+        /* =====================================================
+           NEIN-TEXTE
+        ===================================================== */
 
         const noTexts = [
 
@@ -1171,10 +1125,10 @@
 
 
         /* =====================================================
-           RECHTECK ÜBERLAPPT?
+           RECHTECK-ÜBERSCHNEIDUNG
         ===================================================== */
 
-        function overlaps(
+        function rectanglesOverlap(
             a,
             b,
             gap = 0
@@ -1211,60 +1165,11 @@
 
 
         /* =====================================================
-           IST NEIN INNERHALB DER STAGE?
+           JA-RECHTECK IN DER BUTTON-STAGE
         ===================================================== */
 
-        function isInsideStage(
-            rect
-        ) {
+        function getYesRectInStage() {
 
-            const stageWidth =
-                stage.clientWidth;
-
-
-            const stageHeight =
-                stage.clientHeight;
-
-
-            return (
-
-                rect.left
-                >=
-                stagePadding
-
-                &&
-
-                rect.top
-                >=
-                stagePadding
-
-                &&
-
-                rect.right
-                <=
-                stageWidth
-                -
-                stagePadding
-
-                &&
-
-                rect.bottom
-                <=
-                stageHeight
-                -
-                stagePadding
-
-            );
-
-        }
-
-
-
-        /* =====================================================
-           JA-RECHTECK IN STAGE KOORDINATEN
-        ===================================================== */
-
-        function getYesRect() {
 
             const stageRect =
                 stage.getBoundingClientRect();
@@ -1303,13 +1208,14 @@
 
 
         /* =====================================================
-           NEIN-RECHTECK FÜR EINE POSITION
+           NEIN-RECHTECK AUS EINEM MITTELPUNKT
         ===================================================== */
 
-        function getNoRect(
+        function createNoRect(
             centerX,
             centerY
         ) {
+
 
             const width =
                 noButton.offsetWidth;
@@ -1348,33 +1254,78 @@
 
 
         /* =====================================================
-           SICHERE POSITION SUCHEN
+           LIEGT DER BUTTON VOLLSTÄNDIG
+           INNERHALB DER STAGE?
+        ===================================================== */
+
+        function isInsideStage(
+            rect
+        ) {
+
+
+            return (
+
+                rect.left
+                >=
+                stagePadding
+
+                &&
+
+                rect.top
+                >=
+                stagePadding
+
+                &&
+
+                rect.right
+                <=
+                stage.clientWidth
+                -
+                stagePadding
+
+                &&
+
+                rect.bottom
+                <=
+                stage.clientHeight
+                -
+                stagePadding
+
+            );
+
+        }
+
+
+
+        /* =====================================================
+           NEUE POSITION SUCHEN
         ===================================================== */
 
         function findSafePosition() {
 
 
             const yesRect =
-                getYesRect();
+                getYesRectInStage();
 
 
-            const noWidth =
+            const width =
                 noButton.offsetWidth;
 
 
-            const noHeight =
+            const height =
                 noButton.offsetHeight;
 
 
+
             /*
-             * Erlaubte Mittelpunkt-Positionen
-             * für NEIN.
+             * Erlaubter Bereich für
+             * den MITTELPUNKT von NEIN.
              */
 
             const minX =
                 stagePadding
                 +
-                noWidth / 2;
+                width / 2;
 
 
             const maxX =
@@ -1382,13 +1333,13 @@
                 -
                 stagePadding
                 -
-                noWidth / 2;
+                width / 2;
 
 
             const minY =
                 stagePadding
                 +
-                noHeight / 2;
+                height / 2;
 
 
             const maxY =
@@ -1396,14 +1347,13 @@
                 -
                 stagePadding
                 -
-                noHeight / 2;
+                height / 2;
 
 
 
             /*
-             * Falls aus irgendeinem Grund
-             * kein sinnvoller Bereich existiert,
-             * nichts verändern.
+             * Wenn zu wenig Platz existiert,
+             * bleibt der Button stehen.
              */
 
             if (
@@ -1419,16 +1369,14 @@
 
 
             /*
-             * Bis zu 10.000 Positionen testen.
-
-             * Dadurch ist die Chance extrem hoch,
-             * dass eine sichere Position gefunden wird.
+             * Bis zu 5000 zufällige
+             * Positionen ausprobieren.
              */
 
             for (
-                let i = 0;
-                i < 10000;
-                i++
+                let attempt = 0;
+                attempt < 5000;
+                attempt++
             ) {
 
 
@@ -1439,7 +1387,8 @@
                     Math.random()
                     *
                     (
-                        maxX - minX
+                        maxX -
+                        minX
                     );
 
 
@@ -1450,13 +1399,18 @@
                     Math.random()
                     *
                     (
-                        maxY - minY
+                        maxY -
+                        minY
                     );
 
 
 
-                const candidate =
-                    getNoRect(
+                /*
+                 * Rechteck für NEIN.
+                 */
+
+                const noRect =
+                    createNoRect(
                         x,
                         y
                     );
@@ -1464,13 +1418,13 @@
 
 
                 /*
-                 * Muss vollständig
-                 * innerhalb der Stage sein.
+                 * Sicherheitsprüfung
+                 * Bildschirmbereich.
                  */
 
                 if (
                     !isInsideStage(
-                        candidate
+                        noRect
                     )
                 ) {
 
@@ -1481,12 +1435,13 @@
 
 
                 /*
-                 * Darf JA nicht berühren.
+                 * Sicherheitsprüfung
+                 * JA-Button.
                  */
 
                 if (
-                    overlaps(
-                        candidate,
+                    rectanglesOverlap(
+                        noRect,
                         yesRect,
                         safetyGap
                     )
@@ -1499,9 +1454,7 @@
 
 
                 /*
-                 * Zusätzlich müssen wir
-                 * vermeiden, dass NEIN
-                 * exakt an der alten Position landet.
+                 * Sichere Position gefunden.
                  */
 
                 return {
@@ -1514,13 +1467,11 @@
 
 
             /*
-             * Feste Positionen als Fallback.
-
-             * Damit der Button nicht verschwindet,
-             * wenn JA einmal sehr groß ist.
+             * Fallback:
+             * feste sichere Ecken.
              */
 
-            const fallbackPositions = [
+            const fallback = [
 
                 {
                     x: minX,
@@ -1540,48 +1491,19 @@
                 {
                     x: maxX,
                     y: maxY
-                },
-
-                {
-                    x:
-                        minX,
-
-                    y:
-                        (
-                            minY
-                            +
-                            maxY
-                        )
-                        /
-                        2
-                },
-
-                {
-                    x:
-                        maxX,
-
-                    y:
-                        (
-                            minY
-                            +
-                            maxY
-                        )
-                        /
-                        2
                 }
 
             ];
 
 
-
             for (
                 const position
-                of fallbackPositions
+                of fallback
             ) {
 
 
-                const candidate =
-                    getNoRect(
+                const noRect =
+                    createNoRect(
                         position.x,
                         position.y
                     );
@@ -1590,13 +1512,13 @@
                 if (
 
                     isInsideStage(
-                        candidate
+                        noRect
                     )
 
                     &&
 
-                    !overlaps(
-                        candidate,
+                    !rectanglesOverlap(
+                        noRect,
                         yesRect,
                         safetyGap
                     )
@@ -1612,10 +1534,9 @@
 
 
             /*
-             * Wirklich keine Position gefunden.
-
-             * Dann bleibt NEIN einfach
-             * an seiner aktuellen Position.
+             * Wenn wirklich keine Position
+             * mehr existiert:
+             * nichts verändern.
              */
 
             return null;
@@ -1625,10 +1546,10 @@
 
 
         /* =====================================================
-           NEIN BUTTON TELEPORTIEREN
+           NEIN TELEPORTIEREN
         ===================================================== */
 
-        function teleportNoButton() {
+        function moveNoButton() {
 
 
             const position =
@@ -1636,8 +1557,11 @@
 
 
             /*
-             * Falls keine Position gefunden
-             * wurde, nichts verändern.
+             * Keine sichere Position?
+             * Dann NICHTS machen.
+
+             * Dadurch verschwindet der Button
+             * niemals.
              */
 
             if (
@@ -1651,15 +1575,10 @@
 
 
             /*
-             * WICHTIG:
+             * Neue Position setzen.
 
-             * Kein transition für left/top.
-
-             * Dadurch gibt es wirklich
-             * KEINE Bewegung.
-
-             * Der Button erscheint direkt
-             * an der neuen Position.
+             * Wichtig:
+             * KEINE left/top transition.
              */
 
             noButton.style.left =
@@ -1674,119 +1593,122 @@
 
 
         /* =====================================================
-           NEIN BUTTON
+           NEIN GEKLICKT
         ===================================================== */
 
-        function sayNo() {
+        noButton.addEventListener(
+            "click",
+            () => {
 
 
-            noClicks++;
-
-
-
-            /*
-             * 1. JA VERGRÖSSERN
-             */
-
-            yesScale *=
-                growthFactor;
-
-
-            if (
-                yesScale >
-                maxYesScale
-            ) {
-
-                yesScale =
-                    maxYesScale;
-
-            }
+                noClicks++;
 
 
 
-            /*
-             * JA Größe aktualisieren.
-             */
+                /*
+                 * JA vergrößern.
+                 */
 
-            yesButton.style.transform =
-
-                `
-                translate(-50%, -50%)
-                scale(${yesScale})
-                `;
+                yesScale *=
+                    growthFactor;
 
 
+                if (
+                    yesScale
+                    >
+                    maximumYesScale
+                ) {
 
-            /*
-             * 2. NEIN TEXT ÄNDERN
-             */
+                    yesScale =
+                        maximumYesScale;
 
-            const textIndex =
+                }
 
-                Math.min(
-                    noClicks,
-                    noTexts.length - 1
+
+                yesButton.style.transform =
+
+                    `
+                    translate(-50%, -50%)
+                    scale(${yesScale})
+                    `;
+
+
+
+                /*
+                 * Text wechseln.
+                 */
+
+                const textIndex =
+                    Math.min(
+                        noClicks,
+                        noTexts.length - 1
+                    );
+
+
+                noButton.innerText =
+                    noTexts[textIndex];
+
+
+
+                /*
+                 * Einen Frame warten.
+
+                 * Danach hat der Browser
+                 * die neue Größe von JA
+                 * berechnet.
+                 */
+
+                requestAnimationFrame(
+                    () => {
+
+                        moveNoButton();
+
+                    }
                 );
 
-
-            noButton.innerText =
-                noTexts[textIndex];
-
-
-
-            /*
-             * 3. GANZ WICHTIG:
-
-             * Erst nachdem JA größer geworden ist,
-             * neue sichere Position berechnen.
-             */
-
-            requestAnimationFrame(() => {
-
-
-                teleportNoButton();
-
-            });
-
-        }
+            }
+        );
 
 
 
         /* =====================================================
-           JA BUTTON
+           JA GEKLICKT
         ===================================================== */
 
-        function sayYes() {
+        yesButton.addEventListener(
+            "click",
+            () => {
 
 
-            /*
-             * Hauptseite ausblenden.
-             */
+                /*
+                 * Hauptkarte ausblenden.
+                 */
 
-            mainCard.style.display =
-                "none";
-
-
-            /*
-             * Erfolgsseite anzeigen.
-             */
-
-            success.style.display =
-                "flex";
+                mainCard.style.display =
+                    "none";
 
 
-            /*
-             * Herzen.
-             */
+                /*
+                 * Erfolg anzeigen.
+                 */
 
-            createHearts();
+                success.style.display =
+                    "flex";
 
-        }
+
+                /*
+                 * Herzen.
+                 */
+
+                createHearts();
+
+            }
+        );
 
 
 
         /* =====================================================
-           HERZEN
+           HERZEN ERZEUGEN
         ===================================================== */
 
         function createHearts() {
@@ -1811,190 +1733,89 @@
             ) {
 
 
-                setTimeout(() => {
+                setTimeout(
+                    () => {
 
 
-                    const heart =
-                        document.createElement(
-                            "div"
-                        );
+                        const heart =
+                            document.createElement(
+                                "div"
+                            );
 
 
-                    heart.className =
-                        "floating-heart";
+                        heart.className =
+                            "floating-heart";
 
 
-                    heart.innerText =
+                        heart.innerText =
+                            heartTypes[
+                                Math.floor(
+                                    Math.random()
+                                    *
+                                    heartTypes.length
+                                )
+                            ];
 
-                        heartTypes[
-                            Math.floor(
-                                Math.random()
-                                *
-                                heartTypes.length
-                            )
-                        ];
 
+                        heart.style.left =
 
-                    heart.style.left =
-
-                        (
                             Math.random()
                             *
                             100
-                        )
-                        +
-                        "vw";
-
-
-                    heart.style.fontSize =
-
-                        (
-                            18
                             +
-                            Math.random()
-                            *
-                            25
-                        )
-                        +
-                        "px";
+                            "vw";
 
 
-                    heart.style.animationDuration =
+                        heart.style.fontSize =
 
-                        (
-                            3
+                            (
+                                18
+                                +
+                                Math.random()
+                                *
+                                25
+                            )
                             +
-                            Math.random()
-                            *
-                            3
-                        )
-                        +
-                        "s";
+                            "px";
 
 
-                    document.body.appendChild(
-                        heart
-                    );
+                        heart.style.animationDuration =
+
+                            (
+                                3
+                                +
+                                Math.random()
+                                *
+                                3
+                            )
+                            +
+                            "s";
 
 
-                    setTimeout(() => {
-
-                        heart.remove();
-
-                    }, 6500);
+                        document.body.appendChild(
+                            heart
+                        );
 
 
-                }, i * 70);
+                        setTimeout(
+                            () => {
+
+                                heart.remove();
+
+                            },
+
+                            6500
+                        );
+
+
+                    },
+
+                    i * 70
+                );
 
             }
 
         }
-
-
-
-        /* =====================================================
-           BUTTONS BEIM LADEN
-
-           Die Startpositionen werden bereits
-           vom CSS vorgegeben:
-
-           JA = 38%
-           NEIN = 70%
-
-           Dadurch liegen sie beim ersten Laden
-           nebeneinander.
-
-        ===================================================== */
-
-        window.addEventListener(
-            "load",
-            () => {
-
-                /*
-                 * Absichtlich NICHTS verschieben.
-                 *
-                 * Das ist wichtig für den
-                 * sauberen Startzustand.
-                 */
-
-            }
-        );
-
-
-
-        /* =====================================================
-           RESIZE
-
-           Wenn z.B. das Handy gedreht wird,
-           prüfen wir nur, ob NEIN noch innerhalb
-           der Stage liegt.
-
-           Wir bewegen ihn NICHT automatisch,
-           solange die Seite gerade erst geladen wurde.
-        ===================================================== */
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-
-                /*
-                 * Erst prüfen:
-                 * aktuelle Position.
-                 */
-
-                const rect =
-                    noButton.getBoundingClientRect();
-
-
-                const stageRect =
-                    stage.getBoundingClientRect();
-
-
-                const stagePosition = {
-
-                    left:
-                        rect.left
-                        -
-                        stageRect.left,
-
-                    top:
-                        rect.top
-                        -
-                        stageRect.top,
-
-                    right:
-                        rect.right
-                        -
-                        stageRect.left,
-
-                    bottom:
-                        rect.bottom
-                        -
-                        stageRect.top
-
-                };
-
-
-                /*
-                 * Nur wenn der Button
-                 * außerhalb geraten ist,
-                 * wird eine sichere Position
-                 * gesucht.
-                 */
-
-                if (
-                    !isInsideStage(
-                        stagePosition
-                    )
-                ) {
-
-                    teleportNoButton();
-
-                }
-
-            }
-        );
 
     </script>
 
