@@ -1,1439 +1,641 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Unsere Geschichte ❤️</title>
 
-
     <style>
-
-        /* =====================================================
-           RESET
-        ===================================================== */
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-
-        /* =====================================================
-           BODY
-        ===================================================== */
 
         body {
-
             min-height: 100vh;
+            padding: 40px 20px;
 
-            overflow-x: hidden;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
+            font-family: Arial, Helvetica, sans-serif;
             color: white;
 
-
             background:
-
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(255, 60, 120, 0.22),
-                    transparent 28%
-                ),
-
-                radial-gradient(
-                    circle at 90% 30%,
-                    rgba(166, 70, 255, 0.18),
-                    transparent 28%
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #10070d,
-                    #1b0814,
-                    #080409
-                );
+                radial-gradient(circle at top left, rgba(255, 80, 150, 0.18), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(130, 80, 255, 0.18), transparent 35%),
+                linear-gradient(135deg, #090910, #11111c 50%, #0b0b14);
         }
 
-
-
-        /* =====================================================
-           HINTERGRUND
-        ===================================================== */
-
-        .background {
-
-            position: fixed;
-
-            inset: 0;
-
-            overflow: hidden;
-
-            pointer-events: none;
-
-            z-index: 0;
-        }
-
-
-        .glow {
-
-            position: absolute;
-
-            border-radius: 50%;
-
-            filter: blur(110px);
-
-            opacity: 0.30;
-        }
-
-
-        .glow.one {
-
-            width: 350px;
-            height: 350px;
-
-            background: #ff2f68;
-
-            top: -120px;
-            left: -120px;
-        }
-
-
-        .glow.two {
-
-            width: 350px;
-            height: 350px;
-
-            background: #9c27ff;
-
-            right: -120px;
-            bottom: 10%;
-        }
-
-
-
-        /* =====================================================
-           HAUPTBEREICH
-        ===================================================== */
-
-        .page {
-
-            position: relative;
-
-            z-index: 2;
-
-            width: min(
-                1100px,
-                92%
-            );
-
+        .container {
+            width: min(900px, 100%);
             margin: 0 auto;
-
-            padding:
-                90px 0 120px;
         }
-
-
-
-        /* =====================================================
-           HEADER
-        ===================================================== */
 
         .header {
-
             text-align: center;
-
-            margin-bottom: 100px;
-
-            animation:
-                fadeUp
-                0.9s
-                ease;
+            margin-bottom: 55px;
         }
 
+        .header-heart {
+            font-size: 55px;
+            margin-bottom: 12px;
 
-        .heart {
-
-            font-size: 64px;
-
-            margin-bottom: 20px;
-
-            animation:
-                heartbeat
-                1.8s
-                ease-in-out
-                infinite;
+            animation: heartbeat 2s infinite;
         }
-
 
         .eyebrow {
-
-            margin-bottom: 15px;
-
-            color: #ff9db8;
-
-            font-size: 13px;
-
-            font-weight: bold;
-
-            letter-spacing: 3px;
-
+            color: #ff9acb;
+            font-size: 14px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
         }
-
 
         h1 {
+            font-size: clamp(38px, 7vw, 58px);
+            margin-bottom: 20px;
 
-            margin-bottom: 25px;
-
-            font-size:
-                clamp(
-                    45px,
-                    8vw,
-                    80px
-                );
-
-            line-height: 1;
-
-
-            background:
-
-                linear-gradient(
-                    90deg,
-                    #ffffff,
-                    #ffb4ca
-                );
-
-
+            background: linear-gradient(90deg, #ff78b7, #c78cff);
             -webkit-background-clip: text;
-
-            -webkit-text-fill-color:
-                transparent;
+            -webkit-text-fill-color: transparent;
         }
-
 
         .intro {
-
-            width: min(
-                650px,
-                100%
-            );
-
+            max-width: 650px;
             margin: 0 auto;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.72
-                );
 
             font-size: 18px;
+            line-height: 1.7;
 
-            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.82);
         }
-
-
-
-        /* =====================================================
-           TIMELINE
-        ===================================================== */
 
         .timeline {
-
             position: relative;
-
-            width: 100%;
-
-            margin: 0 auto;
+            margin-top: 40px;
         }
 
-
-        /*
-         * Mittlere Linie
-         */
+        /* Mittlere Linie */
 
         .timeline::before {
-
             content: "";
 
             position: absolute;
-
             top: 0;
-
             bottom: 0;
-
             left: 50%;
 
-            width: 3px;
+            width: 2px;
 
-            transform:
-                translateX(-50%);
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 120, 183, 0),
+                rgba(255, 120, 183, 0.6),
+                rgba(199, 140, 255, 0.6),
+                rgba(199, 140, 255, 0)
+            );
 
-
-            background:
-
-                linear-gradient(
-                    to bottom,
-                    transparent,
-                    #ff5c8a 8%,
-                    #ff5c8a 92%,
-                    transparent
-                );
-
-
-            opacity: 0.65;
-
-
-            box-shadow:
-
-                0 0 20px
-                rgba(
-                    255,
-                    92,
-                    138,
-                    0.4
-                );
+            transform: translateX(-50%);
         }
 
-
-
-        /* =====================================================
-           TIMELINE ITEM
-        ===================================================== */
-
-        .timeline-item {
-
+        .event {
             position: relative;
 
             width: 50%;
-
-            padding-bottom: 100px;
+            padding: 0 35px 55px;
 
             opacity: 0;
-
-            transform:
-                translateY(40px);
+            transform: translateY(40px);
 
             transition:
-
                 opacity 0.8s ease,
-
                 transform 0.8s ease;
         }
 
-
-        .timeline-item.visible {
-
+        .event.visible {
             opacity: 1;
-
-            transform:
-                translateY(0);
+            transform: translateY(0);
         }
 
-
-        /* =====================================================
-           LINKER EINTRAG
-        ===================================================== */
-
-        .timeline-item.left {
-
+        .event:nth-child(odd) {
             left: 0;
-
-            padding-right: 70px;
-
             text-align: right;
         }
 
-
-        /* =====================================================
-           RECHTER EINTRAG
-        ===================================================== */
-
-        .timeline-item.right {
-
+        .event:nth-child(even) {
             left: 50%;
-
-            padding-left: 70px;
-
             text-align: left;
         }
 
-
-
-        /* =====================================================
-           TIMELINE PUNKT
-        ===================================================== */
-
-        .timeline-dot {
-
+        .event-dot {
             position: absolute;
-
             top: 5px;
 
-            width: 24px;
-
-            height: 24px;
+            width: 18px;
+            height: 18px;
 
             border-radius: 50%;
 
-
-            background:
-
-                linear-gradient(
-                    135deg,
-                    #ff2f68,
-                    #ff8baa
-                );
-
-
-            border:
-                4px solid #1a0912;
-
+            background: linear-gradient(135deg, #ff78b7, #c78cff);
 
             box-shadow:
-
-                0 0 0 5px
-                rgba(
-                    255,
-                    92,
-                    138,
-                    0.12
-                ),
-
-                0 0 25px
-                rgba(
-                    255,
-                    92,
-                    138,
-                    0.55
-                );
-
-
-            z-index: 3;
+                0 0 15px rgba(255, 120, 183, 0.7),
+                0 0 30px rgba(199, 140, 255, 0.3);
         }
 
-
-        .timeline-item.left
-        .timeline-dot {
-
-            right:
-                -12px;
+        .event:nth-child(odd) .event-dot {
+            right: -9px;
         }
 
-
-        .timeline-item.right
-        .timeline-dot {
-
-            left:
-                -12px;
+        .event:nth-child(even) .event-dot {
+            left: -9px;
         }
 
+        .event-card {
+            padding: 25px;
 
+            background: rgba(255, 255, 255, 0.07);
 
-        /* =====================================================
-           STORY CARD
-        ===================================================== */
+            border: 1px solid rgba(255, 255, 255, 0.11);
 
-        .story-card {
+            border-radius: 24px;
 
-            position: relative;
-
-            display: inline-block;
-
-            width: 100%;
-
-            max-width: 470px;
-
-            padding: 32px;
-
-
-            background:
-
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.065
-                );
-
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.13
-                );
-
-
-            border-radius: 28px;
-
-
-            backdrop-filter:
-                blur(18px);
-
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
 
             box-shadow:
-
-                0 20px 60px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.25
-                );
-
-
-            transition:
-
-                transform 0.3s ease,
-
-                background 0.3s ease;
+                0 15px 35px rgba(0, 0, 0, 0.25),
+                0 0 30px rgba(255, 80, 150, 0.04);
         }
 
-
-        .story-card:hover {
-
-            transform:
-                translateY(-6px);
-
-
-            background:
-
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.09
-                );
+        .event-emoji {
+            font-size: 32px;
+            margin-bottom: 10px;
         }
 
-
-
-        /* =====================================================
-           EMOJI
-        ===================================================== */
-
-        .story-emoji {
-
-            font-size: 46px;
-
-            margin-bottom: 18px;
+        .event-title {
+            font-size: 24px;
+            margin-bottom: 14px;
         }
 
-
-
-        /* =====================================================
-           TITEL
-        ===================================================== */
-
-        .story-title {
-
-            margin-bottom: 12px;
-
-            color: white;
-
-            font-size: 27px;
-
-            line-height: 1.2;
-        }
-
-
-
-        /* =====================================================
-           DATUM / KLEINER TEXT
-        ===================================================== */
-
-        .story-date {
-
-            margin-bottom: 18px;
-
-            color: #ff91ae;
-
-            font-size: 13px;
-
-            font-weight: bold;
-
-            letter-spacing: 1px;
-
-            text-transform: uppercase;
-        }
-
-
-
-        /* =====================================================
-           STORY TEXT
-        ===================================================== */
-
-        .story-text {
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.70
-                );
-
+        .event-text {
             font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.82);
 
-            line-height: 1.75;
+            white-space: pre-line;
         }
-
-
-
-        /* =====================================================
-           ABSCHLUSS
-        ===================================================== */
 
         .ending {
-
-            max-width: 750px;
-
-            margin:
-                30px auto 0;
-
-            padding-top: 80px;
-
             text-align: center;
+            margin-top: 15px;
+            padding-top: 25px;
         }
 
+        .ending-title {
+            font-size: 28px;
+            margin-bottom: 12px;
 
-        .ending-heart {
-
-            font-size: 70px;
-
-            margin-bottom: 20px;
-
-            animation:
-                heartbeat
-                1.8s
-                ease-in-out
-                infinite;
-        }
-
-
-        .ending h2 {
-
-            margin-bottom: 20px;
-
-            font-size:
-                clamp(
-                    38px,
-                    6vw,
-                    58px
-                );
-
-
-            background:
-
-                linear-gradient(
-                    90deg,
-                    #ffffff,
-                    #ffb6cb
-                );
-
-
+            background: linear-gradient(90deg, #ff78b7, #c78cff);
             -webkit-background-clip: text;
-
-            -webkit-text-fill-color:
-                transparent;
+            -webkit-text-fill-color: transparent;
         }
 
-
-        .ending p {
-
-            margin-bottom: 35px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.72
-                );
-
-            font-size: 18px;
-
-            line-height: 1.8;
+        .ending-text {
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.7;
+            font-size: 17px;
         }
 
-
-
-        /* =====================================================
-           WEITER BUTTON
-        ===================================================== */
+        .next-area {
+            text-align: center;
+            margin-top: 35px;
+        }
 
         .next-button {
+            display: inline-block;
 
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 10px;
-
-
-            padding:
-                16px 30px;
-
-
-            color: white;
-
-            text-decoration: none;
-
-
-            font-size: 17px;
-
-            font-weight: bold;
-
+            padding: 15px 28px;
 
             border-radius: 999px;
 
+            background: linear-gradient(90deg, #ff5fa7, #c978ff);
 
-            background:
+            color: white;
+            text-decoration: none;
 
-                linear-gradient(
-                    135deg,
-                    #ff2f68,
-                    #ff6d99
-                );
-
+            font-size: 16px;
+            font-weight: bold;
 
             box-shadow:
-
-                0 12px 35px
-                rgba(
-                    255,
-                    47,
-                    104,
-                    0.35
-                );
-
+                0 10px 30px rgba(255, 95, 167, 0.25);
 
             transition:
-
                 transform 0.25s ease,
-
                 box-shadow 0.25s ease;
         }
 
-
         .next-button:hover {
-
-            transform:
-                translateY(-3px);
-
+            transform: translateY(-4px) scale(1.03);
 
             box-shadow:
-
-                0 18px 45px
-                rgba(
-                    255,
-                    47,
-                    104,
-                    0.50
-                );
+                0 15px 35px rgba(255, 95, 167, 0.35);
         }
-
-
-
-        /* =====================================================
-           ANIMATIONEN
-        ===================================================== */
 
         @keyframes heartbeat {
-
-            0%,
-            100% {
-
-                transform:
-                    scale(1);
+            0%, 100% {
+                transform: scale(1);
             }
 
-
-            50% {
-
-                transform:
-                    scale(1.12);
-            }
-        }
-
-
-        @keyframes fadeUp {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(30px);
+            10% {
+                transform: scale(1.1);
             }
 
+            20% {
+                transform: scale(1);
+            }
 
-            to {
+            30% {
+                transform: scale(1.08);
+            }
 
-                opacity: 1;
-
-                transform:
-                    translateY(0);
+            40% {
+                transform: scale(1);
             }
         }
 
+        @media (max-width: 700px) {
 
-
-        /* =====================================================
-           HANDY
-        ===================================================== */
-
-        @media (
-            max-width: 700px
-        ) {
-
-            .page {
-
-                padding:
-                    55px 0 80px;
+            body {
+                padding: 25px 15px;
             }
-
 
             .header {
-
-                margin-bottom: 70px;
+                margin-bottom: 40px;
             }
-
-
-            .intro {
-
-                font-size: 16px;
-            }
-
-
-            /*
-             * Timeline links
-             */
 
             .timeline::before {
-
-                left: 18px;
-
-                transform:
-                    translateX(-50%);
+                left: 12px;
             }
 
-
-            .timeline-item {
-
+            .event,
+            .event:nth-child(odd),
+            .event:nth-child(even) {
                 width: 100%;
+                left: 0;
 
-                left: 0 !important;
+                padding:
+                    0
+                    0
+                    35px
+                    40px;
 
-                padding-bottom: 60px;
-
-                padding-left: 55px !important;
-
-                padding-right: 0 !important;
-
-                text-align: left !important;
+                text-align: left;
             }
 
-
-            .timeline-item.left
-            .timeline-dot,
-
-            .timeline-item.right
-            .timeline-dot {
-
-                left: 6px;
-
+            .event-dot,
+            .event:nth-child(odd) .event-dot,
+            .event:nth-child(even) .event-dot {
+                left: 3px;
                 right: auto;
             }
 
-
-            .story-card {
-
-                max-width: none;
-
-                padding: 25px;
-
-                border-radius: 22px;
+            .event-card {
+                padding: 22px;
             }
 
-
-            .story-title {
-
-                font-size: 23px;
+            .event-title {
+                font-size: 21px;
             }
 
-
-            .story-text {
-
+            .event-text {
                 font-size: 15px;
-
-                line-height: 1.65;
             }
-
-
-            .ending {
-
-                padding-top: 40px;
-            }
-
         }
-
     </style>
-
 </head>
-
-
 
 <body>
 
+    <div class="container">
 
-    <!-- =====================================================
-         HINTERGRUND
-    ===================================================== -->
-
-    <div class="background">
-
-        <div class="glow one"></div>
-
-        <div class="glow two"></div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         SEITE
-    ===================================================== -->
-
-    <main class="page">
-
-
-        <!-- =================================================
-             HEADER
-        ================================================== -->
+        <!-- HEADER -->
 
         <header class="header">
 
-
-            <div class="heart">
+            <div class="header-heart">
                 ❤️
             </div>
-
 
             <div class="eyebrow">
                 Ein paar schöne Momente
             </div>
 
-
             <h1>
                 Unsere Geschichte
             </h1>
 
-
             <p class="intro">
-
-                Eigentlich kennen wir uns noch gar
-                nicht so lange...
-
-                und trotzdem haben wir in kurzer Zeit
-                schon einige schöne Momente gesammelt. ❤️
-
+                Eigentlich kennen wir uns noch gar nicht so lange...
+                und trotzdem haben wir in kurzer Zeit schon einige
+                schöne Momente gesammelt. ❤️
             </p>
-
 
         </header>
 
 
+        <!-- TIMELINE -->
 
-        <!-- =================================================
-             TIMELINE
-        ================================================== -->
-
-        <section class="timeline">
+        <div class="timeline">
 
 
+            <!-- Instagram -->
 
-            <!-- =================================================
-                 1 — INSTAGRAM
-            ================================================== -->
+            <div class="event">
 
-            <article
-                class="timeline-item left"
-            >
+                <div class="event-dot"></div>
 
-                <div class="timeline-dot"></div>
+                <div class="event-card">
 
-
-                <div class="story-card">
-
-
-                    <div class="story-emoji">
+                    <div class="event-emoji">
                         📱
                     </div>
 
-
-                    <div class="story-date">
-                        Der Anfang
-                    </div>
-
-
-                    <h2 class="story-title">
+                    <h2 class="event-title">
                         Schreiben auf Instagram
                     </h2>
 
+                    <p class="event-text">
+Eigentlich fing alles ganz unspektakulär mit dem Schreiben auf Instagram an. 📱
 
-                    <p class="story-text">
-
-                        Eigentlich fing alles ganz
-                        unspektakulär mit dem Schreiben
-                        auf Instagram an. 📱
-
-                        Aus ein paar Nachrichten wurden
-                        immer mehr Gespräche, viel Lachen
-                        und irgendwann dann unser erstes
-                        Treffen. 🤭❤️
-
+Aus ein paar Nachrichten wurden immer mehr Gespräche,
+viel Lachen und irgendwann dann unser erstes Treffen. 🤭❤️
                     </p>
-
 
                 </div>
 
-            </article>
-
-
-
-            <!-- =================================================
-                 2 — ERSTES DATE
-            ================================================== -->
-
-            <article
-                class="timeline-item right"
-            >
-
-                <div class="timeline-dot"></div>
-
-
-                <div class="story-card">
-
-
-                    <div class="story-emoji">
-                        ❤️
-                    </div>
-
-
-                    <div class="story-date">
-                        Unser erstes Date
-                    </div>
-
-
-                    <h2 class="story-title">
-                        Unser erstes Date
-                    </h2>
-
-
-                    <p class="story-text">
-
-                        Zwei Menschen, die sich überhaupt
-                        nicht kannten, ein Abend im Enchilada
-                        und ziemlich viele Gespräche.
-
-                        Und ich war am Anfang sehr nervös,
-                        aber durch deine offene Art hat sich
-                        das schnell gelegt.
-
-                        Da habe ich gemerkt:
-                        Ich will dich wieder sehen. 🙈
-
-                    </p>
-
-
-                </div>
-
-            </article>
-
-
-
-            <!-- =================================================
-                 3 — KAFFEE / SPAZIEREN / BILLARD
-                     + KOCHEN
-            ================================================== -->
-
-            <article
-                class="timeline-item left"
-            >
-
-                <div class="timeline-dot"></div>
-
-
-                <div class="story-card">
-
-
-                    <div class="story-emoji">
-                        ☕🎱
-                    </div>
-
-
-                    <div class="story-date">
-                        Unser zweites Date
-                    </div>
-
-
-                    <h2 class="story-title">
-                        Billard spielen?
-                    </h2>
-
-
-                    <p class="story-text">
-
-                        Eigentlich war der Plan:
-                        Kaffee trinken, spazieren und
-                        Billard spielen.
-
-                        Dass wir dann durch deinen Vorschlag
-                        zu mir gegangen sind, hat mich sehr
-                        gefreut.
-
-                        Mit dem gemeinsamen Kochen hat es
-                        das Ganze dann noch abgerundet. 🥰
-
-                    </p>
-
-
-                </div>
-
-            </article>
-
-
-
-            <!-- =================================================
-                 4 — FILM
-            ================================================== -->
-
-            <article
-                class="timeline-item right"
-            >
-
-                <div class="timeline-dot"></div>
-
-
-                <div class="story-card">
-
-
-                    <div class="story-emoji">
-                        🎬
-                    </div>
-
-
-                    <div class="story-date">
-                        Ein besonderer Abend
-                    </div>
-
-
-                    <h2 class="story-title">
-                        Der Filmabend
-                    </h2>
-
-
-                    <p class="story-text">
-
-                        Wir wollten eigentlich ganz
-                        entspannt einen Film schauen.
-
-                        Vom Film haben wir am Ende
-                        erstaunlich wenig mitbekommen. 🤭
-
-                        Dafür gab es ziemlich viel
-                        Kuscheln, Küssen und einfach
-                        eine wunderschöne Zeit mit dir. ❤️
-
-                    </p>
-
-
-                </div>
-
-            </article>
-
-
-
-            <!-- =================================================
-                 5 — BADMINTON
-            ================================================== -->
-
-            <article
-                class="timeline-item left"
-            >
-
-                <div class="timeline-dot"></div>
-
-
-                <div class="story-card">
-
-
-                    <div class="story-emoji">
-                        🏸
-                    </div>
-
-
-                    <div class="story-date">
-                        Gemeinsam aktiv
-                    </div>
-
-
-                    <h2 class="story-title">
-                        Badminton
-                    </h2>
-
-
-                    <p class="story-text">
-
-                        Beim Badminton hatten wir zusammen
-                        jede Menge Spaß.
-
-                        Ein bisschen Ehrgeiz, ein bisschen
-                        gegenseitig aufziehen und ganz viel
-                        lachen.
-
-                        Genau solche Momente mit dir
-                        liebe ich. ❤️
-
-                    </p>
-
-
-                </div>
-
-            </article>
-
-
-
-            <!-- =================================================
-                 6 — LATE NIGHT SHOPPING
-            ================================================== -->
-
-            <article
-                class="timeline-item right"
-            >
-
-                <div class="timeline-dot"></div>
-
-
-                <div class="story-card">
-
-
-                    <div class="story-emoji">
-                        🛍️
-                    </div>
-
-
-                    <div class="story-date">
-                        Gemeinsam unterwegs
-                    </div>
-
-
-                    <h2 class="story-title">
-                        Late Night Shopping
-                    </h2>
-
-
-                    <p class="story-text">
-
-                        Beim Late Night Shopping wurde
-                        dann aus „nur ein bisschen bummeln“
-                        ganz schnell ein schöner Abend mit dir. 🤭
-
-                        Zusammen shoppen, quatschen und
-                        natürlich viel mehr anschauen,
-                        als wir am Ende wirklich kaufen. 😂❤️
-
-                    </p>
-
-
-                </div>
-
-            </article>
-
-
-
-            <!-- =================================================
-                 7 — KLEINE MOMENTE
-            ================================================== -->
-
-            <article
-                class="timeline-item left"
-            >
-
-                <div class="timeline-dot"></div>
-
-
-                <div class="story-card">
-
-
-                    <div class="story-emoji">
-                        🥰
-                    </div>
-
-
-                    <div class="story-date">
-                        Und das Wichtigste
-                    </div>
-
-
-                    <h2 class="story-title">
-                        All die kleinen Momente
-                    </h2>
-
-
-                    <p class="story-text">
-
-                        Am Ende sind es gar nicht nur
-                        die großen Dates.
-
-                        Es sind die kleinen Nachrichten,
-                        das Lachen, das Kuscheln,
-                        das Wiedersehen...
-
-                        und dieses Gefühl, dass ich mich
-                        jedes Mal auf dich freue. ❤️
-
-                    </p>
-
-
-                </div>
-
-            </article>
-
-
-
-        </section>
-
-
-
-        <!-- =================================================
-             ABSCHLUSS
-        ================================================== -->
-
-        <section class="ending">
-
-
-            <div class="ending-heart">
-                ❤️
             </div>
 
 
-            <h2>
-                Und das war erst der Anfang.
+            <!-- Erstes Date -->
+
+            <div class="event">
+
+                <div class="event-dot"></div>
+
+                <div class="event-card">
+
+                    <div class="event-emoji">
+                        ❤️
+                    </div>
+
+                    <h2 class="event-title">
+                        Unser erstes Date
+                    </h2>
+
+                    <p class="event-text">
+Zwei Menschen, die sich überhaupt nicht kannten,
+ein Abend im Enchilada und ziemlich viele Gespräche.
+
+Und ich war am Anfang sehr nervös,
+aber durch deine offene Art hat sich das schnell gelegt.
+
+Da habe ich gemerkt:
+
+Ich will dich wieder sehen. 🙈
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Billard -->
+
+            <div class="event">
+
+                <div class="event-dot"></div>
+
+                <div class="event-card">
+
+                    <div class="event-emoji">
+                        ☕🎱
+                    </div>
+
+                    <h2 class="event-title">
+                        Billard spielen?
+                    </h2>
+
+                    <p class="event-text">
+Eigentlich war der Plan:
+Kaffee trinken, spazieren und
+Billard spielen.
+
+Dass wir dann durch deinen Vorschlag
+zu mir gegangen sind, hat mich sehr
+gefreut.
+
+Mit dem gemeinsamen Kochen hat es
+das Ganze dann noch abgerundet. 🥰
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Filmabend -->
+
+            <div class="event">
+
+                <div class="event-dot"></div>
+
+                <div class="event-card">
+
+                    <div class="event-emoji">
+                        🎬
+                    </div>
+
+                    <h2 class="event-title">
+                        Der Filmabend
+                    </h2>
+
+                    <p class="event-text">
+Wir wollten eigentlich ganz
+entspannt einen Film schauen.
+
+Vom Film haben wir am Ende
+erstaunlich wenig mitbekommen. 🤭
+
+Dafür gab es ziemlich viel
+Kuscheln, Küssen und einfach
+eine wunderschöne Zeit mit dir. ❤️
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Badminton -->
+
+            <div class="event">
+
+                <div class="event-dot"></div>
+
+                <div class="event-card">
+
+                    <div class="event-emoji">
+                        🏸
+                    </div>
+
+                    <h2 class="event-title">
+                        Badminton
+                    </h2>
+
+                    <p class="event-text">
+Beim Badminton hatten wir zusammen
+jede Menge Spaß.
+
+Ein bisschen Ehrgeiz, ein bisschen
+gegenseitig aufziehen und ganz viel
+lachen.
+
+Genau solche Momente mit dir
+liebe ich. ❤️
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Late Night Shopping -->
+
+            <div class="event">
+
+                <div class="event-dot"></div>
+
+                <div class="event-card">
+
+                    <div class="event-emoji">
+                        🛍️
+                    </div>
+
+                    <h2 class="event-title">
+                        Late Night Shopping
+                    </h2>
+
+                    <p class="event-text">
+Beim Late Night Shopping wurde
+dann aus „nur ein bisschen bummeln“
+ganz schnell ein schöner Abend mit dir. 🤭
+
+Zusammen shoppen, quatschen und
+natürlich viel mehr anschauen,
+als wir am Ende wirklich kaufen. 😂❤️
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Kleine Momente -->
+
+            <div class="event">
+
+                <div class="event-dot"></div>
+
+                <div class="event-card">
+
+                    <div class="event-emoji">
+                        🥰
+                    </div>
+
+                    <h2 class="event-title">
+                        All die kleinen Momente
+                    </h2>
+
+                    <p class="event-text">
+Am Ende sind es gar nicht nur
+die großen Dates.
+
+Es sind die kleinen Nachrichten,
+das Lachen, das Kuscheln,
+das Wiedersehen...
+
+und dieses Gefühl, dass ich mich
+jedes Mal auf dich freue. ❤️
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ENDE -->
+
+        <div class="ending">
+
+            <h2 class="ending-title">
+                Und das war erst der Anfang. ❤️
             </h2>
 
-
-            <p>
-
-                Ich glaube,
-                da warten noch ziemlich viele
+            <p class="ending-text">
+                Ich glaube, da warten noch ziemlich viele
                 schöne Momente auf uns.
-
             </p>
 
+        </div>
 
-            <a
-                class="next-button"
-                href="frage.html"
-            >
 
-                Weiter
+        <!-- WEITER -->
 
-                <span>
-                    →
-                </span>
+        <div class="next-area">
 
+            <a href="frage.html" class="next-button">
+                Weiter →
             </a>
 
+        </div>
 
-        </section>
-
-
-    </main>
-
+    </div>
 
 
     <script>
 
-        /* =====================================================
-           SCROLL-ANIMATION
-        ===================================================== */
+        const events = document.querySelectorAll(".event");
 
-        const items =
-            document.querySelectorAll(
-                ".timeline-item"
-            );
+        const observer = new IntersectionObserver(
+            (entries) => {
 
+                entries.forEach(entry => {
 
-        const observer =
-            new IntersectionObserver(
+                    if (entry.isIntersecting) {
 
-                (entries) => {
+                        entry.target.classList.add("visible");
 
-                    entries.forEach(
-                        (entry) => {
+                    }
 
-                            if (
-                                entry.isIntersecting
-                            ) {
+                });
 
-                                entry.target
-                                    .classList
-                                    .add(
-                                        "visible"
-                                    );
-
-                            }
-
-                        }
-                    );
-
-                },
-
-                {
-                    threshold: 0.15
-                }
-
-            );
-
-
-        items.forEach(
-            (item) => {
-
-                observer.observe(
-                    item
-                );
-
+            },
+            {
+                threshold: 0.15
             }
         );
 
+
+        events.forEach(event => {
+
+            observer.observe(event);
+
+        });
+
     </script>
 
-
 </body>
-
 </html>
