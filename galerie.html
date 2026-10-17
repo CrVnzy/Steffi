@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d19">
+    <title>Unsere Fotogalerie ❤️</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px 16px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 8%, rgba(255,96,160,.2), transparent 32rem),
+                radial-gradient(circle at 90% 92%, rgba(157,100,255,.2), transparent 32rem),
+                linear-gradient(145deg, #090910, #15111f 54%, #0a0a13);
+        }
+        .card {
+            width: min(680px, 100%);
+            padding: clamp(32px, 7vw, 58px) 26px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 30px;
+            background: rgba(255,255,255,.075);
+            box-shadow: 0 20px 60px rgba(0,0,0,.34);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .icon { font-size: 55px; }
+        h1 { margin: 14px 0; font-size: clamp(32px, 7vw, 48px); background: linear-gradient(90deg,#ff83b8,#d0a1ff); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        p { max-width: 520px; margin: 0 auto 20px; color: rgba(255,255,255,.76); font-size: 17px; line-height: 1.7; }
+        .status { display: inline-block; margin: 5px 0 24px; padding: 8px 13px; border: 1px solid rgba(255,255,255,.15); border-radius: 999px; color: #f1d5ff; font-size: 13px; }
+        a { display: inline-block; padding: 13px 19px; border-radius: 999px; color: #fff; text-decoration: none; background: linear-gradient(90deg,#ff5fa7,#bd78ff); font-weight: bold; }
+        a:focus-visible { outline: 3px solid #ff83b8; outline-offset: 3px; }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <div class="icon" aria-hidden="true">📸</div>
+        <h1>Unsere Fotogalerie</h1>
+        <p>Hier entsteht ein privater Ort, an dem wir beide Bilder hochladen und mit Datum oder kleinen Notizen ergänzen können.</p>
+        <span class="status">Der geschützte Speicher wird eingerichtet</span>
+        <p>Die Galerie wird erst freigeschaltet, wenn der private Speicher und die Anmeldung eingerichtet sind. So landen eure Fotos nicht öffentlich auf der Website.</p>
+        <a href="index.html">Zurück zum Menü</a>
+    </main>
+</body>
+</html>
