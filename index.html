@@ -78,6 +78,11 @@
         }
         .since span { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
         .since strong { font-size: 16px; }
+        .timer-caption { margin:18px 0 10px; color:var(--muted); font-size:13px; font-weight:bold; letter-spacing:.08em; text-transform:uppercase; }
+        .relationship-timer { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px; width:min(760px,100%); margin:0 auto; }
+        .timer-unit { min-width:0; padding:12px 8px; border:1px solid var(--border); border-radius:16px; background:rgba(255,255,255,.055); }
+        .timer-unit strong { display:block; color:#fff; font-size:clamp(20px,4vw,28px); font-variant-numeric:tabular-nums; line-height:1.1; }
+        .timer-unit span { display:block; margin-top:6px; color:var(--muted); font-size:11px; letter-spacing:.06em; text-transform:uppercase; }
         .section-title {
             margin: 34px 0 14px;
             color: rgba(255,255,255,.92);
@@ -143,6 +148,8 @@
             .menu { grid-template-columns: 1fr; }
             .menu-card { min-height: 130px; padding: 19px; }
             .intro { font-size: 16px; }
+            .relationship-timer { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+            .timer-unit { padding: 11px 5px; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
@@ -159,6 +166,15 @@
             <div class="since">
                 <span>Zusammen seit</span>
                 <strong>10. Oktober 2026 · 01:58 Uhr</strong>
+            </div>
+            <p class="timer-caption">Schon zusammen</p>
+            <div class="relationship-timer" role="timer" aria-label="Beziehungsdauer seit dem 10. Oktober 2026 um 01:58 Uhr" aria-live="off">
+                <div class="timer-unit"><strong id="timerYears">00</strong><span>Jahre</span></div>
+                <div class="timer-unit"><strong id="timerMonths">00</strong><span>Monate</span></div>
+                <div class="timer-unit"><strong id="timerDays">00</strong><span>Tage</span></div>
+                <div class="timer-unit"><strong id="timerHours">00</strong><span>Stunden</span></div>
+                <div class="timer-unit"><strong id="timerMinutes">00</strong><span>Minuten</span></div>
+                <div class="timer-unit"><strong id="timerSeconds">00</strong><span>Sekunden</span></div>
             </div>
         </header>
 
@@ -184,5 +200,62 @@
         </nav>
         <footer>Mit Liebe für uns gemacht ❤️</footer>
     </main>
+    <script>
+        (() => {
+            const startedAt = new Date(2026, 9, 10, 1, 58, 0);
+            const fields = {
+                years: document.getElementById("timerYears"),
+                months: document.getElementById("timerMonths"),
+                days: document.getElementById("timerDays"),
+                hours: document.getElementById("timerHours"),
+                minutes: document.getElementById("timerMinutes"),
+                seconds: document.getElementById("timerSeconds")
+            };
+
+            function updateRelationshipTimer() {
+                const now = new Date();
+                let cursor = new Date(startedAt);
+                let years = 0;
+                let months = 0;
+                let days = 0;
+
+                while (true) {
+                    const next = new Date(cursor);
+                    next.setFullYear(next.getFullYear() + 1);
+                    if (next > now) break;
+                    cursor = next;
+                    years++;
+                }
+                while (true) {
+                    const next = new Date(cursor);
+                    next.setMonth(next.getMonth() + 1);
+                    if (next > now) break;
+                    cursor = next;
+                    months++;
+                }
+                while (true) {
+                    const next = new Date(cursor);
+                    next.setDate(next.getDate() + 1);
+                    if (next > now) break;
+                    cursor = next;
+                    days++;
+                }
+
+                let remaining = Math.max(0, Math.floor((now - cursor) / 1000));
+                const hours = Math.floor(remaining / 3600);
+                remaining %= 3600;
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                const values = { years, months, days, hours, minutes, seconds };
+
+                for (const [unit, value] of Object.entries(values)) {
+                    fields[unit].textContent = String(value).padStart(2, "0");
+                }
+            }
+
+            updateRelationshipTimer();
+            window.setInterval(updateRelationshipTimer, 1000);
+        })();
+    </script>
 </body>
 </html>
