@@ -131,7 +131,7 @@
 
         <section class="panel" id="loginPanel">
             <h2>Privat anmelden</h2>
-            <p class="muted">Wir schicken dir einen sechsstelligen Anmeldecode per E-Mail. Lass diese Seite in der installierten App geöffnet und gib den Code hier ein. Nur freigeschaltete Konten können eure Wünsche und Erinnerungen sehen.</p>
+            <p class="muted">Wir schicken dir einen Anmeldecode per E-Mail. Lass diese Seite in der installierten App geöffnet und gib den Code hier ein. Nur freigeschaltete Konten können eure Wünsche und Erinnerungen sehen.</p>
             <form id="loginForm">
                 <label class="field" for="email">Deine E-Mail-Adresse
                     <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@beispiel.de">
@@ -140,8 +140,8 @@
             </form>
             <form id="otpForm" hidden>
                 <p class="muted">Der Code wurde an <strong id="otpEmail"></strong> geschickt.</p>
-                <label class="field" for="otpCode">Sechsstelliger Code aus der E-Mail
-                    <input id="otpCode" name="otpCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+                <label class="field" for="otpCode">Anmeldecode aus der E-Mail (6–10 Ziffern)
+                    <input id="otpCode" name="otpCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required>
                 </label>
                 <div class="auth-actions">
                     <button class="button primary" id="verifyOtpButton" type="submit">Code bestätigen</button>
@@ -581,8 +581,8 @@
                     setMessage(
                         byId("loginMessage"),
                         isResend
-                            ? "Ein neuer sechsstelliger Code ist unterwegs. Prüfe auch deinen Spam-Ordner."
-                            : "Der sechsstellige Code ist unterwegs. Lass diese Seite geöffnet und prüfe auch deinen Spam-Ordner.",
+                            ? "Ein neuer Anmeldecode ist unterwegs. Prüfe auch deinen Spam-Ordner."
+                            : "Der Anmeldecode ist unterwegs. Lass diese Seite geöffnet und prüfe auch deinen Spam-Ordner.",
                         false
                     );
                     if (!isResend) byId("otpCode").focus();
