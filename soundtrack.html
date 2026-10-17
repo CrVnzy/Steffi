@@ -171,6 +171,13 @@
         .song-title { margin: 0; font-size: 18px; overflow-wrap: anywhere; }
         .song-artist { margin: 5px 0 0; color: var(--muted); overflow-wrap: anywhere; }
         .song-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .player-toggle { margin-top: 12px; }
+        .embedded-player { grid-column: 1 / -1; min-width: 0; padding-top: 4px; }
+        .player-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .player-toolbar .button { min-height: 38px; padding: 7px 13px; font-size: 14px; }
+        .player-toolbar .button[aria-pressed="true"] { border-color: rgba(255,131,184,.75); background: rgba(255,131,184,.18); }
+        .player-frame { display: block; width: 100%; border: 0; border-radius: 14px; background: rgba(0,0,0,.2); }
+        .player-note { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
         .provider-link { min-height: 38px; padding: 7px 13px; font-size: 14px; }
         .provider-link.apple { border-color: rgba(255,131,184,.35); background: rgba(255,131,184,.11); }
         .provider-link.spotify { border-color: rgba(175,255,190,.25); background: rgba(105,204,130,.1); }
@@ -200,7 +207,7 @@
             <div class="heart" aria-hidden="true">🎵</div>
             <p class="eyebrow">Steffi &amp; Yannik</p>
             <h1>Unser Soundtrack</h1>
-            <p class="intro">Songs, die zu uns gehören. Fügt eure Lieder hinzu und öffnet sie mit Apple Music oder Spotify – ganz egal, welchen Dienst ihr nutzt. ❤️</p>
+            <p class="intro">Songs, die zu uns gehören. Fügt Links von Apple Music und/oder Spotify hinzu und hört sie direkt hier mit Cover an – egal, welchen Dienst ihr nutzt. ❤️</p>
         </header>
 
         <section class="panel login-panel" id="loginPanel" aria-labelledby="loginTitle">
@@ -229,7 +236,7 @@
         <div id="memberContent" hidden>
             <section class="panel" aria-labelledby="addTitle">
                 <h2 id="addTitle">Ein Lied für uns hinzufügen</h2>
-                <p class="muted">Tragt Titel und Künstler ein. Mindestens ein Musik-Link muss dabei sein. Fehlt der Link beim anderen Dienst, führt dessen Button direkt zur Suche nach dem Song.</p>
+                <p class="muted">Tragt Titel und Künstler ein und fügt einen oder beide Musik-Links hinzu. Über „Cover &amp; Player anzeigen“ könnt ihr den Song direkt hier abspielen; die Buttons öffnen den jeweiligen Dienst.</p>
                 <form id="songForm">
                     <div class="field-grid">
                         <div>
@@ -313,6 +320,74 @@
                 card.appendChild(link);
             }
 
+            function embeddedUrl(song, provider) {
+                const stored = provider === "apple" ? song.apple_url : song.spotify_url;
+                if (!stored) return null;
+
+                let parsed;
+                try { parsed = new URL(stored); } catch { return null; }
+                if (parsed.protocol !== "https:" || parsed.username || parsed.password) return null;
+
+                if (provider === "spotify") {
+                    if (parsed.hostname.toLowerCase() !== "open.spotify.com") return null;
+                    const match = parsed.pathname.match(/^\/(?:intl-[a-z]{2}\/)?(track|album|playlist|episode|show)\/([A-Za-z0-9]+)(?:\/|$)/i);
+                    if (!match) return null;
+                    return "https://open.spotify.com/embed/" + match[1] + "/" + match[2] + "?utm_source=generator&theme=0";
+                }
+
+                if (parsed.hostname.toLowerCase() !== "music.apple.com") return null;
+                if (!/^\/[a-z]{2}\/((album|song|playlist|music-video|artist|station)\/)/i.test(parsed.pathname)) return null;
+                parsed.hostname = "embed.music.apple.com";
+                return parsed.href;
+            }
+
+            function createPlayer(song, providers) {
+                const player = document.createElement("section");
+                player.className = "embedded-player";
+                player.setAttribute("aria-label", "Eingebetteter Musikplayer");
+
+                const toolbar = document.createElement("div");
+                toolbar.className = "player-toolbar";
+                toolbar.setAttribute("role", "group");
+                toolbar.setAttribute("aria-label", "Musikdienst auswählen");
+
+                const frame = document.createElement("iframe");
+                frame.className = "player-frame";
+                frame.loading = "lazy";
+                frame.referrerPolicy = "strict-origin-when-cross-origin";
+                frame.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+                frame.allowFullscreen = true;
+
+                function selectProvider(provider) {
+                    const label = provider === "apple" ? "Apple Music" : "Spotify";
+                    frame.src = embeddedUrl(song, provider);
+                    frame.title = song.title + " von " + song.artist + " auf " + label;
+                    frame.height = provider === "apple" ? "450" : "352";
+                    for (const button of toolbar.querySelectorAll("button")) {
+                        button.setAttribute("aria-pressed", String(button.dataset.provider === provider));
+                    }
+                }
+
+                for (const provider of providers) {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "button";
+                    button.dataset.provider = provider;
+                    button.setAttribute("aria-pressed", "false");
+                    button.textContent = provider === "apple" ? "Apple Music" : "Spotify";
+                    button.addEventListener("click", () => selectProvider(provider));
+                    toolbar.appendChild(button);
+                }
+
+                const note = document.createElement("p");
+                note.className = "player-note";
+                note.textContent = "Cover und Player werden direkt vom gewählten Musikdienst geladen.";
+
+                player.append(toolbar, frame, note);
+                selectProvider(providers[0]);
+                return player;
+            }
+
             function renderSong(song) {
                 const card = document.createElement("article");
                 card.className = "song-card";
@@ -328,6 +403,30 @@
                 addProviderLink(links, song, "apple");
                 addProviderLink(links, song, "spotify");
                 info.append(title, artist, links);
+
+                const supportedProviders = ["apple", "spotify"].filter((provider) => Boolean(embeddedUrl(song, provider)));
+                let player = null;
+                if (supportedProviders.length > 0) {
+                    const toggle = document.createElement("button");
+                    toggle.type = "button";
+                    toggle.className = "button player-toggle";
+                    toggle.textContent = "Cover & Player anzeigen";
+                    toggle.setAttribute("aria-expanded", "false");
+                    toggle.addEventListener("click", () => {
+                        if (player) {
+                            player.remove();
+                            player = null;
+                            toggle.textContent = "Cover & Player anzeigen";
+                            toggle.setAttribute("aria-expanded", "false");
+                            return;
+                        }
+                        player = createPlayer(song, supportedProviders);
+                        card.appendChild(player);
+                        toggle.textContent = "Player ausblenden";
+                        toggle.setAttribute("aria-expanded", "true");
+                    });
+                    info.appendChild(toggle);
+                }
 
                 const remove = document.createElement("button");
                 remove.type = "button";
