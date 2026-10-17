@@ -375,6 +375,39 @@
             line-height: 1.5;
         }
 
+        .home-button-area {
+            margin-top: 28px;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 14px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .home-button:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .home-button:focus-visible {
+            outline: 3px solid #ff9acb;
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .home-button {
+                width: 100%;
+            }
+        }
+
         /* =========================
            FEUERWERK CANVAS
         ========================= */
@@ -700,6 +733,10 @@
 
             <div class="firework-message">
                 Das musste natürlich gefeiert werden. 🎆✨
+            </div>
+
+            <div class="home-button-area">
+                <a class="home-button" href="index.html">← Zurück zur Hauptseite</a>
             </div>
 
         </div>
