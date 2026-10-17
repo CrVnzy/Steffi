@@ -52,8 +52,20 @@
             font-size: clamp(18px, 4vw, 23px);
             font-weight: bold;
         }
-        .caption { margin: 0 0 28px; color: rgba(255,255,255,.62); font-size: 14px; }
+        .caption { margin: 0 0 24px; color: rgba(255,255,255,.62); font-size: 14px; }
+        .question-box { max-width: 520px; margin: 0 auto 24px; padding: 24px 20px; border: 1px solid rgba(255,131,184,.24); border-radius: 22px; background: rgba(255,131,184,.07); }
+        .question-label { margin: 0 0 8px; color: #ff83b8; font-size: 13px; font-weight: bold; letter-spacing: .1em; text-transform: uppercase; }
+        .question-title { margin: 0 0 20px; font-size: clamp(24px, 5vw, 32px); }
+        .answer-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        .answer-button { padding: 13px 24px; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; color: #fff; background: rgba(255,255,255,.07); font: inherit; font-weight: bold; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+        .answer-button:hover { transform: translateY(-2px); background: rgba(255,255,255,.12); }
+        .answer-button.yes { border: 0; background: linear-gradient(90deg, #ff5fa7, #bd78ff); }
+        .answer-button:focus-visible { outline: 3px solid #ff83b8; outline-offset: 3px; }
+        .question-response { animation: appear .35s ease both; }
+        .question-response p { margin: 0 0 18px; color: rgba(255,255,255,.84); font-size: 16px; line-height: 1.65; }
         .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        [hidden] { display: none !important; }
+        @keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .button {
             display: inline-block;
             padding: 13px 19px;
@@ -76,10 +88,41 @@
         <h1>Der Anfang</h1>
         <p class="message">Hier kannst du dich noch einmal durch unsere ersten gemeinsamen Momente klicken – vom Kennenlernen bis zu dem Augenblick, an dem aus uns offiziell ein Wir wurde. 🥰</p>
         <p class="caption">Die Geschichte bleibt wie damals. Am Ende wartet unser gemeinsamer Moment mit dem festen Datum.</p>
+        <section class="question-box" aria-labelledby="openingQuestion">
+            <p class="question-label">Bevor wir zurück an den Anfang gehen …</p>
+            <h2 class="question-title" id="openingQuestion">Magst du mich? ❤️</h2>
+            <div class="answer-buttons" id="answerButtons">
+                <button class="answer-button yes" id="yesButton" type="button">Ja ❤️</button>
+                <button class="answer-button" id="noButton" type="button">Nein 🙈</button>
+            </div>
+            <div class="question-response" id="yesResponse" tabindex="-1" hidden>
+                <p>Das freut mich sehr. ❤️ Dann lass uns gemeinsam noch einmal zurück an den Anfang gehen.</p>
+                <a class="button primary" href="timeline.html">Erinnerung starten →</a>
+            </div>
+            <div class="question-response" id="noResponse" tabindex="-1" hidden>
+                <p>Oh nein 🙈 Ich zeige dir trotzdem gern noch einmal, wie schön unsere Geschichte angefangen hat.</p>
+                <a class="button primary" href="timeline.html">Trotzdem Erinnerung ansehen →</a>
+            </div>
+        </section>
         <nav class="links" aria-label="Seitennavigation">
-            <a class="button primary" href="timeline.html">Erinnerung starten →</a>
             <a class="button" href="index.html">Zurück zum Menü</a>
         </nav>
     </main>
+    <script>
+        (() => {
+            const answerButtons = document.getElementById("answerButtons");
+            const yesResponse = document.getElementById("yesResponse");
+            const noResponse = document.getElementById("noResponse");
+
+            function showResponse(response) {
+                answerButtons.hidden = true;
+                response.hidden = false;
+                response.focus();
+            }
+
+            document.getElementById("yesButton").addEventListener("click", () => showResponse(yesResponse));
+            document.getElementById("noButton").addEventListener("click", () => showResponse(noResponse));
+        })();
+    </script>
 </body>
 </html>
