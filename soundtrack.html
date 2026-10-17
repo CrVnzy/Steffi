@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d19">
+    <meta name="description" content="Unsere gemeinsame private Songliste für Apple Music und Spotify.">
+    <title>Unser Soundtrack ❤️</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --pink: #ff83b8;
+            --lavender: #d0a1ff;
+            --muted: rgba(255,255,255,.72);
+            --panel: rgba(255,255,255,.075);
+            --border: rgba(255,255,255,.13);
+            --line: rgba(255,255,255,.12);
+        }
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 28px 18px;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 8% 5%, rgba(255,96,160,.19), transparent 34rem),
+                radial-gradient(circle at 92% 90%, rgba(157,100,255,.19), transparent 34rem),
+                linear-gradient(145deg, #090910, #15111f 54%, #0a0a13);
+        }
+        button, input { font: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        .shell { width: min(900px, 100%); margin: 0 auto; }
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 16px 4px;
+            color: #f1d5ff;
+            text-decoration: none;
+        }
+        .back:hover { color: #fff; }
+        .hero, .panel, .signed-in {
+            border: 1px solid var(--border);
+            background: var(--panel);
+            box-shadow: 0 20px 55px rgba(0,0,0,.25);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .hero {
+            padding: clamp(28px, 6vw, 48px) 24px;
+            border-radius: 30px;
+            text-align: center;
+        }
+        .heart { font-size: 46px; }
+        .eyebrow {
+            margin: 10px 0;
+            color: var(--pink);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+        h1 {
+            margin: 0;
+            font-size: clamp(34px, 7vw, 54px);
+            line-height: 1.1;
+            background: linear-gradient(90deg, #ff83b8, #d0a1ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .intro {
+            max-width: 620px;
+            margin: 16px auto 0;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.65;
+        }
+        .panel {
+            margin-top: 16px;
+            padding: clamp(20px, 4vw, 30px);
+            border-radius: 24px;
+        }
+        .panel h2 { margin: 0 0 8px; font-size: clamp(21px, 4vw, 26px); }
+        .muted { color: var(--muted); line-height: 1.55; }
+        .login-panel { max-width: 620px; margin: 18px auto; }
+        .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .field-grid .wide { grid-column: 1 / -1; }
+        label {
+            display: block;
+            margin: 0 0 7px;
+            color: rgba(255,255,255,.9);
+            font-size: 13px;
+            font-weight: 700;
+        }
+        input {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.17);
+            border-radius: 14px;
+            background: rgba(13,11,20,.55);
+            outline: none;
+        }
+        input:focus-visible {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 3px rgba(255,131,184,.2);
+        }
+        input::placeholder { color: rgba(255,255,255,.45); }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+        .button, .provider-link {
+            display: inline-flex;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 17px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 999px;
+            color: #fff;
+            background: rgba(255,255,255,.075);
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .18s ease, border-color .18s ease, background .18s ease;
+        }
+        .button:hover, .provider-link:hover { transform: translateY(-1px); border-color: rgba(255,131,184,.55); }
+        .button:focus-visible, .provider-link:focus-visible, .back:focus-visible {
+            outline: 3px solid var(--pink);
+            outline-offset: 3px;
+        }
+        .button.primary {
+            border: 0;
+            background: linear-gradient(100deg, #ff55a7, #bc68f1);
+            font-weight: 700;
+        }
+        .button.danger { color: #ffd7e8; border-color: rgba(255,131,184,.35); }
+        button:disabled { opacity: .58; cursor: wait; transform: none; }
+        .message { min-height: 20px; margin: 10px 0 0; color: #e7c8ff; font-size: 14px; line-height: 1.45; }
+        .message.error { color: #ffb5c5; }
+        .signed-in {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 18px;
+            color: var(--muted);
+        }
+        .songs-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .songs-count { color: var(--muted); white-space: nowrap; }
+        .song-list { display: grid; gap: 12px; }
+        .song-card {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 14px;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(10,9,16,.3);
+        }
+        .song-title { margin: 0; font-size: 18px; overflow-wrap: anywhere; }
+        .song-artist { margin: 5px 0 0; color: var(--muted); overflow-wrap: anywhere; }
+        .song-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .provider-link { min-height: 38px; padding: 7px 13px; font-size: 14px; }
+        .provider-link.apple { border-color: rgba(255,131,184,.35); background: rgba(255,131,184,.11); }
+        .provider-link.spotify { border-color: rgba(175,255,190,.25); background: rgba(105,204,130,.1); }
+        .song-card .button { min-height: 38px; padding: 7px 13px; }
+        .empty { margin: 0; padding: 22px 12px; color: var(--muted); text-align: center; line-height: 1.6; }
+        footer { padding: 22px 0 4px; text-align: center; color: rgba(255,255,255,.5); font-size: 13px; }
+        [hidden] { display: none !important; }
+        @media (max-width: 620px) {
+            body { padding: 18px 13px; }
+            .field-grid { grid-template-columns: 1fr; }
+            .field-grid .wide { grid-column: auto; }
+            .song-card { grid-template-columns: 1fr; }
+            .song-card .button { justify-self: start; }
+            .signed-in { align-items: flex-start; }
+            .songs-heading { align-items: flex-start; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <main class="shell">
+        <a class="back" href="index.html">← Zurück zum Menü</a>
+
+        <header class="hero">
+            <div class="heart" aria-hidden="true">🎵</div>
+            <p class="eyebrow">Steffi &amp; Yannik</p>
+            <h1>Unser Soundtrack</h1>
+            <p class="intro">Songs, die zu uns gehören. Fügt eure Lieder hinzu und öffnet sie mit Apple Music oder Spotify – ganz egal, welchen Dienst ihr nutzt. ❤️</p>
+        </header>
+
+        <section class="panel login-panel" id="loginPanel" aria-labelledby="loginTitle">
+            <h2 id="loginTitle">Privat anmelden</h2>
+            <p class="muted">Wir schicken dir einen einmaligen Anmeldelink per E-Mail. Nur freigeschaltete Konten erhalten Zugriff auf eure Songliste.</p>
+            <form id="loginForm">
+                <label for="email">Deine E-Mail-Adresse</label>
+                <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@example.com">
+                <div class="actions">
+                    <button class="button primary" id="loginButton" type="submit">Anmeldelink senden</button>
+                </div>
+                <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="signed-in" id="signedInPanel" hidden>
+            <span id="userLabel"></span>
+            <button class="button" id="logoutButton" type="button">Abmelden</button>
+        </section>
+
+        <section class="panel login-panel" id="noAccess" hidden aria-live="polite">
+            <h2>Dieser Zugang ist noch nicht freigeschaltet</h2>
+            <p class="muted">Die Adresse <strong id="noAccessEmail"></strong> darf diese private Songliste nicht öffnen. Bitte verwendet eines der freigeschalteten Konten.</p>
+        </section>
+
+        <div id="memberContent" hidden>
+            <section class="panel" aria-labelledby="addTitle">
+                <h2 id="addTitle">Ein Lied für uns hinzufügen</h2>
+                <p class="muted">Tragt Titel und Künstler ein. Mindestens ein Musik-Link muss dabei sein. Fehlt der Link beim anderen Dienst, führt dessen Button direkt zur Suche nach dem Song.</p>
+                <form id="songForm">
+                    <div class="field-grid">
+                        <div>
+                            <label for="songTitle">Songtitel</label>
+                            <input id="songTitle" name="title" type="text" maxlength="100" required placeholder="Zum Beispiel: Lieblingslied">
+                        </div>
+                        <div>
+                            <label for="songArtist">Künstler/in</label>
+                            <input id="songArtist" name="artist" type="text" maxlength="80" required placeholder="Zum Beispiel: Lieblingsband">
+                        </div>
+                        <div>
+                            <label for="appleUrl">Apple-Music-Link (optional)</label>
+                            <input id="appleUrl" name="apple_url" type="url" maxlength="2048" placeholder="https://music.apple.com/...">
+                        </div>
+                        <div>
+                            <label for="spotifyUrl">Spotify-Link (optional)</label>
+                            <input id="spotifyUrl" name="spotify_url" type="url" maxlength="2048" placeholder="https://open.spotify.com/...">
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="button primary" id="saveButton" type="submit">Song zu unserer Liste hinzufügen</button>
+                    </div>
+                    <p class="message" id="songMessage" role="status" aria-live="polite"></p>
+                </form>
+            </section>
+
+            <section class="panel" aria-labelledby="listTitle">
+                <div class="songs-heading">
+                    <h2 id="listTitle">Unsere Lieder</h2>
+                    <span class="songs-count" id="songCount">Lädt …</span>
+                </div>
+                <div class="song-list" id="songList" aria-live="polite"></div>
+            </section>
+        </div>
+
+        <footer>Nur für euch beide. Mit Liebe gemacht ❤️</footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        (() => {
+            const byId = (id) => document.getElementById(id);
+            const loginPanel = byId("loginPanel");
+            const signedInPanel = byId("signedInPanel");
+            const memberContent = byId("memberContent");
+            const noAccess = byId("noAccess");
+            const songList = byId("songList");
+            const songCount = byId("songCount");
+            let client = null;
+            let currentSession = null;
+            let isMember = false;
+            let loadSequence = 0;
+            let viewSequence = 0;
+
+            function setMessage(element, message, isError) {
+                element.textContent = message || "";
+                element.classList.toggle("error", Boolean(isError));
+            }
+
+            function providerUrl(song, provider) {
+                const stored = provider === "apple" ? song.apple_url : song.spotify_url;
+                if (stored) return stored;
+                const search = encodeURIComponent(song.title + " " + song.artist);
+                return provider === "apple"
+                    ? "https://music.apple.com/de/search?term=" + search
+                    : "https://open.spotify.com/search/" + search;
+            }
+
+            function addProviderLink(card, song, provider) {
+                const hasDirectLink = Boolean(provider === "apple" ? song.apple_url : song.spotify_url);
+                const link = document.createElement("a");
+                link.className = "provider-link " + (provider === "apple" ? "apple" : "spotify");
+                link.href = providerUrl(song, provider);
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = hasDirectLink
+                    ? (provider === "apple" ? "Apple Music öffnen" : "Spotify öffnen")
+                    : (provider === "apple" ? "In Apple Music suchen" : "Bei Spotify suchen");
+                link.setAttribute("aria-label", link.textContent + ": " + song.title + " – " + song.artist);
+                card.appendChild(link);
+            }
+
+            function renderSong(song) {
+                const card = document.createElement("article");
+                card.className = "song-card";
+                const info = document.createElement("div");
+                const title = document.createElement("h3");
+                title.className = "song-title";
+                title.textContent = song.title;
+                const artist = document.createElement("p");
+                artist.className = "song-artist";
+                artist.textContent = song.artist;
+                const links = document.createElement("div");
+                links.className = "song-links";
+                addProviderLink(links, song, "apple");
+                addProviderLink(links, song, "spotify");
+                info.append(title, artist, links);
+
+                const remove = document.createElement("button");
+                remove.type = "button";
+                remove.className = "button danger";
+                remove.textContent = "Löschen";
+                remove.setAttribute("aria-label", song.title + " aus eurer Songliste löschen");
+                remove.addEventListener("click", () => deleteSong(song, remove));
+                card.append(info, remove);
+                songList.appendChild(card);
+            }
+
+            async function loadSongs() {
+                const sequence = ++loadSequence;
+                songList.replaceChildren();
+                songCount.textContent = "Lädt …";
+                setMessage(byId("songMessage"), "", false);
+                const { data: songs, error } = await client
+                    .from("couple_songs")
+                    .select("id, title, artist, apple_url, spotify_url, created_at")
+                    .order("created_at", { ascending: false });
+
+                if (sequence !== loadSequence) return;
+                if (error) {
+                    songCount.textContent = "";
+                    setMessage(byId("songMessage"), "Eure Songliste konnte gerade nicht geladen werden. Bitte versucht es noch einmal.", true);
+                    return;
+                }
+
+                songCount.textContent = songs.length + (songs.length === 1 ? " Lied" : " Lieder");
+                if (songs.length === 0) {
+                    const empty = document.createElement("p");
+                    empty.className = "empty";
+                    empty.textContent = "Hier wartet Platz für euren ersten gemeinsamen Song. ❤️";
+                    songList.appendChild(empty);
+                    return;
+                }
+
+                songs.forEach(renderSong);
+            }
+
+            async function deleteSong(song, button) {
+                if (!currentSession || !isMember) return;
+                if (!window.confirm("Möchtet ihr „" + song.title + "“ wirklich aus eurem Soundtrack löschen?")) return;
+                button.disabled = true;
+                try {
+                    const { data, error } = await client
+                        .from("couple_songs")
+                        .delete()
+                        .eq("id", song.id)
+                        .select("id")
+                        .maybeSingle();
+                    if (error) throw error;
+                    await loadSongs();
+                    setMessage(
+                        byId("songMessage"),
+                        data ? "Der Song wurde aus eurer Liste gelöscht." : "Der Song war schon nicht mehr in der Liste.",
+                        false
+                    );
+                } catch {
+                    setMessage(byId("songMessage"), "Der Song konnte nicht gelöscht werden. Bitte versucht es erneut.", true);
+                } finally {
+                    button.disabled = false;
+                }
+            }
+
+            async function updateView() {
+                const sequence = ++viewSequence;
+                const { data, error: sessionError } = await client.auth.getSession();
+                if (sequence !== viewSequence) return;
+                if (sessionError) {
+                    setMessage(byId("loginMessage"), "Anmeldung konnte gerade nicht geprüft werden. Bitte lade die Seite neu.", true);
+                    return;
+                }
+
+                currentSession = data.session;
+                const user = currentSession && currentSession.user;
+                isMember = false;
+                loginPanel.hidden = Boolean(user);
+                signedInPanel.hidden = !user;
+                memberContent.hidden = true;
+                noAccess.hidden = true;
+
+                if (!user) {
+                    songList.replaceChildren();
+                    songCount.textContent = "";
+                    return;
+                }
+
+                byId("userLabel").textContent = "Angemeldet als " + (user.email || "");
+                byId("noAccessEmail").textContent = user.email || "dieses Konto";
+                const { data: membership, error } = await client
+                    .from("gallery_members")
+                    .select("email")
+                    .eq("email", (user.email || "").toLowerCase())
+                    .maybeSingle();
+
+                if (sequence !== viewSequence) return;
+                if (error) {
+                    memberContent.hidden = false;
+                    songCount.textContent = "";
+                    setMessage(byId("songMessage"), "Der private Zugriff konnte gerade nicht geprüft werden. Bitte versucht es später erneut.", true);
+                    return;
+                }
+                if (!membership) {
+                    noAccess.hidden = false;
+                    return;
+                }
+
+                isMember = true;
+                memberContent.hidden = false;
+                await loadSongs();
+            }
+
+            const config = window.STEFFI_SUPABASE;
+            if (!window.supabase || !window.supabase.createClient || !config || !config.url || !config.publishableKey) {
+                setMessage(byId("loginMessage"), "Der Soundtrack ist gerade nicht erreichbar. Bitte versucht es später erneut.", true);
+                byId("loginButton").disabled = true;
+                return;
+            }
+
+            client = window.supabase.createClient(config.url, config.publishableKey);
+
+            byId("loginForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const email = byId("email").value.trim().toLowerCase();
+                const button = byId("loginButton");
+                button.disabled = true;
+                setMessage(byId("loginMessage"), "Der Anmeldelink wird angefordert …", false);
+                try {
+                    const { error } = await client.auth.signInWithOtp({
+                        email,
+                        options: {
+                            emailRedirectTo: window.location.origin + window.location.pathname,
+                            shouldCreateUser: true
+                        }
+                    });
+                    if (error) throw error;
+                    setMessage(byId("loginMessage"), "Wenn die Adresse freigeschaltet ist, sollte der Anmeldelink gleich ankommen. Prüft auch euren Spam-Ordner.", false);
+                } catch {
+                    setMessage(byId("loginMessage"), "Der Anmeldelink konnte nicht gesendet werden. Prüft eure Eingabe und versucht es erneut.", true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            byId("logoutButton").addEventListener("click", async () => {
+                const { error } = await client.auth.signOut();
+                if (error) setMessage(byId("songMessage"), "Abmelden hat nicht geklappt. Bitte versucht es erneut.", true);
+                else await updateView(null);
+            });
+
+            byId("songForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                if (!currentSession || !isMember) return;
+
+                const title = byId("songTitle").value.trim();
+                const artist = byId("songArtist").value.trim();
+                const appleInput = byId("appleUrl").value.trim();
+                const spotifyInput = byId("spotifyUrl").value.trim();
+                if (!appleInput && !spotifyInput) {
+                    setMessage(byId("songMessage"), "Fügt bitte mindestens einen Apple-Music- oder Spotify-Link hinzu.", true);
+                    return;
+                }
+
+                function validateMusicUrl(value, provider) {
+                    if (!value) return null;
+                    let parsed;
+                    try { parsed = new URL(value); } catch { return false; }
+                    const host = parsed.hostname.toLowerCase();
+                    const allowed = provider === "apple"
+                        ? ["music.apple.com", "itunes.apple.com"]
+                        : ["open.spotify.com", "spotify.link"];
+                    if (parsed.protocol !== "https:" || parsed.username || parsed.password || !allowed.includes(host)) return false;
+                    return parsed.href;
+                }
+
+                const appleUrl = validateMusicUrl(appleInput, "apple");
+                const spotifyUrl = validateMusicUrl(spotifyInput, "spotify");
+                if (appleInput && !appleUrl) {
+                    setMessage(byId("songMessage"), "Der Apple-Link muss von music.apple.com oder itunes.apple.com stammen.", true);
+                    return;
+                }
+                if (spotifyInput && !spotifyUrl) {
+                    setMessage(byId("songMessage"), "Der Spotify-Link muss von open.spotify.com oder spotify.link stammen.", true);
+                    return;
+                }
+
+                const button = byId("saveButton");
+                button.disabled = true;
+                setMessage(byId("songMessage"), "Der Song wird zu eurer Liste hinzugefügt …", false);
+                try {
+                    const { error } = await client.from("couple_songs").insert({
+                        title,
+                        artist,
+                        apple_url: appleUrl,
+                        spotify_url: spotifyUrl
+                    });
+                    if (error) throw error;
+                    byId("songForm").reset();
+                    await loadSongs();
+                    setMessage(byId("songMessage"), "Der Song ist jetzt in eurer gemeinsamen Liste. ❤️", false);
+                } catch {
+                    setMessage(byId("songMessage"), "Der Song konnte nicht gespeichert werden. Prüft die Links und versucht es erneut.", true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            client.auth.onAuthStateChange(() => {
+                window.setTimeout(() => { void updateView(); }, 0);
+            });
+            void updateView();
+        })();
+    </script>
+</body>
+</html>
