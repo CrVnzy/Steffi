@@ -229,7 +229,6 @@
         let currentSession = null;
         let activeWish = null;
         let activeMode = "complete";
-        let currentPhotoUrl = "";
 
         function setMessage(element, text, isError) {
             element.textContent = text || "";
@@ -272,7 +271,11 @@
             checkbox.type = "checkbox";
             checkbox.setAttribute("aria-label", wish.title + " als erledigt markieren");
             checkbox.addEventListener("change", () => {
-                if (checkbox.checked) openComposer(wish, "complete");
+                if (!checkbox.checked) return;
+                wishList.querySelectorAll(".wish-check").forEach((other) => {
+                    if (other !== checkbox) other.checked = false;
+                });
+                openComposer(wish, "complete");
             });
             const copy = document.createElement("span");
             copy.className = "wish-copy";
@@ -382,7 +385,6 @@
             byId("memoryDate").value = entry.completed_at || "";
             byId("memoryNote").value = entry.completion_note || "";
             byId("memoryPhoto").value = "";
-            currentPhotoUrl = "";
             byId("photoHint").textContent = editing && entry.object_path
                 ? "Euer bisheriges Foto bleibt erhalten, wenn ihr kein neues auswählt. Neue Bilder bis 15 MB sind möglich."
                 : "Bilder bis 15 MB sind möglich. Ihr könnt die Erinnerung auch ohne Foto speichern.";
@@ -408,7 +410,12 @@
         async function saveCompletedWish(withPhoto) {
             if (!activeWish || !currentSession) return;
             const button = byId(withPhoto ? "saveMemoryButton" : "saveLaterButton");
-            const file = withPhoto ? byId("memoryPhoto").files[0] : null;
+            const selectedFile = byId("memoryPhoto").files[0];
+            if (!withPhoto && selectedFile) {
+                setMessage(composerMessage, "Wenn du das ausgewählte Foto gleich speichern möchtest, nutze bitte „Als Erinnerung speichern“.", true);
+                return;
+            }
+            const file = withPhoto ? selectedFile : null;
             if (file && !allowedTypes[file.type]) {
                 setMessage(composerMessage, "Dieses Bildformat wird nicht unterstützt. Verwende JPG, PNG, WebP, GIF, HEIC oder AVIF.", true);
                 return;
@@ -454,9 +461,9 @@
                 activeWish = null;
                 composer.hidden = true;
                 setMessage(composerMessage, "", false);
-                setMessage(wishMessage, "Der Moment ist jetzt bei euren Erinnerungen gespeichert. ❤️", false);
                 await loadEntries();
                 setTab("memories");
+                setMessage(memoryMessage, "Der Moment ist jetzt bei euren Erinnerungen gespeichert. ❤️", false);
             } catch (error) {
                 if (uploadedPath) await client.storage.from("couple-photos").remove([uploadedPath]);
                 setMessage(composerMessage, "Das konnte nicht gespeichert werden. Bitte versuche es erneut.", true);
@@ -526,8 +533,8 @@
                     const { error } = await client.from("couple_wishes").insert({ title });
                     if (error) throw error;
                     input.value = "";
-                    setMessage(wishMessage, "Euer Wunsch wurde hinzugefügt. ❤️", false);
                     await loadEntries();
+                    setMessage(wishMessage, "Euer Wunsch wurde hinzugefügt. ❤️", false);
                 } catch (error) {
                     setMessage(wishMessage, "Der Wunsch konnte nicht gespeichert werden. Bitte versuche es erneut.", true);
                 } finally {
