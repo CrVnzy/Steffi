@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d19">
+    <title>Erinnerung starten ❤️</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px 16px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 8%, rgba(255,96,160,.2), transparent 32rem),
+                radial-gradient(circle at 90% 92%, rgba(157,100,255,.2), transparent 32rem),
+                linear-gradient(145deg, #090910, #15111f 54%, #0a0a13);
+        }
+        .card {
+            width: min(680px, 100%);
+            padding: clamp(32px, 7vw, 58px) 26px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 30px;
+            background: rgba(255,255,255,.075);
+            box-shadow: 0 20px 60px rgba(0,0,0,.34);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .heart { margin-bottom: 12px; font-size: 52px; animation: pulse 2s ease-in-out infinite; }
+        .eyebrow { color: #ff83b8; font-size: 13px; font-weight: bold; letter-spacing: .18em; text-transform: uppercase; }
+        h1 {
+            margin: 12px 0 18px;
+            font-size: clamp(35px, 7vw, 56px);
+            line-height: 1.1;
+            background: linear-gradient(90deg, #ff83b8, #d0a1ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .message { max-width: 520px; margin: 0 auto 28px; color: rgba(255,255,255,.82); font-size: 18px; line-height: 1.75; }
+        .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        .button {
+            display: inline-block;
+            padding: 14px 22px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 999px;
+            color: #fff;
+            text-decoration: none;
+            background: rgba(255,255,255,.07);
+            font-weight: bold;
+            transition: transform .2s ease, background .2s ease;
+        }
+        .button.primary { border: 0; background: linear-gradient(90deg, #ff5fa7, #bd78ff); }
+        .button:hover { transform: translateY(-2px); }
+        .button:focus-visible { outline: 3px solid #ff83b8; outline-offset: 3px; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <div class="heart" aria-hidden="true">❤️</div>
+        <p class="eyebrow">Steffi &amp; Yannik</p>
+        <h1>Dann starten wir unsere Erinnerung 🥰</h1>
+        <p class="message">Komm, wir schauen uns noch einmal an, wie unsere gemeinsame Geschichte angefangen hat. ❤️</p>
+        <nav class="links" aria-label="Seitennavigation">
+            <a class="button primary" href="timeline.html">Erinnerung starten →</a>
+            <a class="button" href="index.html">Zurück zum Menü</a>
+        </nav>
+    </main>
+</body>
+</html>
