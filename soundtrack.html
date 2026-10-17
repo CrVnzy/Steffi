@@ -330,7 +330,7 @@
 
                 if (provider === "spotify") {
                     if (parsed.hostname.toLowerCase() !== "open.spotify.com") return null;
-                    const match = parsed.pathname.match(/^\/(track|album|playlist|episode|show)\/([A-Za-z0-9]+)(?:\/|$)/);
+                    const match = parsed.pathname.match(/^\/(?:intl-[a-z]{2}\/)?(track|album|playlist|episode|show)\/([A-Za-z0-9]+)(?:\/|$)/i);
                     if (!match) return null;
                     return "https://open.spotify.com/embed/" + match[1] + "/" + match[2] + "?utm_source=generator&theme=0";
                 }
