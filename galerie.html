@@ -6,47 +6,354 @@
     <meta name="theme-color" content="#100d19">
     <title>Unsere Fotogalerie ❤️</title>
     <style>
-        * { box-sizing: border-box; }
+        :root { color-scheme: dark; --pink:#ff83b8; --lavender:#d0a1ff; --muted:rgba(255,255,255,.72); --panel:rgba(255,255,255,.075); --border:rgba(255,255,255,.14); }
+        * { box-sizing:border-box; }
         body {
-            min-height: 100vh;
-            margin: 0;
-            padding: 24px 16px;
-            display: grid;
-            place-items: center;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-            background:
-                radial-gradient(circle at 10% 8%, rgba(255,96,160,.2), transparent 32rem),
-                radial-gradient(circle at 90% 92%, rgba(157,100,255,.2), transparent 32rem),
-                linear-gradient(145deg, #090910, #15111f 54%, #0a0a13);
+            min-height:100vh; margin:0; padding:28px 16px; color:#fff;
+            font-family:Arial,Helvetica,sans-serif;
+            background:radial-gradient(circle at 10% 8%,rgba(255,96,160,.2),transparent 32rem),radial-gradient(circle at 90% 92%,rgba(157,100,255,.2),transparent 32rem),linear-gradient(145deg,#090910,#15111f 54%,#0a0a13);
         }
-        .card {
-            width: min(680px, 100%);
-            padding: clamp(32px, 7vw, 58px) 26px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,.14);
-            border-radius: 30px;
-            background: rgba(255,255,255,.075);
-            box-shadow: 0 20px 60px rgba(0,0,0,.34);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-        }
-        .icon { font-size: 55px; }
-        h1 { margin: 14px 0; font-size: clamp(32px, 7vw, 48px); background: linear-gradient(90deg,#ff83b8,#d0a1ff); background-clip: text; -webkit-background-clip: text; color: transparent; }
-        p { max-width: 520px; margin: 0 auto 20px; color: rgba(255,255,255,.76); font-size: 17px; line-height: 1.7; }
-        .status { display: inline-block; margin: 5px 0 24px; padding: 8px 13px; border: 1px solid rgba(255,255,255,.15); border-radius: 999px; color: #f1d5ff; font-size: 13px; }
-        a { display: inline-block; padding: 13px 19px; border-radius: 999px; color: #fff; text-decoration: none; background: linear-gradient(90deg,#ff5fa7,#bd78ff); font-weight: bold; }
-        a:focus-visible { outline: 3px solid #ff83b8; outline-offset: 3px; }
+        main { width:min(900px,100%); margin:0 auto; }
+        .topbar { display:flex; justify-content:space-between; align-items:center; margin:0 0 22px; }
+        .back,.button { display:inline-flex; align-items:center; justify-content:center; padding:11px 16px; border:1px solid var(--border); border-radius:999px; color:#fff; text-decoration:none; background:rgba(255,255,255,.07); cursor:pointer; font:inherit; transition:transform .2s ease,background .2s ease; }
+        .back:hover,.button:hover { transform:translateY(-2px); background:rgba(255,255,255,.12); }
+        .back:focus-visible,.button:focus-visible,input:focus-visible,textarea:focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+        .hero,.panel { border:1px solid var(--border); border-radius:28px; background:var(--panel); box-shadow:0 20px 55px rgba(0,0,0,.28); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+        .hero { padding:clamp(26px,6vw,48px) 24px; text-align:center; }
+        .eyebrow { margin:0 0 10px; color:var(--pink); font-size:13px; font-weight:bold; letter-spacing:.18em; text-transform:uppercase; }
+        h1 { margin:0; font-size:clamp(34px,7vw,54px); background:linear-gradient(90deg,#ff83b8,#d0a1ff); background-clip:text; -webkit-background-clip:text; color:transparent; }
+        .intro { max-width:600px; margin:16px auto 0; color:var(--muted); font-size:16px; line-height:1.65; }
+        .panel { margin-top:18px; padding:clamp(22px,5vw,34px); }
+        h2 { margin:0 0 12px; font-size:22px; }
+        .muted { color:var(--muted); line-height:1.6; }
+        form { display:grid; gap:14px; }
+        label { display:grid; gap:7px; color:rgba(255,255,255,.88); font-size:14px; font-weight:bold; }
+        input,textarea { width:100%; padding:13px 14px; border:1px solid rgba(255,255,255,.17); border-radius:14px; color:#fff; background:rgba(0,0,0,.18); font:inherit; }
+        input[type="file"] { padding:11px; }
+        textarea { min-height:88px; resize:vertical; }
+        input::file-selector-button { margin-right:12px; padding:8px 12px; border:0; border-radius:999px; color:#fff; background:rgba(255,131,184,.28); cursor:pointer; }
+        .button.primary { border:0; background:linear-gradient(90deg,#ff5fa7,#bd78ff); font-weight:bold; }
+        .button:disabled { cursor:wait; opacity:.65; transform:none; }
+        .message { min-height:22px; margin:0; color:#f1d5ff; font-size:14px; line-height:1.5; }
+        .message.error { color:#ffb4c5; }
+        .userbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; color:var(--muted); overflow-wrap:anywhere; }
+        .notice { padding:18px; border:1px solid rgba(255,131,184,.24); border-radius:18px; background:rgba(255,131,184,.08); line-height:1.6; }
+        .gallery-heading { display:flex; justify-content:space-between; align-items:end; gap:16px; margin:28px 0 14px; }
+        .gallery-heading h2 { margin:0; }
+        .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+        .photo-card { min-width:0; overflow:hidden; border:1px solid var(--border); border-radius:19px; background:rgba(0,0,0,.18); }
+        .photo-frame { display:grid; place-items:center; aspect-ratio:4/3; overflow:hidden; background:rgba(0,0,0,.22); }
+        .photo-frame img { display:block; width:100%; height:100%; object-fit:cover; }
+        .photo-copy { padding:14px; }
+        .photo-copy p { margin:0 0 8px; overflow-wrap:anywhere; line-height:1.45; }
+        .photo-date { color:var(--muted); font-size:12px; }
+        .remove { margin-top:12px; padding:7px 11px; border:1px solid rgba(255,255,255,.17); border-radius:999px; color:#fff; background:transparent; cursor:pointer; }
+        .remove:hover { border-color:#ff83b8; }
+        [hidden] { display:none !important; }
+        @media(max-width:700px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media(max-width:480px) { body { padding:18px 12px; } .grid { grid-template-columns:1fr; } .topbar { margin-bottom:14px; } .panel { border-radius:22px; } .gallery-heading { align-items:start; flex-direction:column; } }
+        @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
     </style>
 </head>
 <body>
-    <main class="card">
-        <div class="icon" aria-hidden="true">📸</div>
-        <h1>Unsere Fotogalerie</h1>
-        <p>Hier entsteht ein privater Ort, an dem wir beide Bilder hochladen und mit Datum oder kleinen Notizen ergänzen können.</p>
-        <span class="status">Der geschützte Speicher wird eingerichtet</span>
-        <p>Die Galerie wird erst freigeschaltet, wenn der private Speicher und die Anmeldung eingerichtet sind. So landen eure Fotos nicht öffentlich auf der Website.</p>
-        <a href="index.html">Zurück zum Menü</a>
+    <main>
+        <nav class="topbar" aria-label="Seitennavigation">
+            <a class="back" href="index.html">← Zum Menü</a>
+            <span aria-hidden="true">❤️</span>
+        </nav>
+
+        <header class="hero">
+            <p class="eyebrow">Steffi &amp; Yannik</p>
+            <h1>Unsere Fotogalerie</h1>
+            <p class="intro">Ein privater Ort für unsere Bilder und Erinnerungen. Melde dich mit einer freigeschalteten E-Mail-Adresse an, um Fotos hochzuladen und gemeinsam anzusehen.</p>
+        </header>
+
+        <section class="panel" id="loginPanel">
+            <h2>Privat anmelden</h2>
+            <p class="muted">Wir schicken dir einen einmaligen Anmeldelink per E-Mail. Nur freigeschaltete Konten erhalten Zugriff auf die Fotos.</p>
+            <form id="loginForm">
+                <label for="email">Deine E-Mail-Adresse</label>
+                <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@beispiel.de">
+                <button class="button primary" id="loginButton" type="submit">Anmeldelink senden</button>
+                <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="panel" id="signedInPanel" hidden>
+            <div class="userbar">
+                <span id="userLabel"></span>
+                <button class="button" id="logoutButton" type="button">Abmelden</button>
+            </div>
+            <div class="notice" id="noAccess" hidden>
+                Diese E-Mail-Adresse ist noch nicht für die Galerie freigeschaltet. Melde dich mit der anderen Adresse an oder frage Yannik.
+            </div>
+            <div id="memberContent" hidden>
+                <h2>Ein neues Bild für uns</h2>
+                <p class="muted">Lade ein Foto hoch und ergänze ein Datum oder eine kleine Notiz. Bilder bis 15 MB sind möglich.</p>
+                <form id="uploadForm">
+                    <label for="photo">Bild auswählen</label>
+                    <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/avif" required>
+                    <label for="caption">Kleine Notiz (optional)</label>
+                    <textarea id="caption" name="caption" maxlength="300" placeholder="Was möchtest du zu diesem Moment festhalten?"></textarea>
+                    <label for="memoryDate">Datum der Erinnerung (optional)</label>
+                    <input id="memoryDate" name="memoryDate" type="date">
+                    <button class="button primary" id="uploadButton" type="submit">Foto in unsere Galerie legen</button>
+                    <p class="message" id="photoMessage" role="status" aria-live="polite"></p>
+                </form>
+
+                <div class="gallery-heading">
+                    <h2>Unsere Erinnerungen</h2>
+                    <span class="muted" id="photoCount"></span>
+                </div>
+                <div class="grid" id="photoList" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="supabase-config.js"></script>
+        <script>
+        (() => {
+            const byId = (id) => document.getElementById(id);
+            const loginPanel = byId("loginPanel");
+            const signedInPanel = byId("signedInPanel");
+            const loginMessage = byId("loginMessage");
+            const photoMessage = byId("photoMessage");
+            const memberContent = byId("memberContent");
+            const noAccess = byId("noAccess");
+            const photoList = byId("photoList");
+            const photoCount = byId("photoCount");
+            const allowedTypes = {
+                "image/jpeg": "jpg",
+                "image/png": "png",
+                "image/webp": "webp",
+                "image/gif": "gif",
+                "image/heic": "heic",
+                "image/avif": "avif"
+            };
+            let client = null;
+            let currentSession = null;
+
+            function setMessage(element, text, isError) {
+                element.textContent = text || "";
+                element.classList.toggle("error", Boolean(isError));
+            }
+
+            const config = window.STEFFI_SUPABASE;
+            if (!window.supabase || !window.supabase.createClient || !config || !config.url || !config.publishableKey) {
+                setMessage(loginMessage, "Die Galerie ist gerade nicht erreichbar. Bitte versuche es später erneut.", true);
+                byId("loginButton").disabled = true;
+                return;
+            }
+
+            client = window.supabase.createClient(config.url, config.publishableKey);
+
+            byId("loginForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const email = byId("email").value.trim().toLowerCase();
+                const button = byId("loginButton");
+                button.disabled = true;
+                setMessage(loginMessage, "Der Anmeldelink wird angefordert …", false);
+                try {
+                    const result = await client.auth.signInWithOtp({
+                        email,
+                        options: {
+                            emailRedirectTo: window.location.origin + window.location.pathname,
+                            shouldCreateUser: true
+                        }
+                    });
+                    if (result.error) throw result.error;
+                    setMessage(loginMessage, "Wenn die Adresse freigeschaltet ist, sollte der Anmeldelink gleich ankommen. Prüfe auch deinen Spam-Ordner.", false);
+                } catch (error) {
+                    setMessage(loginMessage, "Der Anmeldelink konnte nicht gesendet werden. " + (error.message || "Bitte prüfe deine Eingabe und versuche es erneut."), true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            byId("logoutButton").addEventListener("click", async () => {
+                const { error } = await client.auth.signOut();
+                if (error) setMessage(photoMessage, "Abmelden hat nicht geklappt: " + error.message, true);
+                else {
+                    photoList.replaceChildren();
+                    await updateView();
+                }
+            });
+
+            async function updateView() {
+                const { data, error } = await client.auth.getSession();
+                if (error) {
+                    setMessage(loginMessage, "Anmeldung konnte nicht geprüft werden: " + error.message, true);
+                    return;
+                }
+                currentSession = data.session;
+                const user = currentSession && currentSession.user;
+                loginPanel.hidden = Boolean(user);
+                signedInPanel.hidden = !user;
+                if (!user) {
+                    memberContent.hidden = true;
+                    noAccess.hidden = true;
+                    setMessage(loginMessage, "", false);
+                    return;
+                }
+
+                byId("userLabel").textContent = "Angemeldet als " + (user.email || "");
+                memberContent.hidden = true;
+                noAccess.hidden = true;
+                setMessage(photoMessage, "", false);
+
+                const { data: membership, error: membershipError } = await client
+                    .from("gallery_members")
+                    .select("email")
+                    .eq("email", (user.email || "").toLowerCase())
+                    .maybeSingle();
+
+                if (membershipError) {
+                    setMessage(photoMessage, "Die Galerie konnte gerade nicht geladen werden. Bitte versuche es später erneut.", true);
+                    memberContent.hidden = false;
+                    return;
+                }
+                if (!membership) {
+                    noAccess.hidden = false;
+                    return;
+                }
+
+                memberContent.hidden = false;
+                await loadPhotos();
+            }
+
+            async function loadPhotos() {
+                photoList.replaceChildren();
+                setMessage(photoMessage, "Unsere Bilder werden geladen …", false);
+                const { data: photos, error } = await client
+                    .from("gallery_photos")
+                    .select("id, object_path, caption, memory_date, created_at")
+                    .order("created_at", { ascending: false });
+
+                if (error) {
+                    setMessage(photoMessage, "Die Bilder konnten nicht geladen werden. Bitte versuche es später erneut.", true);
+                    return;
+                }
+                photoCount.textContent = photos.length + (photos.length === 1 ? " Bild" : " Bilder");
+                if (photos.length === 0) {
+                    const empty = document.createElement("p");
+                    empty.className = "muted";
+                    empty.textContent = "Hier wartet schon Platz für unsere erste gemeinsame Erinnerung. ❤️";
+                    photoList.appendChild(empty);
+                    setMessage(photoMessage, "", false);
+                    return;
+                }
+
+                for (const photo of photos) {
+                    const { data: signed, error: signedError } = await client.storage
+                        .from("couple-photos")
+                        .createSignedUrl(photo.object_path, 3600);
+                    if (signedError || !signed) continue;
+
+                    const card = document.createElement("article");
+                    card.className = "photo-card";
+                    const frame = document.createElement("div");
+                    frame.className = "photo-frame";
+                    const image = document.createElement("img");
+                    image.src = signed.signedUrl;
+                    image.alt = photo.caption || "Eine Erinnerung von uns";
+                    image.loading = "lazy";
+                    frame.appendChild(image);
+
+                    const copy = document.createElement("div");
+                    copy.className = "photo-copy";
+                    const caption = document.createElement("p");
+                    caption.textContent = photo.caption || "Ein schöner Moment ❤️";
+                    const date = document.createElement("div");
+                    date.className = "photo-date";
+                    if (photo.memory_date) {
+                        date.textContent = "Erinnerung vom " + new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(photo.memory_date + "T00:00:00"));
+                    } else {
+                        date.textContent = "Hinzugefügt am " + new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(photo.created_at));
+                    }
+                    const remove = document.createElement("button");
+                    remove.type = "button";
+                    remove.className = "remove";
+                    remove.textContent = "Entfernen";
+                    remove.addEventListener("click", () => deletePhoto(photo, remove));
+                    copy.append(caption, date, remove);
+                    card.append(frame, copy);
+                    photoList.appendChild(card);
+                }
+                if (!photoList.childElementCount) {
+                    setMessage(photoMessage, "Die gespeicherten Bilder konnten gerade nicht geöffnet werden. Bitte lade die Seite neu.", true);
+                } else {
+                    setMessage(photoMessage, "", false);
+                }
+            }
+
+            async function deletePhoto(photo, button) {
+                if (!window.confirm("Möchtest du dieses Bild aus eurer Galerie entfernen?")) return;
+                button.disabled = true;
+                setMessage(photoMessage, "Das Bild wird entfernt …", false);
+                const { error: rowError } = await client.from("gallery_photos").delete().eq("id", photo.id);
+                if (rowError) {
+                    button.disabled = false;
+                    setMessage(photoMessage, "Das Bild konnte nicht entfernt werden. Bitte versuche es erneut.", true);
+                    return;
+                }
+                const { error: fileError } = await client.storage.from("couple-photos").remove([photo.object_path]);
+                await loadPhotos();
+                if (fileError) setMessage(photoMessage, "Der Galerie-Eintrag wurde entfernt, aber die gespeicherte Bilddatei konnte nicht gelöscht werden.", true);
+            }
+
+            byId("uploadForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                if (!currentSession) {
+                    setMessage(photoMessage, "Bitte melde dich zuerst an.", true);
+                    return;
+                }
+                const file = byId("photo").files[0];
+                if (!file) return;
+                if (!allowedTypes[file.type]) {
+                    setMessage(photoMessage, "Dieses Bildformat wird nicht unterstützt. Verwende JPG, PNG, WebP, GIF, HEIC oder AVIF.", true);
+                    return;
+                }
+                if (file.size > 15 * 1024 * 1024) {
+                    setMessage(photoMessage, "Das Bild ist größer als 15 MB. Bitte wähle eine kleinere Datei.", true);
+                    return;
+                }
+
+                const button = byId("uploadButton");
+                button.disabled = true;
+                setMessage(photoMessage, "Das Bild wird sicher hochgeladen …", false);
+                const path = window.crypto.randomUUID() + "." + allowedTypes[file.type];
+                try {
+                    const { error: uploadError } = await client.storage
+                        .from("couple-photos")
+                        .upload(path, file, { contentType: file.type, upsert: false });
+                    if (uploadError) throw uploadError;
+
+                    const { error: rowError } = await client.from("gallery_photos").insert({
+                        object_path: path,
+                        caption: byId("caption").value.trim(),
+                        memory_date: byId("memoryDate").value || null
+                    });
+                    if (rowError) {
+                        await client.storage.from("couple-photos").remove([path]);
+                        throw rowError;
+                    }
+
+                    byId("uploadForm").reset();
+                    setMessage(photoMessage, "Das Bild ist jetzt in eurer privaten Galerie. ❤️", false);
+                    await loadPhotos();
+                } catch (error) {
+                    setMessage(photoMessage, "Das Bild konnte nicht gespeichert werden. " + (error.message || "Bitte versuche es erneut."), true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            client.auth.onAuthStateChange(() => {
+                window.setTimeout(() => updateView(), 0);
+            });
+            updateView();
+        })();
+        </script>
     </main>
 </body>
 </html>
