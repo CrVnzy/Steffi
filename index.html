@@ -155,6 +155,26 @@
             *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
     </style>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Unser Kapitel">
+<style>
+        .install-card { margin-top:16px; padding:20px; display:grid; grid-template-columns:1fr auto; align-items:center; gap:12px 18px; border:1px solid rgba(255,131,184,.28); border-radius:22px; background:rgba(255,131,184,.065); }
+        .install-card .install-kicker { margin:0 0 7px; color:var(--pink); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+        .install-card h2 { margin:0 0 7px; font-size:18px; }
+        .install-card p { margin:0; color:var(--muted); font-size:14px; line-height:1.55; }
+        .install-button { justify-self:end; padding:11px 16px; border:0; border-radius:999px; color:#fff; background:linear-gradient(90deg,#ff5fa7,#bd78ff); font:inherit; font-weight:700; cursor:pointer; }
+        .install-button:focus-visible,.install-details summary:focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+        .install-button[hidden] { display:none; }
+        .install-status { grid-column:1/-1; }
+        .install-details { grid-column:1/-1; color:var(--muted); font-size:14px; }
+        .install-details summary { width:max-content; max-width:100%; color:#f1d5ff; cursor:pointer; }
+        .install-steps { display:grid; gap:8px; padding:12px 0 0; }
+        .install-steps p { margin:0; }
+        @media(max-width:620px) { .install-card { grid-template-columns:1fr; } .install-button { justify-self:start; } }
+    </style>
 </head>
 <body>
     <main class="page">
@@ -216,6 +236,22 @@
                 <span class="arrow" aria-hidden="true">→</span>
             </a>
         </nav>
+        <section class="install-card" data-pwa-install aria-labelledby="install-title">
+            <div>
+                <p class="install-kicker">Für euren Startbildschirm</p>
+                <h2 id="install-title">Unser Kapitel als App</h2>
+                <p>Fügt die Seite hinzu und öffnet eure Erinnerungen bequem wie eine App.</p>
+            </div>
+            <button class="install-button" id="installButton" type="button" hidden>App installieren</button>
+            <p class="install-status" id="installStatus" aria-live="polite">Die App braucht eine Internetverbindung, damit Galerie und gemeinsame Inhalte aktuell bleiben.</p>
+            <details class="install-details" id="installDetails">
+                <summary>Installationsanleitung anzeigen</summary>
+                <div class="install-steps">
+                    <p><strong>Android:</strong> Öffnet die Seite in Chrome, tippt auf ⋮ und wählt „App installieren“ oder „Zum Startbildschirm hinzufügen“.</p>
+                    <p><strong>iPhone oder iPad:</strong> Öffnet die Seite in Safari, tippt auf „Teilen“, dann „Zum Home-Bildschirm“. Lasst „Als Web-App öffnen“ aktiviert und tippt auf „Hinzufügen“.</p>
+                </div>
+            </details>
+        </section>
         <footer>Mit Liebe für uns gemacht ❤️</footer>
     </main>
     <script>
@@ -275,5 +311,62 @@
             window.setInterval(updateRelationshipTimer, 1000);
         })();
     </script>
+
+    <script>
+        (() => {
+            const button = document.getElementById("installButton");
+            const status = document.getElementById("installStatus");
+            const details = document.getElementById("installDetails");
+            if (!button || !status || !details) return;
+
+            const isInstalled = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+            let installPrompt = null;
+
+            if (isInstalled) {
+                button.hidden = true;
+                status.textContent = "Unser Kapitel ist bereits als App geöffnet.";
+                return;
+            }
+
+            if (isIOS) {
+                button.hidden = false;
+                button.textContent = "iPhone-Anleitung anzeigen";
+            }
+
+            window.addEventListener("beforeinstallprompt", event => {
+                event.preventDefault();
+                installPrompt = event;
+                button.hidden = false;
+                button.textContent = "App installieren";
+            });
+
+            button.addEventListener("click", async () => {
+                if (installPrompt) {
+                    installPrompt.prompt();
+                    const choice = await installPrompt.userChoice;
+                    status.textContent = choice.outcome === "accepted"
+                        ? "Die Installation wurde gestartet. Du findest die App anschließend auf deinem Startbildschirm."
+                        : "Alles gut — du kannst die Installation später erneut starten.";
+                    installPrompt = null;
+                    return;
+                }
+
+                details.open = true;
+                details.scrollIntoView({ behavior: "smooth", block: "center" });
+                status.textContent = isIOS
+                    ? "Öffne diese Seite in Safari und folge der iPhone-Anleitung."
+                    : "Öffne das Browsermenü und wähle „App installieren“ oder „Zum Startbildschirm hinzufügen“.";
+            });
+
+            window.addEventListener("appinstalled", () => {
+                installPrompt = null;
+                button.hidden = true;
+                status.textContent = "Unser Kapitel wurde als App hinzugefügt.";
+            });
+        })();
+    </script>
+
 </body>
 </html>
