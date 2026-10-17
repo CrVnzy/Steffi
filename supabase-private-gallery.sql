@@ -55,9 +55,10 @@ create policy "members can delete shared photos"
   ));
 
 grant usage on schema public to authenticated;
+revoke all privileges on table public.gallery_members from public, anon, authenticated;
 grant select on public.gallery_members to authenticated;
-grant select, insert, update, delete on public.gallery_photos to authenticated;
-revoke insert, update, delete on table public.gallery_photos from authenticated;
+revoke all privileges on table public.gallery_photos from public, anon, authenticated;
+grant select on public.gallery_photos to authenticated;
 grant insert (object_path, caption, memory_date) on public.gallery_photos to authenticated;
 grant update (caption, memory_date) on public.gallery_photos to authenticated;
 grant delete on public.gallery_photos to authenticated;
