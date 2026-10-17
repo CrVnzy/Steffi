@@ -108,6 +108,7 @@
         @media(prefers-reduced-motion:reduce) {
             *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
         }
+            .auth-actions { display:flex; flex-wrap:wrap; gap:10px; }
     </style>
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
@@ -130,14 +131,23 @@
 
         <section class="panel" id="loginPanel">
             <h2>Privat anmelden</h2>
-            <p class="muted">Wir schicken dir einen einmaligen Anmeldelink per E-Mail. Nur freigeschaltete Konten können eure Wünsche und Erinnerungen sehen.</p>
+            <p class="muted">Wir schicken dir einen sechsstelligen Anmeldecode per E-Mail. Lass diese Seite in der installierten App geöffnet und gib den Code hier ein. Nur freigeschaltete Konten können eure Wünsche und Erinnerungen sehen.</p>
             <form id="loginForm">
-                <label class="field" for="email">Deine E-Mail-Adresse
-                    <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@beispiel.de">
-                </label>
-                <button class="button primary" id="loginButton" type="submit">Anmeldelink senden</button>
-                <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+                <label class="field" for="email">Deine E-Mail-Adresse</label>
+                <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@beispiel.de">
+                <button class="button primary" id="loginButton" type="submit">Code anfordern</button>
             </form>
+            <form id="otpForm" hidden>
+                <p class="muted">Der Code wurde an <strong id="otpEmail"></strong> geschickt.</p>
+                <label class="field" for="otpCode">Sechsstelliger Code aus der E-Mail</label>
+                <input id="otpCode" name="otpCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+                <div class="auth-actions">
+                    <button class="button primary" id="verifyOtpButton" type="submit">Code bestätigen</button>
+                    <button class="button" id="resendOtpButton" type="button">Code erneut senden</button>
+                    <button class="button" id="changeEmailButton" type="button">E-Mail ändern</button>
+                </div>
+            </form>
+            <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
         </section>
 
         <section class="panel" id="signedInPanel" hidden>
@@ -235,6 +245,7 @@
             "image/avif": "avif"
         };
         let client = null;
+            let pendingOtpEmail = "";
         let currentSession = null;
         let activeWish = null;
         let activeMode = "complete";
@@ -551,27 +562,80 @@
             }
             client = window.supabase.createClient(config.url, config.publishableKey);
 
-            byId("loginForm").addEventListener("submit", async (event) => {
-                event.preventDefault();
-                const email = byId("email").value.trim().toLowerCase();
-                const button = byId("loginButton");
+            async function requestLoginCode(email, button, isResend) {
                 button.disabled = true;
-                setMessage(loginMessage, "Der Anmeldelink wird angefordert …", false);
+                setMessage(byId("loginMessage"), isResend ? "Ein neuer Code wird angefordert …" : "Der Code wird angefordert …", false);
                 try {
                     const { error } = await client.auth.signInWithOtp({
                         email,
-                        options: {
-                            emailRedirectTo: window.location.origin + window.location.pathname,
-                            shouldCreateUser: true
-                        }
+                        options: { shouldCreateUser: true }
                     });
                     if (error) throw error;
-                    setMessage(loginMessage, "Wenn die Adresse freigeschaltet ist, sollte der Anmeldelink gleich ankommen. Prüfe auch deinen Spam-Ordner.", false);
+                    pendingOtpEmail = email;
+                    byId("otpEmail").textContent = email;
+                    byId("loginForm").hidden = true;
+                    byId("otpForm").hidden = false;
+                    byId("otpCode").value = "";
+                    setMessage(
+                        byId("loginMessage"),
+                        isResend
+                            ? "Ein neuer sechsstelliger Code ist unterwegs. Prüfe auch deinen Spam-Ordner."
+                            : "Der sechsstellige Code ist unterwegs. Lass diese Seite geöffnet und prüfe auch deinen Spam-Ordner.",
+                        false
+                    );
+                    if (!isResend) byId("otpCode").focus();
                 } catch (error) {
-                    setMessage(loginMessage, "Der Anmeldelink konnte nicht gesendet werden. " + (error.message || "Bitte prüfe deine Eingabe und versuche es erneut."), true);
+                    const detail = error && error.message ? " " + error.message : "";
+                    setMessage(byId("loginMessage"), "Der Code konnte nicht gesendet werden." + detail, true);
                 } finally {
                     button.disabled = false;
                 }
+            }
+
+            byId("loginForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const email = byId("email").value.trim().toLowerCase();
+                await requestLoginCode(email, byId("loginButton"), false);
+            });
+
+            byId("otpForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const token = byId("otpCode").value.trim();
+                const button = byId("verifyOtpButton");
+                button.disabled = true;
+                setMessage(byId("loginMessage"), "Der Code wird geprüft …", false);
+                try {
+                    if (!pendingOtpEmail) throw new Error("Fordere zuerst einen neuen Code an.");
+                    const { error } = await client.auth.verifyOtp({
+                        email: pendingOtpEmail,
+                        token,
+                        type: "email"
+                    });
+                    if (error) throw error;
+                    pendingOtpEmail = "";
+                    byId("otpForm").hidden = true;
+                    setMessage(byId("loginMessage"), "Der Code wurde bestätigt. Anmeldung läuft …", false);
+                    await updateView();
+                } catch {
+                    setMessage(byId("loginMessage"), "Der Code ist ungültig oder abgelaufen. Bitte prüfe ihn oder fordere einen neuen Code an.", true);
+                    byId("otpCode").select();
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            byId("resendOtpButton").addEventListener("click", async () => {
+                if (!pendingOtpEmail) return;
+                await requestLoginCode(pendingOtpEmail, byId("resendOtpButton"), true);
+            });
+
+            byId("changeEmailButton").addEventListener("click", () => {
+                pendingOtpEmail = "";
+                byId("otpForm").hidden = true;
+                byId("loginForm").hidden = false;
+                byId("otpCode").value = "";
+                setMessage(byId("loginMessage"), "", false);
+                byId("email").focus();
             });
 
             byId("logoutButton").addEventListener("click", async () => {
