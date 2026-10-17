@@ -1,1760 +1,203 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Eine kleine Frage ❤️</title>
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d19">
+    <title>Steffi &amp; Yannik ❤️</title>
     <style>
-
-        /* =====================================================
-           RESET
-        ===================================================== */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            color-scheme: dark;
+            --pink: #ff83b8;
+            --lavender: #d0a1ff;
+            --muted: rgba(255,255,255,.72);
+            --panel: rgba(255,255,255,.075);
+            --border: rgba(255,255,255,.13);
         }
-
-
-        html,
+        * { box-sizing: border-box; }
         body {
-            width: 100%;
-            height: 100%;
-        }
-
-
-        body {
-
             min-height: 100vh;
-
-            overflow: hidden;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            color: white;
-
+            margin: 0;
+            padding: 32px 18px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
             background:
-
-                radial-gradient(
-                    circle at 15% 20%,
-                    rgba(255, 55, 115, 0.30),
-                    transparent 30%
-                ),
-
-                radial-gradient(
-                    circle at 85% 80%,
-                    rgba(165, 65, 255, 0.20),
-                    transparent 30%
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #10070d,
-                    #1c0814,
-                    #080409
-                );
+                radial-gradient(circle at 8% 5%, rgba(255,96,160,.19), transparent 34rem),
+                radial-gradient(circle at 92% 90%, rgba(157,100,255,.19), transparent 34rem),
+                linear-gradient(145deg, #090910, #15111f 54%, #0a0a13);
         }
-
-
-        /* =====================================================
-           HINTERGRUND
-        ===================================================== */
-
-        .background {
-
-            position: fixed;
-
-            inset: 0;
-
-            pointer-events: none;
-
-            z-index: 0;
-
+        .page { width: min(900px, 100%); }
+        .hero, .menu-card {
+            border: 1px solid var(--border);
+            background: var(--panel);
+            box-shadow: 0 20px 55px rgba(0,0,0,.28);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
-
-
-        .glow {
-
-            position: absolute;
-
-            width: 320px;
-            height: 320px;
-
-            border-radius: 50%;
-
-            filter: blur(110px);
-
-            opacity: 0.35;
-
-        }
-
-
-        .glow-one {
-
-            top: -120px;
-            left: -100px;
-
-            background: #ff2f68;
-
-        }
-
-
-        .glow-two {
-
-            right: -100px;
-            bottom: -100px;
-
-            background: #9c27ff;
-
-        }
-
-
-        /* =====================================================
-           HAUPTKARTE
-        ===================================================== */
-
-        .card {
-
-            position: relative;
-
-            z-index: 5;
-
-            width: min(700px, 92vw);
-
-            min-height: 540px;
-
-            padding:
-                50px 30px;
-
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-
-            text-align: center;
-
-
-            background:
-                rgba(255, 255, 255, 0.07);
-
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.13);
-
-
+        .hero {
+            padding: clamp(30px, 7vw, 58px) 24px 36px;
             border-radius: 32px;
-
-
-            backdrop-filter:
-                blur(20px);
-
-
-            box-shadow:
-
-                0 30px 100px
-                rgba(0, 0, 0, 0.45);
-
-        }
-
-
-        /* =====================================================
-           HERZ
-        ===================================================== */
-
-        .heart {
-
-            font-size: 65px;
-
-            margin-bottom: 15px;
-
-            animation:
-                heartbeat
-                1.8s
-                ease-in-out
-                infinite;
-
-        }
-
-
-        /* =====================================================
-           KLEINER TEXT
-        ===================================================== */
-
-        .eyebrow {
-
-            margin-bottom: 12px;
-
-            color: #ff9db8;
-
-            font-size: 13px;
-
-            font-weight: bold;
-
-            letter-spacing: 3px;
-
-            text-transform: uppercase;
-
-        }
-
-
-        /* =====================================================
-           TITEL
-        ===================================================== */
-
-        h1 {
-
-            margin-bottom: 20px;
-
-            font-size:
-                clamp(
-                    42px,
-                    8vw,
-                    75px
-                );
-
-            line-height: 1;
-
-
-            background:
-
-                linear-gradient(
-                    90deg,
-                    #ffffff,
-                    #ffb4ca
-                );
-
-
-            -webkit-background-clip: text;
-
-            -webkit-text-fill-color:
-                transparent;
-
-        }
-
-
-        /* =====================================================
-           BESCHREIBUNG
-        ===================================================== */
-
-        .description {
-
-            max-width: 520px;
-
-            margin-bottom: 10px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.75
-                );
-
-            font-size: 18px;
-
-            line-height: 1.7;
-
-        }
-
-
-        /* =====================================================
-           BUTTON-BEREICH
-
-           WICHTIG:
-           Dieser Bereich ist die einzige Fläche,
-           in der NEIN herumwandern darf.
-        ===================================================== */
-
-        .button-stage {
-
-            position: relative;
-
-            width: min(
-                560px,
-                100%
-            );
-
-            height: 240px;
-
-            margin-top: 5px;
-
-            overflow: hidden;
-
-        }
-
-
-        /* =====================================================
-           BUTTON-BASIS
-        ===================================================== */
-
-        button {
-
-            border: none;
-
-            outline: none;
-
-            font-family: inherit;
-
-            font-size: 18px;
-
-            font-weight: bold;
-
-            border-radius: 999px;
-
-            padding:
-                16px 32px;
-
-            cursor: pointer;
-
-            user-select: none;
-
-            white-space: nowrap;
-
-        }
-
-
-        /* =====================================================
-           JA BUTTON
-
-           DIESE POSITION WIRD NIEMALS VERÄNDERT.
-
-           Nur scale() verändert sich.
-        ===================================================== */
-
-        #yesButton {
-
-            position: absolute;
-
-            left: 40%;
-
-            top: 50%;
-
-
-            z-index: 10;
-
-
-            transform:
-                translate(
-                    -50%,
-                    -50%
-                )
-                scale(1);
-
-
-            transform-origin:
-                center center;
-
-
-            color: white;
-
-
-            background:
-
-                linear-gradient(
-                    135deg,
-                    #ff2f68,
-                    #ff6d99
-                );
-
-
-            box-shadow:
-
-                0 10px 30px
-                rgba(
-                    255,
-                    47,
-                    104,
-                    0.35
-                );
-
-
-            transition:
-                transform
-                0.35s
-                ease,
-
-                box-shadow
-                0.25s
-                ease;
-
-        }
-
-
-        #yesButton:hover {
-
-            box-shadow:
-
-                0 15px 40px
-                rgba(
-                    255,
-                    47,
-                    104,
-                    0.55
-                );
-
-        }
-
-
-        /* =====================================================
-           NEIN BUTTON
-
-           Auch dieser Button bleibt IMMER
-           innerhalb von .button-stage.
-        ===================================================== */
-
-        #noButton {
-
-            position: absolute;
-
-            left: 65%;
-
-            top: 50%;
-
-
-            z-index: 20;
-
-
-            transform:
-                translate(
-                    -50%,
-                    -50%
-                );
-
-
-            color: white;
-
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.10
-                );
-
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.18
-                );
-
-        }
-
-
-        #noButton:hover {
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.16
-                );
-
-        }
-
-
-        /* =====================================================
-           HINWEIS
-        ===================================================== */
-
-        .hint {
-
-            margin-top: 5px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.35
-                );
-
-            font-size: 13px;
-
-        }
-
-
-        /* =====================================================
-           ERFOLGSSEITE
-        ===================================================== */
-
-        .success {
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 100;
-
-
-            display: none;
-
-            justify-content: center;
-
-            align-items: center;
-
-
-            padding: 25px;
-
-
             text-align: center;
-
-
-            background:
-
-                radial-gradient(
-                    circle,
-                    rgba(
-                        255,
-                        47,
-                        104,
-                        0.28
-                    ),
-
-                    rgba(
-                        0,
-                        0,
-                        0,
-                        0.96
-                    )
-                );
-
+            animation: appear .7s ease both;
         }
-
-
-        .success-content {
-
-            animation:
-                successAppear
-                0.8s
-                ease;
-
+        .heart { font-size: 52px; animation: pulse 2s ease-in-out infinite; }
+        .eyebrow {
+            margin: 12px 0 10px;
+            color: var(--pink);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
         }
-
-
-        .success-heart {
-
-            font-size: 100px;
-
-            margin-bottom: 20px;
-
-
-            animation:
-                heartbeat
-                1s
-                infinite;
-
-        }
-
-
-        .success h2 {
-
-            margin-bottom: 20px;
-
-            font-size:
-                clamp(
-                    48px,
-                    9vw,
-                    90px
-                );
-
-        }
-
-
-        /*
-         * Nur der Text bekommt den Farbverlauf.
-         * Das Emoji bleibt normal.
-         */
-
-        .success-title {
-
-            background:
-
-                linear-gradient(
-                    90deg,
-                    #ff5c8a,
-                    #ffc5d6
-                );
-
-
+        h1 {
+            margin: 0;
+            font-size: clamp(34px, 7vw, 58px);
+            line-height: 1.08;
+            background: linear-gradient(90deg, #ff83b8, #d0a1ff);
+            background-clip: text;
             -webkit-background-clip: text;
-
-            -webkit-text-fill-color:
-                transparent;
-
+            color: transparent;
         }
-
-
-        .success p {
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.8
-                );
-
-
-            font-size: 20px;
-
-            line-height: 1.7;
-
-        }
-
-
-        /* =====================================================
-           WEITER BUTTON
-        ===================================================== */
-
-        .next-button {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-
-            margin-top: 30px;
-
-            padding:
-                16px 30px;
-
-
-            color: white;
-
-            text-decoration: none;
-
-
+        .intro {
+            max-width: 560px;
+            margin: 18px auto 24px;
+            color: var(--muted);
             font-size: 17px;
-
-            font-weight: bold;
-
-
+            line-height: 1.7;
+        }
+        .since {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 18px;
+            border: 1px solid rgba(255,131,184,.24);
+            border-radius: 18px;
+            background: rgba(255,131,184,.08);
+        }
+        .since span { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+        .since strong { font-size: 16px; }
+        .section-title {
+            margin: 34px 0 14px;
+            color: rgba(255,255,255,.92);
+            font-size: 18px;
+        }
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .menu-card {
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 22px;
+            border-radius: 24px;
+            color: inherit;
+            text-decoration: none;
+            transition: transform .2s ease, border-color .2s ease, background .2s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,131,184,.48);
+            background: rgba(255,255,255,.11);
+        }
+        .menu-card:focus-visible, .back:focus-visible {
+            outline: 3px solid var(--pink);
+            outline-offset: 4px;
+        }
+        .icon {
+            flex: 0 0 46px;
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(255,131,184,.22), rgba(208,161,255,.20));
+            font-size: 23px;
+        }
+        .card-copy { padding-right: 2px; }
+        .card-copy h2 { margin: 2px 0 8px; font-size: 19px; }
+        .card-copy p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+        .arrow { position: absolute; right: 19px; bottom: 17px; color: var(--pink); font-size: 20px; }
+        .status {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 9px;
+            border: 1px solid rgba(255,255,255,.13);
             border-radius: 999px;
-
-
-            background:
-
-                linear-gradient(
-                    135deg,
-                    #ff2f68,
-                    #ff6d99
-                );
-
-
-            box-shadow:
-
-                0 12px 35px
-                rgba(
-                    255,
-                    47,
-                    104,
-                    0.35
-                );
-
-
-            transition:
-                transform
-                0.25s
-                ease,
-
-                box-shadow
-                0.25s
-                ease;
-
+            color: #f1d5ff;
+            font-size: 11px;
+            letter-spacing: .03em;
         }
-
-
-        .next-button:hover {
-
-            transform:
-                translateY(-3px);
-
-
-            box-shadow:
-
-                0 18px 45px
-                rgba(
-                    255,
-                    47,
-                    104,
-                    0.50
-                );
-
+        .menu-card.pending { cursor: default; }
+        .menu-card.pending:hover { transform: none; border-color: var(--border); background: var(--panel); }
+        footer { padding: 25px 0 4px; text-align: center; color: rgba(255,255,255,.5); font-size: 13px; }
+        @keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @media (max-width: 620px) {
+            body { padding: 18px 14px; }
+            .menu { grid-template-columns: 1fr; }
+            .menu-card { min-height: 130px; padding: 19px; }
+            .intro { font-size: 16px; }
         }
-
-
-        /* =====================================================
-           SCHWEBENDE HERZEN
-        ===================================================== */
-
-        .floating-heart {
-
-            position: fixed;
-
-            bottom: -40px;
-
-            z-index: 500;
-
-            pointer-events: none;
-
-            font-size: 25px;
-
-
-            animation:
-                floatHeart
-                5s
-                linear
-                forwards;
-
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
-
-
-        /* =====================================================
-           ANIMATIONEN
-        ===================================================== */
-
-        @keyframes heartbeat {
-
-            0%,
-            100% {
-
-                transform:
-                    scale(1);
-
-            }
-
-            50% {
-
-                transform:
-                    scale(1.15);
-
-            }
-
-        }
-
-
-        @keyframes successAppear {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    scale(0.8);
-
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    scale(1);
-
-            }
-
-        }
-
-
-        @keyframes floatHeart {
-
-            0% {
-
-                transform:
-                    translateY(0)
-                    rotate(0deg);
-
-                opacity: 1;
-
-            }
-
-            100% {
-
-                transform:
-                    translateY(-110vh)
-                    rotate(360deg);
-
-                opacity: 0;
-
-            }
-
-        }
-
-
-
-        /* =====================================================
-           HANDY
-        ===================================================== */
-
-        @media (
-            max-width: 600px
-        ) {
-
-            .card {
-
-                width: 92vw;
-
-                min-height: 550px;
-
-                padding:
-                    35px 15px;
-
-            }
-
-
-            .heart {
-
-                font-size: 55px;
-
-            }
-
-
-            .description {
-
-                max-width: 90%;
-
-                font-size: 16px;
-
-                line-height: 1.6;
-
-            }
-
-
-            /*
-             * Mehr Platz für NEIN auf dem Handy.
-             */
-
-            .button-stage {
-
-                width: 100%;
-
-                height: 280px;
-
-            }
-
-
-            /*
-             * Anfangspositionen auf Handy.
-
-             * Gleiche Höhe:
-             * top: 50%
-             */
-
-            #yesButton {
-
-                left: 35%;
-
-            }
-
-
-            #noButton {
-
-                left: 65%;
-
-            }
-
-
-            button {
-
-                font-size: 16px;
-
-                padding:
-                    14px 23px;
-
-            }
-
-
-            .hint {
-
-                font-size: 12px;
-
-            }
-
-        }
-
     </style>
-
 </head>
-
-
-
 <body>
-
-
-    <!-- =====================================================
-         HINTERGRUND
-    ===================================================== -->
-
-    <div class="background">
-
-        <div class="glow glow-one"></div>
-
-        <div class="glow glow-two"></div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         HAUPTSEITE
-    ===================================================== -->
-
-    <main
-        class="card"
-        id="mainCard"
-    >
-
-
-        <div class="heart">
-            ❤️
-        </div>
-
-
-        <div class="eyebrow">
-            Eine kleine Frage
-        </div>
-
-
-        <h1>
-            Magst du mich?
-        </h1>
-
-
-        <p class="description">
-
-            Bevor wir hier weitermachen,
-            muss ich natürlich erstmal
-            eine ganz wichtige Sache wissen... 🤭
-
-        </p>
-
-
-
-        <!-- =================================================
-             BUTTON-STAGE
-        ================================================== -->
-
-        <div
-            class="button-stage"
-            id="buttonStage"
-        >
-
-
-            <!-- JA -->
-
-            <button
-                id="yesButton"
-                type="button"
-            >
-
-                Ja ❤️
-
-            </button>
-
-
-
-            <!-- NEIN -->
-
-            <button
-                id="noButton"
-                type="button"
-            >
-
-                Nein 🙈
-
-            </button>
-
-
-        </div>
-
-
-
-        <div class="hint">
-
-            Eine Antwort macht mich glücklich... 🥰
-
-        </div>
-
-
-    </main>
-
-
-
-    <!-- =====================================================
-         ERFOLGSSEITE
-    ===================================================== -->
-
-    <section
-        class="success"
-        id="success"
-    >
-
-
-        <div class="success-content">
-
-
-            <div class="success-heart">
-                ❤️
+    <main class="page">
+        <header class="hero">
+            <div class="heart" aria-hidden="true">❤️</div>
+            <p class="eyebrow">Steffi &amp; Yannik</p>
+            <h1>Unser kleines Kapitel</h1>
+            <p class="intro">Schön, dass es dich gibt. Hier sammeln wir unseren Anfang, unsere Geschichten und die kleinen Dinge, die uns verbinden. 🥰</p>
+            <div class="since">
+                <span>Zusammen seit</span>
+                <strong>10. Oktober 2026 · 01:58 Uhr</strong>
             </div>
+        </header>
 
-
-            <h2>
-
-                <span class="success-title">
-                    Jaaaa!
+        <h2 class="section-title">Was möchtest du ansehen?</h2>
+        <nav class="menu" aria-label="Hauptmenü">
+            <a class="menu-card" href="anfang.html">
+                <span class="icon" aria-hidden="true">💞</span>
+                <span class="card-copy">
+                    <h2>Unser Anfang</h2>
+                    <p>Der Moment, an dem aus uns offiziell ein Wir wurde.</p>
                 </span>
-
-                🥰
-
-            </h2>
-
-
-            <p>
-
-                Ich wusste doch,
-                dass du mich magst. ❤️
-
-            </p>
-
-
-            <a
-                href="timeline.html"
-                class="next-button"
-            >
-
-                Los geht's, Steffi ❤️
-
+                <span class="arrow" aria-hidden="true">→</span>
             </a>
-
-
-        </div>
-
-
-    </section>
-
-
-
-    <script>
-
-
-        /* =====================================================
-           ELEMENTE
-        ===================================================== */
-
-        const stage =
-            document.getElementById(
-                "buttonStage"
-            );
-
-
-        const yesButton =
-            document.getElementById(
-                "yesButton"
-            );
-
-
-        const noButton =
-            document.getElementById(
-                "noButton"
-            );
-
-
-        const mainCard =
-            document.getElementById(
-                "mainCard"
-            );
-
-
-        const success =
-            document.getElementById(
-                "success"
-            );
-
-
-
-        /* =====================================================
-           EINSTELLUNGEN
-        ===================================================== */
-
-        let yesScale = 1;
-
-        let noClicks = 0;
-
-
-        /*
-         * JA wächst jedes Mal um 10%.
-         */
-
-        const growthFactor = 1.10;
-
-
-        /*
-         * Maximal 190%.
-
-         * So bleibt auf kleinen Displays
-         * noch Platz für NEIN.
-         */
-
-        const maxYesScale = 1.90;
-
-
-        /*
-         * Abstand zwischen JA und NEIN.
-         */
-
-        const safetyGap = 25;
-
-
-        /*
-         * Abstand vom Rand der Button-Fläche.
-         */
-
-        const stagePadding = 12;
-
-
-
-        /* =====================================================
-           NEIN-TEXTE
-        ===================================================== */
-
-        const noTexts = [
-
-            "Nein 🙈",
-
-            "Bist du sicher? 🤭",
-
-            "Wirklich? 🥺",
-
-            "Denk nochmal nach 😏",
-
-            "Ganz sicher? ❤️",
-
-            "Letzte Chance 😂",
-
-            "Okay... wirklich Nein? 🥺",
-
-            "Warum? 😭",
-
-            "Ich gebe nicht auf 😂",
-
-            "Du machst es mir schwer 😏"
-
-        ];
-
-
-
-        /* =====================================================
-           RECHTECK ERSTELLEN
-        ===================================================== */
-
-        function createRect(
-            centerX,
-            centerY,
-            width,
-            height
-        ) {
-
-            return {
-
-                left:
-                    centerX
-                    -
-                    width / 2,
-
-                top:
-                    centerY
-                    -
-                    height / 2,
-
-                right:
-                    centerX
-                    +
-                    width / 2,
-
-                bottom:
-                    centerY
-                    +
-                    height / 2
-
-            };
-
-        }
-
-
-
-        /* =====================================================
-           ÜBERLAPPEN
-        ===================================================== */
-
-        function overlaps(
-            a,
-            b,
-            gap
-        ) {
-
-            return (
-
-                a.left
-                <
-                b.right + gap
-
-                &&
-
-                a.right
-                >
-                b.left - gap
-
-                &&
-
-                a.top
-                <
-                b.bottom + gap
-
-                &&
-
-                a.bottom
-                >
-                b.top - gap
-
-            );
-
-        }
-
-
-
-        /* =====================================================
-           JA RECHTECK
-
-           Wir messen immer die echte,
-           aktuell sichtbare Größe.
-        ===================================================== */
-
-        function getYesRect() {
-
-            const yes =
-                yesButton.getBoundingClientRect();
-
-
-            const stageRect =
-                stage.getBoundingClientRect();
-
-
-            return {
-
-                left:
-                    yes.left
-                    -
-                    stageRect.left,
-
-                top:
-                    yes.top
-                    -
-                    stageRect.top,
-
-                right:
-                    yes.right
-                    -
-                    stageRect.left,
-
-                bottom:
-                    yes.bottom
-                    -
-                    stageRect.top
-
-            };
-
-        }
-
-
-
-        /* =====================================================
-           SICHERE POSITION SUCHEN
-        ===================================================== */
-
-        function findSafePosition() {
-
-
-            const yesRect =
-                getYesRect();
-
-
-            const width =
-                noButton.offsetWidth;
-
-
-            const height =
-                noButton.offsetHeight;
-
-
-            /*
-             * Mögliche Mittelpunkte von NEIN.
-             */
-
-            const minX =
-                stagePadding
-                +
-                width / 2;
-
-
-            const maxX =
-                stage.clientWidth
-                -
-                stagePadding
-                -
-                width / 2;
-
-
-            const minY =
-                stagePadding
-                +
-                height / 2;
-
-
-            const maxY =
-                stage.clientHeight
-                -
-                stagePadding
-                -
-                height / 2;
-
-
-
-            /*
-             * Ist überhaupt genug Platz
-             * vorhanden?
-             */
-
-            if (
-                maxX < minX
-                ||
-                maxY < minY
-            ) {
-
-                return null;
-
-            }
-
-
-
-            /*
-             * 10.000 zufällige Versuche.
-             */
-
-            for (
-                let i = 0;
-                i < 10000;
-                i++
-            ) {
-
-
-                const x =
-
-                    minX
-                    +
-                    Math.random()
-                    *
-                    (
-                        maxX
-                        -
-                        minX
-                    );
-
-
-                const y =
-
-                    minY
-                    +
-                    Math.random()
-                    *
-                    (
-                        maxY
-                        -
-                        minY
-                    );
-
-
-
-                /*
-                 * Rechteck des NEIN Buttons.
-                 */
-
-                const candidate =
-                    createRect(
-                        x,
-                        y,
-                        width,
-                        height
-                    );
-
-
-
-                /*
-                 * JA darf nicht berührt werden.
-                 */
-
-                if (
-                    overlaps(
-                        candidate,
-                        yesRect,
-                        safetyGap
-                    )
-                ) {
-
-                    continue;
-
-                }
-
-
-
-                /*
-                 * Sichere Position.
-                 */
-
-                return {
-                    x,
-                    y
-                };
-
-            }
-
-
-
-            /*
-             * Keine Position gefunden.
-
-             * NICHT verschwinden!
-
-             * Einfach aktuelle Position behalten.
-             */
-
-            return null;
-
-        }
-
-
-
-        /* =====================================================
-           NEIN BEWEGEN
-        ===================================================== */
-
-        function moveNoButton() {
-
-
-            const position =
-                findSafePosition();
-
-
-            /*
-             * Keine Position?
-
-             * Dann bleibt NEIN einfach stehen.
-             */
-
-            if (
-                position === null
-            ) {
-
-                return;
-
-            }
-
-
-
-            /*
-             * Neue Position.
-
-             * transform bleibt immer
-             * translate(-50%, -50%).
-             */
-
-            noButton.style.left =
-                `${position.x}px`;
-
-
-            noButton.style.top =
-                `${position.y}px`;
-
-        }
-
-
-
-        /* =====================================================
-           NEIN GEKLICKT
-        ===================================================== */
-
-        noButton.addEventListener(
-            "click",
-            () => {
-
-
-                noClicks++;
-
-
-
-                /*
-                 * =========================================
-                 * JA WIRD GRÖSSER
-                 * =========================================
-                 */
-
-                yesScale *=
-                    growthFactor;
-
-
-                if (
-                    yesScale >
-                    maxYesScale
-                ) {
-
-                    yesScale =
-                        maxYesScale;
-
-                }
-
-
-
-                /*
-                 * WICHTIG:
-
-                 * Die Position von JA wird NICHT
-                 * verändert.
-
-                 * Nur die Größe.
-                 */
-
-                yesButton.style.transform =
-
-                    `
-                    translate(
-                        -50%,
-                        -50%
-                    )
-                    scale(${yesScale})
-                    `;
-
-
-
-                /*
-                 * =========================================
-                 * NEIN-TEXT
-                 * =========================================
-                 */
-
-                const textIndex =
-
-                    Math.min(
-                        noClicks,
-                        noTexts.length - 1
-                    );
-
-
-                noButton.innerText =
-                    noTexts[textIndex];
-
-
-
-                /*
-                 * =========================================
-                 * NEUE POSITION
-                 * =========================================
-                 *
-                 * Ein Frame warten, damit die neue
-                 * Größe von JA bereits gemessen wird.
-                 */
-
-                requestAnimationFrame(
-                    () => {
-
-                        moveNoButton();
-
-                    }
-                );
-
-            }
-        );
-
-
-
-        /* =====================================================
-           JA GEKLICKT
-        ===================================================== */
-
-        yesButton.addEventListener(
-            "click",
-            () => {
-
-
-                /*
-                 * Hauptseite verstecken.
-                 */
-
-                mainCard.style.display =
-                    "none";
-
-
-                /*
-                 * Jaaaa-Seite anzeigen.
-                 */
-
-                success.style.display =
-                    "flex";
-
-
-                /*
-                 * Herzen.
-                 */
-
-                createHearts();
-
-            }
-        );
-
-
-
-        /* =====================================================
-           HERZEN
-        ===================================================== */
-
-        function createHearts() {
-
-
-            const heartTypes = [
-
-                "❤️",
-                "💕",
-                "💗",
-                "💖",
-                "💘",
-                "💞"
-
-            ];
-
-
-            for (
-                let i = 0;
-                i < 50;
-                i++
-            ) {
-
-
-                setTimeout(
-                    () => {
-
-
-                        const heart =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        heart.className =
-                            "floating-heart";
-
-
-                        heart.innerText =
-
-                            heartTypes[
-                                Math.floor(
-                                    Math.random()
-                                    *
-                                    heartTypes.length
-                                )
-                            ];
-
-
-                        heart.style.left =
-
-                            Math.random()
-                            *
-                            100
-                            +
-                            "vw";
-
-
-                        heart.style.fontSize =
-
-                            (
-                                18
-                                +
-                                Math.random()
-                                *
-                                25
-                            )
-                            +
-                            "px";
-
-
-                        heart.style.animationDuration =
-
-                            (
-                                3
-                                +
-                                Math.random()
-                                *
-                                3
-                            )
-                            +
-                            "s";
-
-
-                        document.body.appendChild(
-                            heart
-                        );
-
-
-                        setTimeout(
-                            () => {
-
-                                heart.remove();
-
-                            },
-
-                            6500
-                        );
-
-
-                    },
-
-                    i * 70
-                );
-
-            }
-
-        }
-
-    </script>
-
+            <a class="menu-card" href="timeline.html">
+                <span class="icon" aria-hidden="true">✨</span>
+                <span class="card-copy">
+                    <h2>Unsere Geschichte</h2>
+                    <p>Unsere ersten Dates und die schönen Momente bis hierhin.</p>
+                </span>
+                <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="menu-card" href="mag.html">
+                <span class="icon" aria-hidden="true">💌</span>
+                <span class="card-copy">
+                    <h2>Was ich an dir mag</h2>
+                    <p>Ein paar Dinge, die dich für mich besonders machen.</p>
+                </span>
+                <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <div class="menu-card pending" aria-label="Fotogalerie, wird eingerichtet">
+                <span class="icon" aria-hidden="true">📸</span>
+                <span class="card-copy">
+                    <h2>Unsere Fotogalerie</h2>
+                    <p>Ein privater Ort für Bilder und Erinnerungen. Der geschützte Upload wird eingerichtet.</p>
+                    <span class="status">Wird eingerichtet</span>
+                </span>
+            </div>
+        </nav>
+        <footer>Mit Liebe für uns gemacht ❤️</footer>
+    </main>
 </body>
-
 </html>
