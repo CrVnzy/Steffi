@@ -43,12 +43,15 @@
         .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
         .photo-card { min-width:0; overflow:hidden; border:1px solid var(--border); border-radius:19px; background:rgba(0,0,0,.18); }
         .photo-frame { display:grid; place-items:center; aspect-ratio:4/3; overflow:hidden; background:rgba(0,0,0,.22); }
-        .photo-frame img { display:block; width:100%; height:100%; object-fit:cover; }
+        .photo-frame img { display:block; width:100%; height:100%; object-fit:contain; }
         .photo-copy { padding:14px; }
         .photo-copy p { margin:0 0 8px; overflow-wrap:anywhere; line-height:1.45; }
         .photo-date { color:var(--muted); font-size:12px; }
-        .remove { margin-top:12px; padding:7px 11px; border:1px solid rgba(255,255,255,.17); border-radius:999px; color:#fff; background:transparent; cursor:pointer; }
-        .remove:hover { border-color:#ff83b8; }
+        .photo-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+        .photo-action { padding:7px 11px; border:1px solid rgba(255,255,255,.17); border-radius:999px; color:#fff; background:transparent; cursor:pointer; font:inherit; }
+        .photo-action:hover { border-color:#ff83b8; }
+        .photo-action:disabled { cursor:wait; opacity:.65; }
+        .photo-action.download { border-color:rgba(208,161,255,.45); }
         [hidden] { display:none !important; }
         @media(max-width:700px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
         @media(max-width:480px) { body { padding:18px 12px; } .grid { grid-template-columns:1fr; } .topbar { margin-bottom:14px; } .panel { border-radius:22px; } .gallery-heading { align-items:start; flex-direction:column; } }
@@ -132,6 +135,7 @@
             };
             let client = null;
             let currentSession = null;
+            let photoLoadSequence = 0;
 
             function setMessage(element, text, isError) {
                 element.textContent = text || "";
@@ -222,6 +226,7 @@
             }
 
             async function loadPhotos() {
+                const loadSequence = ++photoLoadSequence;
                 photoList.replaceChildren();
                 setMessage(photoMessage, "Unsere Bilder werden geladen …", false);
                 const { data: photos, error } = await client
@@ -229,6 +234,7 @@
                     .select("id, object_path, caption, memory_date, created_at")
                     .order("created_at", { ascending: false });
 
+                if (loadSequence !== photoLoadSequence) return;
                 if (error) {
                     setMessage(photoMessage, "Die Bilder konnten nicht geladen werden. Bitte versuche es später erneut.", true);
                     return;
@@ -247,6 +253,7 @@
                     const { data: signed, error: signedError } = await client.storage
                         .from("couple-photos")
                         .createSignedUrl(photo.object_path, 3600);
+                    if (loadSequence !== photoLoadSequence) return;
                     if (signedError || !signed) continue;
 
                     const card = document.createElement("article");
@@ -270,12 +277,20 @@
                     } else {
                         date.textContent = "Hinzugefügt am " + new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(photo.created_at));
                     }
+                    const actions = document.createElement("div");
+                    actions.className = "photo-actions";
+                    const download = document.createElement("button");
+                    download.type = "button";
+                    download.className = "photo-action download";
+                    download.textContent = "↓ Herunterladen";
+                    download.addEventListener("click", () => downloadPhoto(photo, download));
                     const remove = document.createElement("button");
                     remove.type = "button";
-                    remove.className = "remove";
+                    remove.className = "photo-action";
                     remove.textContent = "Entfernen";
                     remove.addEventListener("click", () => deletePhoto(photo, remove));
-                    copy.append(caption, date, remove);
+                    actions.append(download, remove);
+                    copy.append(caption, date, actions);
                     card.append(frame, copy);
                     photoList.appendChild(card);
                 }
@@ -283,6 +298,34 @@
                     setMessage(photoMessage, "Die gespeicherten Bilder konnten gerade nicht geöffnet werden. Bitte lade die Seite neu.", true);
                 } else {
                     setMessage(photoMessage, "", false);
+                }
+            }
+
+            async function downloadPhoto(photo, button) {
+                button.disabled = true;
+                button.textContent = "Wird geladen …";
+                try {
+                    const { data: file, error } = await client.storage
+                        .from("couple-photos")
+                        .download(photo.object_path);
+                    if (error) throw error;
+                    if (!file) throw new Error("Die Bilddatei wurde nicht gefunden.");
+
+                    const url = URL.createObjectURL(file);
+                    const link = document.createElement("a");
+                    const datePart = (photo.memory_date || photo.created_at || "").slice(0, 10).replace(/[^0-9-]/g, "") || "erinnerung";
+                    const extension = (photo.object_path.split(".").pop() || "jpg").toLowerCase();
+                    link.href = url;
+                    link.download = "steffi-yannik-erinnerung-" + datePart + "." + (/^[a-z0-9]+$/.test(extension) ? extension : "jpg");
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+                } catch (error) {
+                    setMessage(photoMessage, "Das Bild konnte nicht heruntergeladen werden. " + (error.message || "Bitte versuche es erneut."), true);
+                } finally {
+                    button.disabled = false;
+                    button.textContent = "↓ Herunterladen";
                 }
             }
 
