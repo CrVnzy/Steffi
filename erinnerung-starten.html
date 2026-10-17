@@ -42,6 +42,15 @@
             -webkit-background-clip: text;
             color: transparent;
         }
+        .heading-emoji {
+            display: inline-block;
+            background: none;
+            background-clip: initial;
+            -webkit-background-clip: initial;
+            color: initial;
+            -webkit-text-fill-color: initial;
+            font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+        }
         .message { max-width: 520px; margin: 0 auto 28px; color: rgba(255,255,255,.82); font-size: 18px; line-height: 1.75; }
         .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
         .button {
@@ -66,7 +75,7 @@
     <main class="card">
         <div class="heart" aria-hidden="true">❤️</div>
         <p class="eyebrow">Steffi &amp; Yannik</p>
-        <h1>Dann starten wir unsere Erinnerung 🥰</h1>
+        <h1>Dann starten wir unsere Erinnerung <span class="heading-emoji" role="img" aria-label="lächelndes Gesicht">😊</span></h1>
         <p class="message">Komm, wir schauen uns noch einmal an, wie unsere gemeinsame Geschichte angefangen hat. ❤️</p>
         <nav class="links" aria-label="Seitennavigation">
             <a class="button primary" href="anfang.html">Erinnerung starten →</a>
