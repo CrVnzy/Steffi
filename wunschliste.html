@@ -66,6 +66,10 @@
         .wish-copy { min-width:0; }
         .wish-title { display:block; font-size:16px; font-weight:bold; line-height:1.45; overflow-wrap:anywhere; }
         .wish-date { display:block; margin-top:4px; color:var(--muted); font-size:13px; }
+        .wish-delete { flex:0 0 auto; min-height:40px; padding:8px 12px; margin-left:auto; border:1px solid rgba(255,131,184,.3); border-radius:999px; color:#ffd9e8; background:rgba(255,96,160,.08); font:inherit; cursor:pointer; }
+        .wish-delete:hover { border-color:var(--pink); background:rgba(255,96,160,.16); }
+        .wish-delete:focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+        .wish-delete:disabled { cursor:wait; opacity:.65; }
         .add-form { display:flex; gap:10px; margin-top:18px; }
         .add-form input { flex:1; }
         .composer { margin-top:20px; padding:20px; border:1px solid rgba(255,131,184,.33); border-radius:19px; background:rgba(255,131,184,.075); }
@@ -264,11 +268,12 @@
         }
 
         function renderWish(wish) {
-            const row = document.createElement("label");
+            const row = document.createElement("div");
             row.className = "wish-row";
             const checkbox = document.createElement("input");
             checkbox.className = "wish-check";
             checkbox.type = "checkbox";
+            checkbox.id = "wish-check-" + wish.id;
             checkbox.setAttribute("aria-label", wish.title + " als erledigt markieren");
             checkbox.addEventListener("change", () => {
                 if (!checkbox.checked) return;
@@ -277,8 +282,9 @@
                 });
                 openComposer(wish, "complete");
             });
-            const copy = document.createElement("span");
+            const copy = document.createElement("label");
             copy.className = "wish-copy";
+            copy.htmlFor = checkbox.id;
             const title = document.createElement("span");
             title.className = "wish-title";
             title.textContent = wish.title;
@@ -286,8 +292,45 @@
             date.className = "wish-date";
             date.textContent = "Hinzugefügt am " + new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(wish.created_at));
             copy.append(title, date);
-            row.append(checkbox, copy);
+
+            const remove = document.createElement("button");
+            remove.className = "wish-delete";
+            remove.type = "button";
+            remove.textContent = "Löschen";
+            remove.setAttribute("aria-label", wish.title + " aus der Wunschliste löschen");
+            remove.addEventListener("click", () => deleteWish(wish, remove));
+
+            row.append(checkbox, copy, remove);
             wishList.appendChild(row);
+        }
+
+        async function deleteWish(wish, button) {
+            if (!currentSession) return;
+            if (!window.confirm("Möchtet ihr „" + wish.title + "“ wirklich aus „Noch vor uns“ löschen?")) return;
+
+            button.disabled = true;
+            setMessage(wishMessage, "Der Wunsch wird gelöscht …", false);
+            try {
+                const { data, error } = await client
+                    .from("couple_wishes")
+                    .delete()
+                    .eq("id", wish.id)
+                    .eq("is_completed", false)
+                    .select("id")
+                    .maybeSingle();
+                if (error) throw error;
+
+                await loadEntries();
+                setMessage(
+                    wishMessage,
+                    data ? "Der Wunsch wurde aus eurer Liste gelöscht." : "Der Wunsch ist inzwischen erledigt oder schon gelöscht. Eure Liste wurde aktualisiert.",
+                    false
+                );
+            } catch (error) {
+                setMessage(wishMessage, "Der Wunsch konnte nicht gelöscht werden. Bitte versuche es erneut.", true);
+            } finally {
+                button.disabled = false;
+            }
         }
 
         async function renderMemory(memory) {
