@@ -1186,38 +1186,15 @@
         function setCurrentDateTime() {
 
             /*
-             * Genau der Zeitpunkt,
-             * an dem auf JA geklickt wird.
-             */
-
-            const now =
-                new Date();
-
-
-            /*
-             * Datum:
-             * z.B. 03.10.2026
+             * Festes Datum und Uhrzeit,
+             * an dem wir offiziell zusammengekommen sind.
              */
 
             const datum =
-                now.toLocaleDateString(
-                    "de-DE"
-                );
-
-
-            /*
-             * Uhrzeit:
-             * z.B. 16:27
-             */
+                "10.10.2026";
 
             const uhrzeit =
-                now.toLocaleTimeString(
-                    "de-DE",
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                );
+                "01:58";
 
 
             /*
