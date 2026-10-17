@@ -233,6 +233,8 @@
         let currentSession = null;
         let activeWish = null;
         let activeMode = "complete";
+        let entriesLoadPromise = null;
+        let reloadEntriesAfterCurrent = false;
 
         function setMessage(element, text, isError) {
             element.textContent = text || "";
@@ -387,7 +389,25 @@
             memoryList.appendChild(card);
         }
 
-        async function loadEntries() {
+        function loadEntries() {
+            if (entriesLoadPromise) {
+                reloadEntriesAfterCurrent = true;
+                return entriesLoadPromise;
+            }
+
+            entriesLoadPromise = (async () => {
+                do {
+                    reloadEntriesAfterCurrent = false;
+                    await loadEntriesOnce();
+                } while (reloadEntriesAfterCurrent);
+            })().finally(() => {
+                entriesLoadPromise = null;
+                reloadEntriesAfterCurrent = false;
+            });
+            return entriesLoadPromise;
+        }
+
+        async function loadEntriesOnce() {
             wishList.replaceChildren();
             memoryList.replaceChildren();
             setMessage(wishMessage, "Eure Wunschliste wird geladen …", false);
