@@ -236,16 +236,16 @@
         <div id="memberContent" hidden>
             <section class="panel" aria-labelledby="addTitle">
                 <h2 id="addTitle">Ein Lied für uns hinzufügen</h2>
-                <p class="muted">Tragt Titel und Künstler ein und fügt einen oder beide Musik-Links hinzu. Über „Cover &amp; Player anzeigen“ könnt ihr den Song direkt hier abspielen; die Buttons öffnen den jeweiligen Dienst.</p>
+                <p class="muted">Fügt mindestens einen Musik-Link hinzu. Songtitel und Künstler sind optional; wenn ihr sie leer lasst, zeigt der Player die Songdetails vom gewählten Dienst.</p>
                 <form id="songForm">
                     <div class="field-grid">
                         <div>
-                            <label for="songTitle">Songtitel</label>
-                            <input id="songTitle" name="title" type="text" maxlength="100" required placeholder="Zum Beispiel: Lieblingslied">
+                            <label for="songTitle">Songtitel (optional)</label>
+                            <input id="songTitle" name="title" type="text" maxlength="100" placeholder="Zum Beispiel: Lieblingslied">
                         </div>
                         <div>
-                            <label for="songArtist">Künstler/in</label>
-                            <input id="songArtist" name="artist" type="text" maxlength="80" required placeholder="Zum Beispiel: Lieblingsband">
+                            <label for="songArtist">Künstler/in (optional)</label>
+                            <input id="songArtist" name="artist" type="text" maxlength="80" placeholder="Zum Beispiel: Lieblingsband">
                         </div>
                         <div>
                             <label for="appleUrl">Apple-Music-Link (optional)</label>
@@ -297,17 +297,33 @@
                 element.classList.toggle("error", Boolean(isError));
             }
 
+            const genericSongTitles = new Set([
+                "Song aus eurem Soundtrack",
+                "Song aus Spotify",
+                "Song aus Apple Music"
+            ]);
+            const genericArtist = "Künstler/in im Player";
+
+            function songSearchTerms(song) {
+                const title = genericSongTitles.has(song.title) ? "" : song.title;
+                const artist = song.artist === genericArtist ? "" : song.artist;
+                return [title, artist].filter(Boolean).join(" ").trim();
+            }
+
             function providerUrl(song, provider) {
                 const stored = provider === "apple" ? song.apple_url : song.spotify_url;
                 if (stored) return stored;
-                const search = encodeURIComponent(song.title + " " + song.artist);
+                const search = encodeURIComponent(songSearchTerms(song));
                 return provider === "apple"
                     ? "https://music.apple.com/de/search?term=" + search
                     : "https://open.spotify.com/search/" + search;
             }
 
             function addProviderLink(card, song, provider) {
-                const hasDirectLink = Boolean(provider === "apple" ? song.apple_url : song.spotify_url);
+                const stored = provider === "apple" ? song.apple_url : song.spotify_url;
+                const hasDirectLink = Boolean(stored);
+                if (!hasDirectLink && !songSearchTerms(song)) return;
+
                 const link = document.createElement("a");
                 link.className = "provider-link " + (provider === "apple" ? "apple" : "spotify");
                 link.href = providerUrl(song, provider);
@@ -614,13 +630,22 @@
                     return;
                 }
 
+                const savedTitle = title || (
+                    appleUrl && spotifyUrl
+                        ? "Song aus eurem Soundtrack"
+                        : spotifyUrl
+                            ? "Song aus Spotify"
+                            : "Song aus Apple Music"
+                );
+                const savedArtist = artist || "Künstler/in im Player";
+
                 const button = byId("saveButton");
                 button.disabled = true;
                 setMessage(byId("songMessage"), "Der Song wird zu eurer Liste hinzugefügt …", false);
                 try {
                     const { error } = await client.from("couple_songs").insert({
-                        title,
-                        artist,
+                        title: savedTitle,
+                        artist: savedArtist,
                         apple_url: appleUrl,
                         spotify_url: spotifyUrl
                     });
