@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d19">
+    <title>Unsere Wunschliste ❤️</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --pink: #ff83b8;
+            --lavender: #d0a1ff;
+            --muted: rgba(255,255,255,.72);
+            --panel: rgba(255,255,255,.075);
+            --border: rgba(255,255,255,.14);
+        }
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 28px 16px;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 8%, rgba(255,96,160,.2), transparent 32rem),
+                radial-gradient(circle at 90% 92%, rgba(157,100,255,.2), transparent 32rem),
+                linear-gradient(145deg, #090910, #15111f 54%, #0a0a13);
+        }
+        main { width: min(900px, 100%); margin: 0 auto; }
+        .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 22px; }
+        .back,.button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:11px 16px; border:1px solid var(--border); border-radius:999px; color:#fff; text-decoration:none; background:rgba(255,255,255,.07); cursor:pointer; font:inherit; transition:transform .2s ease,background .2s ease; }
+        .back:hover,.button:hover { transform:translateY(-2px); background:rgba(255,255,255,.12); }
+        .back:focus-visible,.button:focus-visible,input:focus-visible,textarea:focus-visible,.tab:focus-visible,.wish-check:focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+        .hero,.panel { border:1px solid var(--border); border-radius:28px; background:var(--panel); box-shadow:0 20px 55px rgba(0,0,0,.28); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+        .hero { padding:clamp(26px,6vw,48px) 24px; text-align:center; }
+        .eyebrow { margin:0 0 10px; color:var(--pink); font-size:13px; font-weight:bold; letter-spacing:.18em; text-transform:uppercase; }
+        h1 { margin:0; font-size:clamp(34px,7vw,54px); background:linear-gradient(90deg,#ff83b8,#d0a1ff); background-clip:text; -webkit-background-clip:text; color:transparent; }
+        .intro { max-width:620px; margin:16px auto 0; color:var(--muted); font-size:16px; line-height:1.65; }
+        .panel { margin-top:18px; padding:clamp(20px,5vw,34px); }
+        h2 { margin:0 0 12px; font-size:22px; }
+        h3 { margin:0; font-size:18px; }
+        .muted { color:var(--muted); line-height:1.6; }
+        form { display:grid; gap:14px; }
+        label.field { display:grid; gap:7px; color:rgba(255,255,255,.88); font-size:14px; font-weight:bold; }
+        input,textarea { width:100%; min-width:0; padding:13px 14px; border:1px solid rgba(255,255,255,.17); border-radius:14px; color:#fff; background:rgba(0,0,0,.18); font:inherit; }
+        input[type="file"] { padding:11px; }
+        textarea { min-height:92px; resize:vertical; }
+        input::file-selector-button { margin-right:12px; padding:8px 12px; border:0; border-radius:999px; color:#fff; background:rgba(255,131,184,.28); cursor:pointer; }
+        .button.primary { border:0; background:linear-gradient(90deg,#ff5fa7,#bd78ff); font-weight:bold; }
+        .button:disabled { cursor:wait; opacity:.65; transform:none; }
+        .message { min-height:22px; margin:0; color:#f1d5ff; font-size:14px; line-height:1.5; }
+        .message.error { color:#ffb4c5; }
+        .userbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; color:var(--muted); overflow-wrap:anywhere; }
+        .notice { padding:18px; border:1px solid rgba(255,131,184,.24); border-radius:18px; background:rgba(255,131,184,.08); line-height:1.6; }
+        .summary { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 14px; margin-bottom:18px; color:var(--muted); font-size:14px; }
+        .summary strong { color:#fff; }
+        .tabs { display:flex; gap:7px; border-bottom:1px solid var(--border); margin-bottom:20px; }
+        .tab { min-height:44px; padding:10px 13px; border:0; border-bottom:2px solid transparent; margin-bottom:-1px; color:var(--muted); background:transparent; font:inherit; cursor:pointer; }
+        .tab[aria-selected="true"] { color:#fff; border-bottom-color:var(--pink); font-weight:bold; }
+        .tab-count { margin-left:5px; color:var(--pink); }
+        .section-heading { display:flex; justify-content:space-between; align-items:end; gap:12px; margin:0 0 12px; }
+        .section-heading h2 { margin:0; }
+        .wish-list,.memory-list { display:grid; gap:10px; }
+        .wish-row { display:flex; align-items:center; gap:13px; min-height:68px; padding:13px 3px; border-bottom:1px solid rgba(255,255,255,.09); }
+        .wish-check { flex:0 0 23px; width:23px; height:23px; accent-color:#ff64ad; cursor:pointer; }
+        .wish-copy { min-width:0; }
+        .wish-title { display:block; font-size:16px; font-weight:bold; line-height:1.45; overflow-wrap:anywhere; }
+        .wish-date { display:block; margin-top:4px; color:var(--muted); font-size:13px; }
+        .add-form { display:flex; gap:10px; margin-top:18px; }
+        .add-form input { flex:1; }
+        .composer { margin-top:20px; padding:20px; border:1px solid rgba(255,131,184,.33); border-radius:19px; background:rgba(255,131,184,.075); }
+        .composer > p { margin:7px 0 16px; color:var(--muted); font-size:14px; line-height:1.55; overflow-wrap:anywhere; }
+        .composer form { gap:13px; }
+        .composer-actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:2px; }
+        .empty { padding:20px 3px; color:var(--muted); line-height:1.65; }
+        .memory-card { display:grid; grid-template-columns:minmax(190px,260px) minmax(0,1fr); gap:17px; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.09); }
+        .memory-photo { display:flex; align-items:center; justify-content:center; min-height:155px; overflow:hidden; border:1px solid var(--border); border-radius:17px; background:linear-gradient(145deg,rgba(255,120,183,.24),rgba(111,79,160,.32),rgba(16,13,25,.8)); color:var(--muted); }
+        .memory-photo img { display:block; max-width:100%; max-height:360px; width:auto; height:auto; object-fit:contain; }
+        .memory-copy { min-width:0; }
+        .memory-date { color:var(--pink); font-size:12px; font-weight:bold; letter-spacing:.06em; text-transform:uppercase; }
+        .memory-title { margin:7px 0; font-size:18px; overflow-wrap:anywhere; }
+        .memory-note { margin:0; color:var(--muted); font-size:14px; line-height:1.6; white-space:pre-wrap; overflow-wrap:anywhere; }
+        .memory-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+        .memory-action { min-height:40px; padding:8px 12px; border:1px solid rgba(255,255,255,.18); border-radius:999px; color:#fff; background:rgba(255,255,255,.06); font:inherit; cursor:pointer; }
+        .memory-action:hover { border-color:var(--pink); }
+        .memory-action:focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+        .lightbox { position:relative; width:min(94vw,1200px); max-width:none; max-height:94vh; margin:auto; padding:48px 12px 12px; border:1px solid var(--border); border-radius:20px; color:#fff; background:#100d19; box-shadow:0 24px 80px rgba(0,0,0,.6); }
+        .lightbox::backdrop { background:rgba(0,0,0,.88); backdrop-filter:blur(6px); }
+        .lightbox img { display:block; max-width:100%; max-height:calc(94vh - 64px); width:auto; height:auto; object-fit:contain; margin:0 auto; }
+        .lightbox-close { position:absolute; top:10px; right:10px; display:grid; place-items:center; width:40px; height:40px; border:1px solid var(--border); border-radius:50%; color:#fff; background:rgba(255,255,255,.08); cursor:pointer; font:inherit; font-size:22px; line-height:1; }
+        .footer { padding:18px 0 2px; color:rgba(255,255,255,.52); text-align:center; font-size:13px; }
+        [hidden] { display:none !important; }
+        @media(max-width:600px) {
+            body { padding:18px 12px; }
+            .hero { border-radius:22px; }
+            .panel { border-radius:22px; }
+            .section-heading { align-items:flex-start; flex-direction:column; }
+            .memory-card { grid-template-columns:1fr; gap:12px; }
+            .memory-photo { min-height:180px; }
+            .add-form { align-items:stretch; flex-direction:column; }
+            .add-form .button { width:100%; }
+            .composer-actions .button { flex:1 1 100%; }
+        }
+        @media(prefers-reduced-motion:reduce) {
+            *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <nav class="topbar" aria-label="Seitennavigation">
+            <a class="back" href="index.html">← Zur Hauptseite</a>
+            <span aria-hidden="true">❤️</span>
+        </nav>
+
+        <header class="hero">
+            <p class="eyebrow">Steffi &amp; Yannik</p>
+            <h1>Unsere Wunschliste</h1>
+            <p class="intro">Kleine Pläne, große Erinnerungen: Sammelt hier Dinge, die ihr zusammen erleben möchtet, und haltet eure gemeinsamen Momente fest. ❤️</p>
+        </header>
+
+        <section class="panel" id="loginPanel">
+            <h2>Privat anmelden</h2>
+            <p class="muted">Wir schicken dir einen einmaligen Anmeldelink per E-Mail. Nur freigeschaltete Konten können eure Wünsche und Erinnerungen sehen.</p>
+            <form id="loginForm">
+                <label class="field" for="email">Deine E-Mail-Adresse
+                    <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@beispiel.de">
+                </label>
+                <button class="button primary" id="loginButton" type="submit">Anmeldelink senden</button>
+                <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="panel" id="signedInPanel" hidden>
+            <div class="userbar">
+                <span id="userLabel"></span>
+                <button class="button" id="logoutButton" type="button">Abmelden</button>
+            </div>
+            <div class="notice" id="noAccess" hidden>Diese E-Mail-Adresse ist noch nicht freigeschaltet. Melde dich mit einem eurer freigegebenen Konten an.</div>
+
+            <div id="memberContent" hidden>
+                <div class="summary">
+                    <strong><span id="openCount">0</span> Wünsche warten auf euch</strong>
+                    <span><span id="memoryCount">0</span> gemeinsame Momente festgehalten</span>
+                </div>
+
+                <div class="tabs" role="tablist" aria-label="Wunschliste und Erinnerungen">
+                    <button class="tab" id="wishesTab" role="tab" aria-controls="wishesPanel" aria-selected="true" type="button">Noch vor uns <span class="tab-count" id="wishTabCount">0</span></button>
+                    <button class="tab" id="memoriesTab" role="tab" aria-controls="memoriesPanel" aria-selected="false" type="button">Schon erlebt <span class="tab-count" id="memoryTabCount">0</span></button>
+                </div>
+
+                <section id="wishesPanel" role="tabpanel" aria-labelledby="wishesTab">
+                    <div class="section-heading"><h2>Was möchtet ihr zusammen machen?</h2></div>
+                    <div class="wish-list" id="wishList" aria-live="polite"></div>
+                    <form class="add-form" id="wishForm">
+                        <input id="newWish" type="text" maxlength="120" placeholder="Noch ein Wunsch für euch …" aria-label="Neuen gemeinsamen Wunsch eingeben" required>
+                        <button class="button primary" id="addWishButton" type="submit">+ Wunsch hinzufügen</button>
+                    </form>
+                    <p class="message" id="wishMessage" role="status" aria-live="polite"></p>
+
+                    <section class="composer" id="memoryComposer" aria-labelledby="composerTitle" hidden>
+                        <h2 id="composerTitle">Diesen Moment festhalten</h2>
+                        <p id="composerDescription"></p>
+                        <form id="memoryForm">
+                            <label class="field" for="memoryDate">Wann habt ihr es gemacht?
+                                <input id="memoryDate" type="date">
+                            </label>
+                            <label class="field" for="memoryNote">Eure Notiz
+                                <textarea id="memoryNote" maxlength="1000" placeholder="Was möchtet ihr von diesem Moment behalten?"></textarea>
+                            </label>
+                            <label class="field" for="memoryPhoto">Ein Foto dazu (optional)
+                                <input id="memoryPhoto" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/avif">
+                            </label>
+                            <p class="muted" id="photoHint">Bilder bis 15 MB sind möglich. Ihr könnt die Erinnerung auch ohne Foto speichern.</p>
+                            <div class="composer-actions">
+                                <button class="button primary" id="saveMemoryButton" type="submit">Als Erinnerung speichern</button>
+                                <button class="button" id="saveLaterButton" type="button">Erledigt, Foto später ergänzen</button>
+                                <button class="button" id="cancelMemoryButton" type="button">Abbrechen</button>
+                            </div>
+                            <p class="message" id="composerMessage" role="status" aria-live="polite"></p>
+                        </form>
+                    </section>
+                </section>
+
+                <section id="memoriesPanel" role="tabpanel" aria-labelledby="memoriesTab" hidden>
+                    <div class="section-heading"><h2>Das habt ihr schon zusammen erlebt</h2></div>
+                    <div class="memory-list" id="memoryList" aria-live="polite"></div>
+                    <p class="message" id="memoryMessage" role="status" aria-live="polite"></p>
+                </section>
+            </div>
+        </section>
+
+        <dialog class="lightbox" id="memoryLightbox" aria-label="Erinnerungsfoto groß anzeigen">
+            <button class="lightbox-close" id="closeLightbox" type="button" aria-label="Schließen">×</button>
+            <img id="lightboxImage" alt="">
+        </dialog>
+
+        <p class="footer">Nur für euch beide. Mit Liebe gemacht ❤️</p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+    (() => {
+        const byId = (id) => document.getElementById(id);
+        const loginPanel = byId("loginPanel");
+        const signedInPanel = byId("signedInPanel");
+        const loginMessage = byId("loginMessage");
+        const wishMessage = byId("wishMessage");
+        const memoryMessage = byId("memoryMessage");
+        const composerMessage = byId("composerMessage");
+        const memberContent = byId("memberContent");
+        const noAccess = byId("noAccess");
+        const wishList = byId("wishList");
+        const memoryList = byId("memoryList");
+        const composer = byId("memoryComposer");
+        const memoryForm = byId("memoryForm");
+        const memoryLightbox = byId("memoryLightbox");
+        const lightboxImage = byId("lightboxImage");
+        const allowedTypes = {
+            "image/jpeg": "jpg",
+            "image/png": "png",
+            "image/webp": "webp",
+            "image/gif": "gif",
+            "image/heic": "heic",
+            "image/avif": "avif"
+        };
+        let client = null;
+        let currentSession = null;
+        let activeWish = null;
+        let activeMode = "complete";
+        let currentPhotoUrl = "";
+
+        function setMessage(element, text, isError) {
+            element.textContent = text || "";
+            element.classList.toggle("error", Boolean(isError));
+        }
+
+        function setTab(tab) {
+            const showWishes = tab === "wishes";
+            byId("wishesTab").setAttribute("aria-selected", String(showWishes));
+            byId("memoriesTab").setAttribute("aria-selected", String(!showWishes));
+            byId("wishesPanel").hidden = !showWishes;
+            byId("memoriesPanel").hidden = showWishes;
+        }
+
+        function formatDate(value) {
+            if (!value) return "";
+            const date = new Date(value + "T00:00:00");
+            return new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(date);
+        }
+
+        function updateCounts(openCount, doneCount) {
+            byId("openCount").textContent = openCount;
+            byId("memoryCount").textContent = doneCount;
+            byId("wishTabCount").textContent = openCount;
+            byId("memoryTabCount").textContent = doneCount;
+        }
+
+        function showEmpty(container, text) {
+            const empty = document.createElement("p");
+            empty.className = "empty";
+            empty.textContent = text;
+            container.appendChild(empty);
+        }
+
+        function renderWish(wish) {
+            const row = document.createElement("label");
+            row.className = "wish-row";
+            const checkbox = document.createElement("input");
+            checkbox.className = "wish-check";
+            checkbox.type = "checkbox";
+            checkbox.setAttribute("aria-label", wish.title + " als erledigt markieren");
+            checkbox.addEventListener("change", () => {
+                if (checkbox.checked) openComposer(wish, "complete");
+            });
+            const copy = document.createElement("span");
+            copy.className = "wish-copy";
+            const title = document.createElement("span");
+            title.className = "wish-title";
+            title.textContent = wish.title;
+            const date = document.createElement("span");
+            date.className = "wish-date";
+            date.textContent = "Hinzugefügt am " + new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(wish.created_at));
+            copy.append(title, date);
+            row.append(checkbox, copy);
+            wishList.appendChild(row);
+        }
+
+        async function renderMemory(memory) {
+            const card = document.createElement("article");
+            card.className = "memory-card";
+            const photoFrame = document.createElement("div");
+            photoFrame.className = "memory-photo";
+            if (memory.object_path) {
+                const { data: signed, error } = await client.storage.from("couple-photos").createSignedUrl(memory.object_path, 3600);
+                if (!error && signed && signed.signedUrl) {
+                    const preview = document.createElement("button");
+                    preview.type = "button";
+                    preview.className = "memory-photo";
+                    preview.setAttribute("aria-label", "Foto zu " + memory.title + " vergrößern");
+                    const image = document.createElement("img");
+                    image.src = signed.signedUrl;
+                    image.alt = memory.title;
+                    image.loading = "lazy";
+                    preview.appendChild(image);
+                    preview.addEventListener("click", () => {
+                        lightboxImage.src = signed.signedUrl;
+                        lightboxImage.alt = memory.title;
+                        memoryLightbox.showModal();
+                    });
+                    photoFrame.replaceWith(preview);
+                } else {
+                    photoFrame.textContent = "Foto konnte nicht geladen werden";
+                }
+            } else {
+                photoFrame.textContent = "Foto später ergänzen";
+            }
+
+            const copy = document.createElement("div");
+            copy.className = "memory-copy";
+            const date = document.createElement("span");
+            date.className = "memory-date";
+            date.textContent = memory.completed_at ? "Erlebt am " + formatDate(memory.completed_at) : "Gemeinsam erlebt";
+            const title = document.createElement("h3");
+            title.className = "memory-title";
+            title.textContent = memory.title;
+            const note = document.createElement("p");
+            note.className = "memory-note";
+            note.textContent = memory.completion_note || "Ein schöner Moment für euch. ❤️";
+            const actions = document.createElement("div");
+            actions.className = "memory-actions";
+            const edit = document.createElement("button");
+            edit.type = "button";
+            edit.className = "memory-action";
+            edit.textContent = memory.object_path ? "Notiz oder Foto bearbeiten" : "Foto oder Notiz ergänzen";
+            edit.addEventListener("click", () => openComposer(memory, "edit"));
+            actions.appendChild(edit);
+            copy.append(date, title, note, actions);
+            card.append(photoFrame, copy);
+            memoryList.appendChild(card);
+        }
+
+        async function loadEntries() {
+            wishList.replaceChildren();
+            memoryList.replaceChildren();
+            setMessage(wishMessage, "Eure Wunschliste wird geladen …", false);
+            setMessage(memoryMessage, "Eure Erinnerungen werden geladen …", false);
+            const { data: entries, error } = await client
+                .from("couple_wishes")
+                .select("id, title, created_at, is_completed, completed_at, completion_note, object_path")
+                .order("created_at", { ascending: false });
+
+            if (error) {
+                setMessage(wishMessage, "Eure Einträge konnten nicht geladen werden. Bitte lade die Seite neu.", true);
+                setMessage(memoryMessage, "Eure Einträge konnten nicht geladen werden. Bitte lade die Seite neu.", true);
+                updateCounts(0, 0);
+                return;
+            }
+
+            const open = entries.filter((entry) => !entry.is_completed);
+            const done = entries.filter((entry) => entry.is_completed);
+            updateCounts(open.length, done.length);
+            if (open.length === 0) showEmpty(wishList, "Hier ist Platz für euren ersten gemeinsamen Wunsch. Was möchtet ihr einmal zusammen erleben? ❤️");
+            else open.forEach(renderWish);
+            if (done.length === 0) showEmpty(memoryList, "Eure gemeinsamen Erlebnisse erscheinen hier, sobald ihr einen Wunsch abgehakt habt.");
+            else {
+                for (const memory of done) await renderMemory(memory);
+            }
+            setMessage(wishMessage, "", false);
+            setMessage(memoryMessage, "", false);
+        }
+
+        function openComposer(entry, mode) {
+            activeWish = entry;
+            activeMode = mode;
+            const editing = mode === "edit";
+            byId("composerTitle").textContent = editing ? "Erinnerung ergänzen" : "Diesen Moment festhalten";
+            byId("composerDescription").textContent = editing
+                ? "Ergänze das Datum, eure Notiz oder ein Foto zu „" + entry.title + "“."
+                : "„" + entry.title + "“ wird zu einer gemeinsamen Erinnerung. Ihr könnt jetzt Foto und Notiz ergänzen oder später hinzufügen.";
+            byId("memoryDate").value = entry.completed_at || "";
+            byId("memoryNote").value = entry.completion_note || "";
+            byId("memoryPhoto").value = "";
+            currentPhotoUrl = "";
+            byId("photoHint").textContent = editing && entry.object_path
+                ? "Euer bisheriges Foto bleibt erhalten, wenn ihr kein neues auswählt. Neue Bilder bis 15 MB sind möglich."
+                : "Bilder bis 15 MB sind möglich. Ihr könnt die Erinnerung auch ohne Foto speichern.";
+            byId("saveMemoryButton").textContent = editing ? "Änderungen speichern" : "Als Erinnerung speichern";
+            byId("saveLaterButton").hidden = editing;
+            byId("cancelMemoryButton").textContent = editing ? "Schließen" : "Abbrechen";
+            setMessage(composerMessage, "", false);
+            setTab("wishes");
+            composer.hidden = false;
+            composer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        function closeComposer() {
+            if (activeMode === "complete") {
+                const checked = wishList.querySelector(".wish-check:checked");
+                if (checked) checked.checked = false;
+            }
+            activeWish = null;
+            composer.hidden = true;
+            setMessage(composerMessage, "", false);
+        }
+
+        async function saveCompletedWish(withPhoto) {
+            if (!activeWish || !currentSession) return;
+            const button = byId(withPhoto ? "saveMemoryButton" : "saveLaterButton");
+            const file = withPhoto ? byId("memoryPhoto").files[0] : null;
+            if (file && !allowedTypes[file.type]) {
+                setMessage(composerMessage, "Dieses Bildformat wird nicht unterstützt. Verwende JPG, PNG, WebP, GIF, HEIC oder AVIF.", true);
+                return;
+            }
+            if (file && file.size > 15 * 1024 * 1024) {
+                setMessage(composerMessage, "Das Bild ist größer als 15 MB. Bitte wähle eine kleinere Datei.", true);
+                return;
+            }
+
+            button.disabled = true;
+            byId("saveLaterButton").disabled = true;
+            byId("cancelMemoryButton").disabled = true;
+            setMessage(composerMessage, file ? "Foto und Erinnerung werden sicher gespeichert …" : "Die Erinnerung wird gespeichert …", false);
+            let uploadedPath = null;
+            try {
+                const previousPath = activeWish.object_path || null;
+                if (file) {
+                    const extension = allowedTypes[file.type];
+                    uploadedPath = "wunschliste/" + window.crypto.randomUUID() + "." + extension;
+                    const { error: uploadError } = await client.storage
+                        .from("couple-photos")
+                        .upload(uploadedPath, file, { contentType: file.type, upsert: false });
+                    if (uploadError) throw uploadError;
+                }
+
+                const changes = {
+                    is_completed: true,
+                    completed_at: byId("memoryDate").value || null,
+                    completion_note: byId("memoryNote").value.trim(),
+                    object_path: uploadedPath || previousPath
+                };
+                const { error: updateError } = await client
+                    .from("couple_wishes")
+                    .update(changes)
+                    .eq("id", activeWish.id)
+                    .select("id")
+                    .single();
+                if (updateError) throw updateError;
+
+                if (uploadedPath && previousPath && previousPath !== uploadedPath) {
+                    await client.storage.from("couple-photos").remove([previousPath]);
+                }
+                activeWish = null;
+                composer.hidden = true;
+                setMessage(composerMessage, "", false);
+                setMessage(wishMessage, "Der Moment ist jetzt bei euren Erinnerungen gespeichert. ❤️", false);
+                await loadEntries();
+                setTab("memories");
+            } catch (error) {
+                if (uploadedPath) await client.storage.from("couple-photos").remove([uploadedPath]);
+                setMessage(composerMessage, "Das konnte nicht gespeichert werden. Bitte versuche es erneut.", true);
+            } finally {
+                button.disabled = false;
+                byId("saveLaterButton").disabled = false;
+                byId("cancelMemoryButton").disabled = false;
+            }
+        }
+
+        function setView() {
+            const config = window.STEFFI_SUPABASE;
+            if (!window.supabase || !window.supabase.createClient || !config || !config.url || !config.publishableKey) {
+                setMessage(loginMessage, "Die Wunschliste ist gerade nicht erreichbar. Bitte versuche es später erneut.", true);
+                byId("loginButton").disabled = true;
+                return;
+            }
+            client = window.supabase.createClient(config.url, config.publishableKey);
+
+            byId("loginForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const email = byId("email").value.trim().toLowerCase();
+                const button = byId("loginButton");
+                button.disabled = true;
+                setMessage(loginMessage, "Der Anmeldelink wird angefordert …", false);
+                try {
+                    const { error } = await client.auth.signInWithOtp({
+                        email,
+                        options: {
+                            emailRedirectTo: window.location.origin + window.location.pathname,
+                            shouldCreateUser: true
+                        }
+                    });
+                    if (error) throw error;
+                    setMessage(loginMessage, "Wenn die Adresse freigeschaltet ist, sollte der Anmeldelink gleich ankommen. Prüfe auch deinen Spam-Ordner.", false);
+                } catch (error) {
+                    setMessage(loginMessage, "Der Anmeldelink konnte nicht gesendet werden. " + (error.message || "Bitte prüfe deine Eingabe und versuche es erneut."), true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            byId("logoutButton").addEventListener("click", async () => {
+                const { error } = await client.auth.signOut();
+                if (error) setMessage(wishMessage, "Abmelden hat nicht geklappt. Bitte versuche es erneut.", true);
+                else await updateView();
+            });
+            byId("wishesTab").addEventListener("click", () => setTab("wishes"));
+            byId("memoriesTab").addEventListener("click", () => setTab("memories"));
+            byId("cancelMemoryButton").addEventListener("click", closeComposer);
+            byId("saveLaterButton").addEventListener("click", () => saveCompletedWish(false));
+            byId("closeLightbox").addEventListener("click", () => memoryLightbox.close());
+            memoryLightbox.addEventListener("click", (event) => {
+                if (event.target === memoryLightbox) memoryLightbox.close();
+            });
+
+            byId("wishForm").addEventListener("submit", async (event) => {
+                event.preventDefault();
+                if (!currentSession) return;
+                const input = byId("newWish");
+                const title = input.value.trim();
+                if (!title) return;
+                const button = byId("addWishButton");
+                button.disabled = true;
+                setMessage(wishMessage, "Der Wunsch wird gespeichert …", false);
+                try {
+                    const { error } = await client.from("couple_wishes").insert({ title });
+                    if (error) throw error;
+                    input.value = "";
+                    setMessage(wishMessage, "Euer Wunsch wurde hinzugefügt. ❤️", false);
+                    await loadEntries();
+                } catch (error) {
+                    setMessage(wishMessage, "Der Wunsch konnte nicht gespeichert werden. Bitte versuche es erneut.", true);
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            memoryForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                await saveCompletedWish(true);
+            });
+            client.auth.onAuthStateChange(() => {
+                window.setTimeout(() => updateView(), 0);
+            });
+            updateView();
+        }
+
+        async function updateView() {
+            if (!client) return;
+            const { data, error } = await client.auth.getSession();
+            if (error) {
+                setMessage(loginMessage, "Anmeldung konnte nicht geprüft werden. Bitte lade die Seite neu.", true);
+                return;
+            }
+            currentSession = data.session;
+            const user = currentSession && currentSession.user;
+            loginPanel.hidden = Boolean(user);
+            signedInPanel.hidden = !user;
+            if (!user) {
+                memberContent.hidden = true;
+                noAccess.hidden = true;
+                setMessage(loginMessage, "", false);
+                return;
+            }
+
+            byId("userLabel").textContent = "Angemeldet als " + (user.email || "");
+            memberContent.hidden = true;
+            noAccess.hidden = true;
+            const { data: membership, error: membershipError } = await client
+                .from("gallery_members")
+                .select("email")
+                .eq("email", (user.email || "").toLowerCase())
+                .maybeSingle();
+
+            if (membershipError) {
+                setMessage(wishMessage, "Eure Wunschliste konnte gerade nicht geladen werden. Bitte versuche es später erneut.", true);
+                memberContent.hidden = false;
+                return;
+            }
+            if (!membership) {
+                noAccess.hidden = false;
+                return;
+            }
+
+            memberContent.hidden = false;
+            await loadEntries();
+        }
+
+        setView();
+    })();
+    </script>
+</body>
+</html>
