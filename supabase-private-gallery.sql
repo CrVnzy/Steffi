@@ -20,38 +20,38 @@ alter table public.gallery_photos enable row level security;
 
 create policy "members can read their own membership"
   on public.gallery_members for select to authenticated
-  using (email = lower(coalesce((select auth.jwt() ->> 'email'), '')));
+  using (email = lower(coalesce((select auth.jwt()) ->> 'email', '')));
 
 create policy "members can view shared photos"
   on public.gallery_photos for select to authenticated
   using (exists (
     select 1 from public.gallery_members gm
-    where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+    where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
   ));
 
 create policy "members can add shared photos"
   on public.gallery_photos for insert to authenticated
   with check (exists (
     select 1 from public.gallery_members gm
-    where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+    where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
   ));
 
 create policy "members can edit shared photos"
   on public.gallery_photos for update to authenticated
   using (exists (
     select 1 from public.gallery_members gm
-    where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+    where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
   ))
   with check (exists (
     select 1 from public.gallery_members gm
-    where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+    where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
   ));
 
 create policy "members can delete shared photos"
   on public.gallery_photos for delete to authenticated
   using (exists (
     select 1 from public.gallery_members gm
-    where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+    where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
   ));
 
 grant usage on schema public to authenticated;
@@ -78,7 +78,7 @@ create policy "gallery members can view couple photos"
     bucket_id = 'couple-photos'
     and exists (
       select 1 from public.gallery_members gm
-      where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+      where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
     )
   );
 
@@ -88,7 +88,7 @@ create policy "gallery members can upload couple photos"
     bucket_id = 'couple-photos'
     and exists (
       select 1 from public.gallery_members gm
-      where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+      where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
     )
   );
 
@@ -98,14 +98,14 @@ create policy "gallery members can edit couple photos"
     bucket_id = 'couple-photos'
     and exists (
       select 1 from public.gallery_members gm
-      where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+      where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
     )
   )
   with check (
     bucket_id = 'couple-photos'
     and exists (
       select 1 from public.gallery_members gm
-      where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+      where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
     )
   );
 
@@ -115,6 +115,6 @@ create policy "gallery members can delete couple photos"
     bucket_id = 'couple-photos'
     and exists (
       select 1 from public.gallery_members gm
-      where gm.email = lower(coalesce((select auth.jwt() ->> 'email'), ''))
+      where gm.email = lower(coalesce((select auth.jwt()) ->> 'email', ''))
     )
   );
