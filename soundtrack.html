@@ -283,6 +283,7 @@
             let currentSession = null;
             let isMember = false;
             let loadSequence = 0;
+            let viewSequence = 0;
 
             function setMessage(element, message, isError) {
                 element.textContent = message || "";
@@ -392,18 +393,16 @@
                 }
             }
 
-            async function updateView(session) {
-                if (!session) {
-                    const result = await client.auth.getSession();
-                    if (result.error) {
-                        setMessage(byId("loginMessage"), "Anmeldung konnte gerade nicht geprüft werden. Bitte lade die Seite neu.", true);
-                        return;
-                    }
-                    currentSession = result.data.session;
-                } else {
-                    currentSession = session;
+            async function updateView() {
+                const sequence = ++viewSequence;
+                const { data, error: sessionError } = await client.auth.getSession();
+                if (sequence !== viewSequence) return;
+                if (sessionError) {
+                    setMessage(byId("loginMessage"), "Anmeldung konnte gerade nicht geprüft werden. Bitte lade die Seite neu.", true);
+                    return;
                 }
 
+                currentSession = data.session;
                 const user = currentSession && currentSession.user;
                 isMember = false;
                 loginPanel.hidden = Boolean(user);
@@ -425,6 +424,7 @@
                     .eq("email", (user.email || "").toLowerCase())
                     .maybeSingle();
 
+                if (sequence !== viewSequence) return;
                 if (error) {
                     memberContent.hidden = false;
                     songCount.textContent = "";
@@ -536,10 +536,10 @@
                 }
             });
 
-            client.auth.onAuthStateChange((_event, session) => {
-                void updateView(session);
+            client.auth.onAuthStateChange(() => {
+                window.setTimeout(() => { void updateView(); }, 0);
             });
-            void updateView(null);
+            void updateView();
         })();
     </script>
 </body>
