@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d19">
+    <title>Unser Gutscheinheft ❤️</title>
+    <style>
+        :root { color-scheme:dark; --pink:#ff83b8; --lavender:#d0a1ff; --muted:rgba(255,255,255,.72); --panel:rgba(255,255,255,.075); --border:rgba(255,255,255,.14); }
+        * { box-sizing:border-box; }
+        body { min-height:100vh; margin:0; padding:28px 16px; color:#fff; font-family:Arial,Helvetica,sans-serif; background:radial-gradient(circle at 10% 8%,rgba(255,96,160,.2),transparent 32rem),radial-gradient(circle at 90% 92%,rgba(157,100,255,.2),transparent 32rem),linear-gradient(145deg,#090910,#15111f 54%,#0a0a13); }
+        main { width:min(900px,100%); margin:0 auto; }
+        .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 22px; }
+        .button,.back { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:11px 16px; border:1px solid var(--border); border-radius:999px; color:#fff; text-decoration:none; background:rgba(255,255,255,.07); cursor:pointer; font:inherit; transition:transform .2s ease,background .2s ease; }
+        .button:hover,.back:hover { transform:translateY(-2px); background:rgba(255,255,255,.12); }
+        .button.primary { border:0; background:linear-gradient(90deg,#ff5fa7,#bd78ff); font-weight:bold; }
+        .button:disabled { cursor:wait; opacity:.65; transform:none; }
+        :focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+        .hero,.panel { border:1px solid var(--border); border-radius:28px; background:var(--panel); box-shadow:0 20px 55px rgba(0,0,0,.28); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+        .hero { padding:clamp(26px,6vw,48px) 24px; text-align:center; }
+        .eyebrow { margin:0 0 10px; color:var(--pink); font-size:13px; font-weight:bold; letter-spacing:.18em; text-transform:uppercase; }
+        h1 { margin:0; font-size:clamp(34px,7vw,54px); background:linear-gradient(90deg,#ff83b8,#d0a1ff); background-clip:text; -webkit-background-clip:text; color:transparent; }
+        h2 { margin:0 0 12px; font-size:22px; }
+        h3 { margin:0; font-size:18px; }
+        .intro,.muted { color:var(--muted); line-height:1.65; }
+        .intro { max-width:620px; margin:16px auto 0; }
+        .panel { margin-top:18px; padding:clamp(20px,5vw,34px); }
+        .userbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; color:var(--muted); overflow-wrap:anywhere; }
+        .notice { padding:18px; border:1px solid rgba(255,131,184,.24); border-radius:18px; background:rgba(255,131,184,.08); line-height:1.6; }
+        form { display:grid; gap:14px; }
+        label.field { display:grid; gap:7px; color:rgba(255,255,255,.9); font-size:14px; font-weight:bold; }
+        input,textarea { width:100%; min-width:0; padding:13px 14px; border:1px solid rgba(255,255,255,.17); border-radius:14px; color:#fff; background:rgba(0,0,0,.18); font:inherit; }
+        textarea { min-height:88px; resize:vertical; }
+        .auth-actions { display:flex; flex-wrap:wrap; gap:10px; }
+        .message { min-height:22px; margin:10px 0 0; color:#f1d5ff; font-size:14px; line-height:1.5; }
+        .message.error { color:#ffb4c5; }
+        .book-tabs { display:flex; flex-wrap:wrap; gap:7px; border-bottom:1px solid var(--border); margin:4px 0 22px; }
+        .tab { min-height:44px; padding:10px 13px; border:0; border-bottom:2px solid transparent; margin-bottom:-1px; color:var(--muted); background:transparent; font:inherit; cursor:pointer; }
+        .tab[aria-selected="true"] { color:#fff; border-bottom-color:var(--pink); font-weight:bold; }
+        .book-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+        .count,.coupon-status { color:var(--muted); font-size:13px; }
+        .coupon-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; margin:18px 0; }
+        .coupon-card { min-width:0; padding:19px; border:1px solid rgba(255,131,184,.22); border-radius:20px; background:linear-gradient(145deg,rgba(255,131,184,.09),rgba(255,255,255,.035)); transition:opacity .2s ease,filter .2s ease; }
+        .coupon-card.redeemed { opacity:.58; filter:grayscale(.75); }
+        .coupon-card-head { display:flex; align-items:flex-start; gap:12px; }
+        .coupon-emoji { flex:0 0 auto; font-size:29px; line-height:1.2; }
+        .coupon-copy { min-width:0; }
+        .coupon-description { margin:9px 0 14px; color:var(--muted); font-size:14px; line-height:1.6; white-space:pre-wrap; overflow-wrap:anywhere; }
+        .coupon-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+        .redeem-button { min-height:40px; padding:8px 13px; border:0; border-radius:999px; color:#fff; background:linear-gradient(90deg,#ff5fa7,#bd78ff); font:inherit; font-weight:bold; cursor:pointer; }
+        .redeem-button:disabled { cursor:wait; opacity:.65; }
+        .coupon-form-wrap { margin-top:24px; padding:20px; border:1px solid rgba(255,131,184,.28); border-radius:20px; background:rgba(255,131,184,.055); }
+        .coupon-form-wrap h2 { margin-bottom:7px; }
+        .coupon-form-wrap .muted { margin:0 0 16px; font-size:14px; }
+        .empty { grid-column:1/-1; padding:24px 8px; color:var(--muted); text-align:center; line-height:1.6; }
+        .footer { padding:18px 0 2px; color:rgba(255,255,255,.52); text-align:center; font-size:13px; }
+        [hidden] { display:none !important; }
+        .confetti { position:fixed; z-index:20; top:-16px; width:9px; height:15px; pointer-events:none; animation:confetti-fall 1.8s ease-in forwards; }
+        @keyframes confetti-fall { to { transform:translate3d(var(--drift),105vh,0) rotate(720deg); opacity:.2; } }
+        @media(max-width:620px) { body{padding:18px 12px}.hero,.panel{border-radius:22px}.coupon-list{grid-template-columns:1fr}.book-heading{align-items:flex-start;flex-direction:column}.auth-actions .button{flex:1 1 100%} }
+        @media(prefers-reduced-motion:reduce) { *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.confetti{display:none} }
+    </style>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Unser Kapitel">
+</head>
+<body>
+<main>
+    <nav class="topbar" aria-label="Seitennavigation"><a class="back" href="index.html">← Zurück zum Menü</a><span aria-hidden="true">🎟️</span></nav>
+    <header class="hero">
+        <p class="eyebrow">Steffi &amp; Yannik</p>
+        <h1>Unser Gutscheinheft</h1>
+        <p class="intro">Kleine Geschenke füreinander: Schaut in eure beiden Hefte und hebt euch die schönen Momente auf. Nur die Person, für die ein Gutschein gedacht ist, kann ihn einlösen. ❤️</p>
+    </header>
+
+    <section class="panel" id="loginPanel">
+        <h2>Privat anmelden</h2>
+        <p class="muted">Wir schicken dir einen Anmeldecode per E-Mail. Lass diese Seite geöffnet und gib den Code hier ein. Nur freigeschaltete Konten erhalten Zugriff.</p>
+        <form id="loginForm">
+            <label class="field" for="email">Deine E-Mail-Adresse<input id="email" name="email" type="email" autocomplete="email" required placeholder="name@beispiel.de"></label>
+            <button class="button primary" id="loginButton" type="submit">Code anfordern</button>
+        </form>
+        <form id="otpForm" hidden>
+            <p class="muted">Der Code wurde an <strong id="otpEmail"></strong> geschickt.</p>
+            <label class="field" for="otpCode">Anmeldecode aus der E-Mail (6–10 Ziffern)<input id="otpCode" name="otpCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required></label>
+            <div class="auth-actions"><button class="button primary" id="verifyOtpButton" type="submit">Code bestätigen</button><button class="button" id="resendOtpButton" type="button">Code erneut senden</button><button class="button" id="changeEmailButton" type="button">E-Mail ändern</button></div>
+        </form>
+        <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" id="signedInPanel" hidden>
+        <div class="userbar"><span id="userLabel"></span><button class="button" id="logoutButton" type="button">Abmelden</button></div>
+        <div class="notice" id="noAccess" hidden>Diese E-Mail-Adresse ist noch nicht für eure privaten Bereiche freigeschaltet.</div>
+        <div class="notice" id="setupNotice" hidden>Die Gutscheine und Check-ins sind noch nicht eingerichtet. Führe <strong>supabase-couple-features.sql</strong> im Supabase SQL-Editor aus und ordne danach alle freigeschalteten Konten in der Tabelle <strong>couple_member_roles</strong> einer Person zu.</div>
+        <div id="memberContent" hidden>
+            <div class="book-tabs" role="tablist" aria-label="Gutscheinhefte">
+                <button class="tab" id="yannikBookTab" role="tab" aria-controls="couponBook" aria-selected="true" type="button">Von Yannik für Steffi</button>
+                <button class="tab" id="steffiBookTab" role="tab" aria-controls="couponBook" aria-selected="false" type="button">Von Steffi für Yannik</button>
+            </div>
+            <section id="couponBook" role="tabpanel" aria-labelledby="yannikBookTab">
+                <div class="book-heading"><h2 id="bookTitle">Von Yannik für Steffi</h2><span class="count" id="couponCount">0 Gutscheine</span></div>
+                <p class="muted" id="bookIntro">Kleine Überraschungen, die Yannik für Steffi vorbereitet hat.</p>
+                <div class="coupon-list" id="couponList" aria-live="polite"></div>
+                <p class="message" id="couponMessage" role="status" aria-live="polite"></p>
+                <p id="bookNote" class="notice"></p>
+                <section class="coupon-form-wrap" id="couponFormWrap" aria-labelledby="addCouponTitle" hidden>
+                    <h2 id="addCouponTitle">Einen Gutschein verschenken</h2>
+                    <p class="muted">Füge eine kleine Überraschung für deine Lieblingsperson hinzu. ❤️</p>
+                    <form id="couponForm">
+                        <label class="field" for="couponTitle">Titel<input id="couponTitle" maxlength="100" required placeholder="Zum Beispiel: Frühstück ans Bett"></label>
+                        <label class="field" for="couponEmoji">Emoji<input id="couponEmoji" maxlength="8" required value="🎁" aria-describedby="emojiHint"></label>
+                        <span class="muted" id="emojiHint">Ein Emoji genügt — du kannst es auch einfach einfügen.</span>
+                        <label class="field" for="couponDescription">Beschreibung (optional)<textarea id="couponDescription" maxlength="500" placeholder="Was steckt hinter deinem Gutschein?"></textarea></label>
+                        <button class="button primary" id="addCouponButton" type="submit">Gutschein hinzufügen</button>
+                    </form>
+                </section>
+            </section>
+        </div>
+    </section>
+    <p class="footer">Nur für euch beide. Mit Liebe gemacht ❤️</p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="private-auth.js"></script>
+<script>
+(() => {
+    const byId = (id) => document.getElementById(id);
+    const books = {
+        yannik: { giver: "yannik", recipient: "steffi", title: "Von Yannik für Steffi", intro: "Kleine Überraschungen, die Yannik für Steffi vorbereitet hat.", tab: "yannikBookTab" },
+        steffi: { giver: "steffi", recipient: "yannik", title: "Von Steffi für Yannik", intro: "Kleine Überraschungen, die Steffi für Yannik vorbereitet hat.", tab: "steffiBookTab" }
+    };
+    let client = null;
+    let currentPerson = "";
+    let activeBook = "yannik";
+    let loadSequence = 0;
+
+    function setMessage(text, isError) {
+        const message = byId("couponMessage");
+        message.textContent = text || "";
+        message.classList.toggle("error", Boolean(isError));
+    }
+
+    function emptyState(text) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = text;
+        byId("couponList").appendChild(empty);
+    }
+
+    function showConfetti() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const colors = ["#ff83b8", "#d0a1ff", "#ffd166", "#ffffff", "#ff5fa7"];
+        for (let i = 0; i < 34; i += 1) {
+            const piece = document.createElement("span");
+            piece.className = "confetti";
+            piece.style.left = Math.random() * 100 + "vw";
+            piece.style.background = colors[i % colors.length];
+            piece.style.setProperty("--drift", (Math.random() * 220 - 110) + "px");
+            piece.style.animationDelay = (Math.random() * .35) + "s";
+            document.body.appendChild(piece);
+            window.setTimeout(() => piece.remove(), 2400);
+        }
+    }
+
+    function renderCoupon(coupon) {
+        const card = document.createElement("article");
+        card.className = "coupon-card" + (coupon.redeemed_at ? " redeemed" : "");
+        const head = document.createElement("div");
+        head.className = "coupon-card-head";
+        const emoji = document.createElement("span");
+        emoji.className = "coupon-emoji";
+        emoji.setAttribute("aria-hidden", "true");
+        emoji.textContent = coupon.emoji || "🎁";
+        const copy = document.createElement("div");
+        copy.className = "coupon-copy";
+        const title = document.createElement("h3");
+        title.textContent = coupon.title;
+        copy.appendChild(title);
+        head.append(emoji, copy);
+        card.appendChild(head);
+        if (coupon.description) {
+            const description = document.createElement("p");
+            description.className = "coupon-description";
+            description.textContent = coupon.description;
+            card.appendChild(description);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "coupon-actions";
+        if (coupon.redeemed_at) {
+            const status = document.createElement("span");
+            status.className = "coupon-status";
+            status.textContent = "Eingelöst am " + new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(new Date(coupon.redeemed_at));
+            actions.appendChild(status);
+        } else if (coupon.recipient_person === currentPerson) {
+            const redeem = document.createElement("button");
+            redeem.className = "redeem-button";
+            redeem.type = "button";
+            redeem.textContent = "Gutschein einlösen";
+            redeem.addEventListener("click", () => redeemCoupon(coupon, redeem));
+            actions.appendChild(redeem);
+        } else {
+            const status = document.createElement("span");
+            status.className = "coupon-status";
+            status.textContent = "Noch offen";
+            actions.appendChild(status);
+        }
+        card.appendChild(actions);
+        byId("couponList").appendChild(card);
+    }
+
+    async function loadCoupons() {
+        const sequence = ++loadSequence;
+        const book = books[activeBook];
+        const list = byId("couponList");
+        list.replaceChildren();
+        setMessage("Eure Gutscheine werden geladen …", false);
+        const { data, error } = await client
+            .from("couple_coupons")
+            .select("id, title, emoji, description, giver_person, recipient_person, created_at, redeemed_at")
+            .eq("giver_person", book.giver)
+            .eq("recipient_person", book.recipient)
+            .order("created_at", { ascending: false });
+        if (sequence !== loadSequence) return;
+        if (error) {
+            setMessage("Die Gutscheine konnten nicht geladen werden. Prüfe, ob das Supabase-Setup ausgeführt wurde.", true);
+            return;
+        }
+
+        const coupons = data || [];
+        const openCount = coupons.filter((coupon) => !coupon.redeemed_at).length;
+        byId("couponCount").textContent = coupons.length + (coupons.length === 1 ? " Gutschein" : " Gutscheine") + " · " + openCount + " offen";
+        if (coupons.length === 0) emptyState(activeBook === currentPerson
+            ? "Hier ist Platz für die erste kleine Überraschung. ❤️"
+            : "Hier wurde noch kein Gutschein für dieses Heft hinzugefügt.");
+        else coupons.forEach(renderCoupon);
+        setMessage("", false);
+    }
+
+    async function redeemCoupon(coupon, button) {
+        if (coupon.recipient_person !== currentPerson || coupon.redeemed_at) return;
+        button.disabled = true;
+        setMessage("Der Gutschein wird eingelöst …", false);
+        const { data, error } = await client
+            .from("couple_coupons")
+            .update({ redeemed_at: new Date().toISOString() })
+            .eq("id", coupon.id)
+            .is("redeemed_at", null)
+            .select("id")
+            .maybeSingle();
+        if (error || !data) {
+            setMessage(error ? "Der Gutschein konnte nicht eingelöst werden. Bitte versuche es erneut." : "Der Gutschein wurde bereits eingelöst. Aktualisiere das Heft.", true);
+            button.disabled = false;
+            return;
+        }
+        showConfetti();
+        await loadCoupons();
+        setMessage("Gutschein eingelöst — viel Freude damit! ❤️", false);
+    }
+
+    function selectBook(key) {
+        activeBook = key;
+        const book = books[key];
+        byId("bookTitle").textContent = book.title;
+        byId("bookIntro").textContent = book.intro;
+        for (const [bookKey, value] of Object.entries(books)) {
+            byId(value.tab).setAttribute("aria-selected", String(bookKey === key));
+        }
+        const canAdd = currentPerson === book.giver;
+        byId("couponFormWrap").hidden = !canAdd;
+        byId("bookNote").textContent = canAdd
+            ? "Du schenkst die Gutscheine in diesem Heft. Einlösen kann nur die Person, für die sie gedacht sind."
+            : "Du kannst Gutscheine in diesem Heft einlösen. Neue Gutscheine fügt die schenkende Person hinzu.";
+        loadCoupons();
+    }
+
+    byId("yannikBookTab").addEventListener("click", () => selectBook("yannik"));
+    byId("steffiBookTab").addEventListener("click", () => selectBook("steffi"));
+
+    byId("couponForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!client || currentPerson !== books[activeBook].giver) return;
+        const button = byId("addCouponButton");
+        const emojiValue = byId("couponEmoji").value.trim();
+        const titleValue = byId("couponTitle").value.trim();
+        if (!titleValue || !emojiValue) return;
+        button.disabled = true;
+        setMessage("Dein Gutschein wird hinzugefügt …", false);
+        const book = books[activeBook];
+        const { error } = await client.from("couple_coupons").insert({
+            title: titleValue,
+            emoji: emojiValue,
+            description: byId("couponDescription").value.trim(),
+            giver_person: book.giver,
+            recipient_person: book.recipient
+        });
+        if (error) {
+            setMessage("Der Gutschein konnte nicht hinzugefügt werden. Bitte versuche es erneut.", true);
+        } else {
+            byId("couponForm").reset();
+            byId("couponEmoji").value = "🎁";
+            await loadCoupons();
+            setMessage("Dein Gutschein wartet jetzt im Heft. ❤️", false);
+        }
+        button.disabled = false;
+    });
+
+    window.createSteffiPrivateAuth({
+        onReady: async (supabase, user, personKey) => {
+            client = supabase;
+            currentPerson = personKey;
+            selectBook(personKey === "yannik" ? "steffi" : "yannik");
+        },
+        onLogout: () => {
+            client = null;
+            currentPerson = "";
+            byId("couponList").replaceChildren();
+            setMessage("", false);
+        }
+    });
+})();
+</script>
+</body>
+</html>
