@@ -2,7 +2,7 @@
   "id": "./index.html",
   "name": "Unser kleines Kapitel – Steffi & Yannik",
   "short_name": "Unser Kapitel",
-  "description": "Eure privaten Erinnerungen, Fotos, Wünsche und gemeinsamen Songs.",
+  "description": "Eure privaten Erinnerungen, Fotos, Wünsche, Songs, Gutscheine und Stimmungs-Check-ins.",
   "lang": "de-DE",
   "start_url": "./index.html",
   "scope": "./",

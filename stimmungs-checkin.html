@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d19">
+    <title>Unser Stimmungs-Check-in ❤️</title>
+    <style>
+        :root { color-scheme:dark; --pink:#ff83b8; --lavender:#d0a1ff; --muted:rgba(255,255,255,.72); --panel:rgba(255,255,255,.075); --border:rgba(255,255,255,.14); }
+        * { box-sizing:border-box; }
+        body { min-height:100vh; margin:0; padding:28px 16px; color:#fff; font-family:Arial,Helvetica,sans-serif; background:radial-gradient(circle at 10% 8%,rgba(255,96,160,.2),transparent 32rem),radial-gradient(circle at 90% 92%,rgba(157,100,255,.2),transparent 32rem),linear-gradient(145deg,#090910,#15111f 54%,#0a0a13); }
+        main { width:min(900px,100%); margin:0 auto; }
+        .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 22px; }
+        .button,.back { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:11px 16px; border:1px solid var(--border); border-radius:999px; color:#fff; text-decoration:none; background:rgba(255,255,255,.07); cursor:pointer; font:inherit; transition:transform .2s ease,background .2s ease; }
+        .button:hover,.back:hover { transform:translateY(-2px); background:rgba(255,255,255,.12); }
+        .button.primary { border:0; background:linear-gradient(90deg,#ff5fa7,#bd78ff); font-weight:bold; }
+        .button:disabled { cursor:wait; opacity:.65; transform:none; }
+        :focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+        .hero,.panel { border:1px solid var(--border); border-radius:28px; background:var(--panel); box-shadow:0 20px 55px rgba(0,0,0,.28); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+        .hero { padding:clamp(26px,6vw,48px) 24px; text-align:center; }
+        .eyebrow { margin:0 0 10px; color:var(--pink); font-size:13px; font-weight:bold; letter-spacing:.18em; text-transform:uppercase; }
+        h1 { margin:0; font-size:clamp(34px,7vw,54px); background:linear-gradient(90deg,#ff83b8,#d0a1ff); background-clip:text; -webkit-background-clip:text; color:transparent; }
+        h2 { margin:0 0 12px; font-size:22px; }
+        .intro,.muted { color:var(--muted); line-height:1.65; }
+        .intro { max-width:620px; margin:16px auto 0; }
+        .panel { margin-top:18px; padding:clamp(20px,5vw,34px); }
+        .userbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; color:var(--muted); overflow-wrap:anywhere; }
+        .notice { padding:18px; border:1px solid rgba(255,131,184,.24); border-radius:18px; background:rgba(255,131,184,.08); line-height:1.6; }
+        form { display:grid; gap:14px; }
+        label.field { display:grid; gap:7px; color:rgba(255,255,255,.9); font-size:14px; font-weight:bold; }
+        input,textarea { width:100%; min-width:0; padding:13px 14px; border:1px solid rgba(255,255,255,.17); border-radius:14px; color:#fff; background:rgba(0,0,0,.18); font:inherit; }
+        textarea { min-height:84px; resize:vertical; }
+        .auth-actions { display:flex; flex-wrap:wrap; gap:10px; }
+        .message { min-height:22px; margin:10px 0 0; color:#f1d5ff; font-size:14px; line-height:1.5; }
+        .message.error { color:#ffb4c5; }
+        .mood-options { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:9px; }
+        .mood-option { min-height:92px; display:grid; place-items:center; align-content:center; gap:7px; padding:10px 6px; border:1px solid var(--border); border-radius:17px; color:#fff; background:rgba(255,255,255,.045); font:inherit; cursor:pointer; transition:background .2s ease,border-color .2s ease,transform .2s ease; }
+        .mood-option:hover { transform:translateY(-2px); background:rgba(255,255,255,.09); }
+        .mood-option[aria-pressed="true"] { border-color:var(--pink); background:rgba(255,131,184,.15); box-shadow:0 0 0 2px rgba(255,131,184,.12); }
+        .mood-emoji { font-size:27px; line-height:1; }
+        .mood-label { font-size:12px; text-align:center; }
+        .week-nav { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 18px; }
+        .week-nav .button { min-height:40px; padding:8px 13px; }
+        .week-nav strong { text-align:center; }
+        .week-list { display:grid; gap:11px; }
+        .day-card { padding:16px; border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,.035); }
+        .day-card.today { border-color:rgba(255,131,184,.5); background:rgba(255,131,184,.065); }
+        .day-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+        .day-head h3 { margin:0; font-size:16px; }
+        .today-tag { color:var(--pink); font-size:12px; font-weight:bold; }
+        .day-entries { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+        .person-entry { min-width:0; min-height:72px; padding:11px; border:1px solid rgba(255,255,255,.075); border-radius:13px; background:rgba(0,0,0,.13); }
+        .person-name { display:block; margin-bottom:6px; color:var(--muted); font-size:12px; }
+        .person-mood { font-weight:bold; line-height:1.45; overflow-wrap:anywhere; }
+        .person-note { margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.45; white-space:pre-wrap; overflow-wrap:anywhere; }
+        .no-checkin { color:rgba(255,255,255,.46); font-size:13px; }
+        .footer { padding:18px 0 2px; color:rgba(255,255,255,.52); text-align:center; font-size:13px; }
+        [hidden] { display:none !important; }
+        @media(max-width:650px) { body{padding:18px 12px}.hero,.panel{border-radius:22px}.mood-options{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.mood-option{min-height:78px;padding:8px 3px}.mood-emoji{font-size:24px}.mood-label{font-size:10px}.day-entries{gap:7px}.person-entry{padding:9px} }
+        @media(max-width:390px) { .mood-label{font-size:9px}.week-nav{gap:6px}.week-nav .button{padding:7px 9px;font-size:13px} }
+        @media(prefers-reduced-motion:reduce) { *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important} }
+    </style>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Unser Kapitel">
+</head>
+<body>
+<main>
+    <nav class="topbar" aria-label="Seitennavigation"><a class="back" href="index.html">← Zurück zum Menü</a><span aria-hidden="true">🌦️</span></nav>
+    <header class="hero">
+        <p class="eyebrow">Steffi &amp; Yannik</p>
+        <h1>Wie geht’s dir heute?</h1>
+        <p class="intro">Ein kleiner, freiwilliger Check-in für euch beide. Wähle ein Emoji und schreib nur dann etwas dazu, wenn du möchtest. ❤️</p>
+    </header>
+
+    <section class="panel" id="loginPanel">
+        <h2>Privat anmelden</h2>
+        <p class="muted">Wir schicken dir einen Anmeldecode per E-Mail. Lass diese Seite geöffnet und gib den Code hier ein. Nur freigeschaltete Konten erhalten Zugriff.</p>
+        <form id="loginForm">
+            <label class="field" for="email">Deine E-Mail-Adresse<input id="email" name="email" type="email" autocomplete="email" required placeholder="name@beispiel.de"></label>
+            <button class="button primary" id="loginButton" type="submit">Code anfordern</button>
+        </form>
+        <form id="otpForm" hidden>
+            <p class="muted">Der Code wurde an <strong id="otpEmail"></strong> geschickt.</p>
+            <label class="field" for="otpCode">Anmeldecode aus der E-Mail (6–10 Ziffern)<input id="otpCode" name="otpCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required></label>
+            <div class="auth-actions"><button class="button primary" id="verifyOtpButton" type="submit">Code bestätigen</button><button class="button" id="resendOtpButton" type="button">Code erneut senden</button><button class="button" id="changeEmailButton" type="button">E-Mail ändern</button></div>
+        </form>
+        <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" id="signedInPanel" hidden>
+        <div class="userbar"><span id="userLabel"></span><button class="button" id="logoutButton" type="button">Abmelden</button></div>
+        <div class="notice" id="noAccess" hidden>Diese E-Mail-Adresse ist noch nicht für eure privaten Bereiche freigeschaltet.</div>
+        <div class="notice" id="setupNotice" hidden>Der Stimmungs-Check-in ist noch nicht eingerichtet. Führe <strong>supabase-couple-features.sql</strong> im Supabase SQL-Editor aus und ordne danach alle freigeschalteten Konten in der Tabelle <strong>couple_member_roles</strong> einer Person zu.</div>
+        <div id="memberContent" hidden>
+            <section aria-labelledby="todayTitle">
+                <h2 id="todayTitle">Dein Check-in für heute</h2>
+                <p class="muted">Wähle aus, was gerade am besten passt. Auslassen ist jederzeit okay. Eure Notizen sind nur für euch beide sichtbar.</p>
+                <div class="mood-options" id="moodOptions" role="group" aria-label="Stimmung für heute auswählen"></div>
+                <form id="checkinForm" style="margin-top:16px">
+                    <label class="field" for="todayNote">Eine kurze Notiz (optional)<textarea id="todayNote" maxlength="300" placeholder="Wenn du magst, erzähl kurz, was dich beschäftigt …"></textarea></label>
+                    <button class="button primary" id="saveCheckinButton" type="submit">Check-in speichern</button>
+                </form>
+                <p class="message" id="checkinMessage" role="status" aria-live="polite"></p>
+            </section>
+
+            <section aria-labelledby="weekTitleHeading" style="margin-top:30px">
+                <div class="week-nav">
+                    <button class="button" id="previousWeekButton" type="button" aria-label="Vorherige Woche">← Woche</button>
+                    <strong id="weekLabel" aria-live="polite"></strong>
+                    <button class="button" id="nextWeekButton" type="button" aria-label="Nächste Woche">Woche →</button>
+                </div>
+                <div class="day-head"><h2 id="weekTitleHeading">Eure Woche</h2><span class="muted">Beide Stimmungen nebeneinander</span></div>
+                <div class="week-list" id="weekList" aria-live="polite"></div>
+                <p class="message" id="weekMessage" role="status" aria-live="polite"></p>
+            </section>
+        </div>
+    </section>
+    <p class="footer">Ohne Druck, nur füreinander da ❤️</p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="private-auth.js"></script>
+<script>
+(() => {
+    const moods = [
+        { key: "great", emoji: "😄", label: "Super" },
+        { key: "good", emoji: "🙂", label: "Gut" },
+        { key: "okay", emoji: "😐", label: "Ganz okay" },
+        { key: "low", emoji: "😔", label: "Nicht so gut" },
+        { key: "hard", emoji: "😣", label: "Schwerer Tag" }
+    ];
+    const people = { yannik: "Yannik", steffi: "Steffi" };
+    const byId = (id) => document.getElementById(id);
+    let client = null;
+    let currentPerson = "";
+    let selectedMood = "";
+    let today = berlinDate(new Date());
+    let displayedMonday = mondayOf(today);
+    let loadSequence = 0;
+
+    function berlinDate(date) {
+        const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Berlin", year: "numeric", month: "2-digit", day: "2-digit" })
+            .formatToParts(date).reduce((result, part) => {
+                if (part.type !== "literal") result[part.type] = part.value;
+                return result;
+            }, {});
+        return parts.year + "-" + parts.month + "-" + parts.day;
+    }
+
+    function addDays(dateString, amount) {
+        const date = new Date(dateString + "T00:00:00Z");
+        date.setUTCDate(date.getUTCDate() + amount);
+        return date.toISOString().slice(0, 10);
+    }
+
+    function mondayOf(dateString) {
+        const date = new Date(dateString + "T00:00:00Z");
+        const weekdayFromMonday = (date.getUTCDay() + 6) % 7;
+        date.setUTCDate(date.getUTCDate() - weekdayFromMonday);
+        return date.toISOString().slice(0, 10);
+    }
+
+    function localDateLabel(dateString, options) {
+        return new Intl.DateTimeFormat("de-DE", options || { weekday: "long", day: "numeric", month: "long" })
+            .format(new Date(dateString + "T12:00:00Z"));
+    }
+
+    function moodFor(key) { return moods.find((mood) => mood.key === key); }
+
+    function setMessage(id, text, isError) {
+        const message = byId(id);
+        message.textContent = text || "";
+        message.classList.toggle("error", Boolean(isError));
+    }
+
+    function renderMoodOptions() {
+        const container = byId("moodOptions");
+        container.replaceChildren();
+        moods.forEach((mood) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "mood-option";
+            button.dataset.mood = mood.key;
+            button.setAttribute("aria-pressed", String(selectedMood === mood.key));
+            button.setAttribute("aria-label", mood.label);
+            const emoji = document.createElement("span");
+            emoji.className = "mood-emoji";
+            emoji.setAttribute("aria-hidden", "true");
+            emoji.textContent = mood.emoji;
+            const label = document.createElement("span");
+            label.className = "mood-label";
+            label.textContent = mood.label;
+            button.append(emoji, label);
+            button.addEventListener("click", () => {
+                selectedMood = mood.key;
+                container.querySelectorAll(".mood-option").forEach((option) => {
+                    option.setAttribute("aria-pressed", String(option.dataset.mood === selectedMood));
+                });
+                setMessage("checkinMessage", "", false);
+            });
+            container.appendChild(button);
+        });
+    }
+
+    function renderEntry(personKey, dateString, entry) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "person-entry";
+        const name = document.createElement("span");
+        name.className = "person-name";
+        name.textContent = people[personKey];
+        wrapper.appendChild(name);
+        if (!entry) {
+            const empty = document.createElement("span");
+            empty.className = "no-checkin";
+            empty.textContent = "Noch kein Check-in";
+            wrapper.appendChild(empty);
+            return wrapper;
+        }
+        const mood = moodFor(entry.mood);
+        const value = document.createElement("div");
+        value.className = "person-mood";
+        value.textContent = mood ? mood.emoji + " " + mood.label : "Stimmung gespeichert";
+        wrapper.appendChild(value);
+        if (entry.note) {
+            const note = document.createElement("p");
+            note.className = "person-note";
+            note.textContent = entry.note;
+            wrapper.appendChild(note);
+        }
+        return wrapper;
+    }
+
+    async function loadWeek() {
+        if (!client || !currentPerson) return;
+        const sequence = ++loadSequence;
+        const weekEnd = addDays(displayedMonday, 6);
+        const labelStart = localDateLabel(displayedMonday, { day: "numeric", month: "short" });
+        const labelEnd = localDateLabel(weekEnd, { day: "numeric", month: "short", year: "numeric" });
+        byId("weekLabel").textContent = labelStart + " – " + labelEnd;
+        byId("nextWeekButton").disabled = displayedMonday >= mondayOf(today);
+        byId("weekList").replaceChildren();
+        setMessage("weekMessage", "Eure Check-ins werden geladen …", false);
+
+        const { data, error } = await client
+            .from("couple_mood_checkins")
+            .select("person_key, mood, note, checkin_date")
+            .gte("checkin_date", displayedMonday)
+            .lte("checkin_date", weekEnd)
+            .order("checkin_date", { ascending: true });
+        if (sequence !== loadSequence) return;
+        if (error) {
+            setMessage("weekMessage", "Die Wochenansicht konnte nicht geladen werden. Bitte versuche es später erneut.", true);
+            return;
+        }
+
+        let entries = data || [];
+        const todayIsInView = today >= displayedMonday && today <= weekEnd;
+        if (!todayIsInView) {
+            selectedMood = "";
+            byId("todayNote").value = "";
+            const { data: todayEntry, error: todayError } = await client
+                .from("couple_mood_checkins")
+                .select("person_key, mood, note, checkin_date")
+                .eq("checkin_date", today)
+                .eq("person_key", currentPerson)
+                .maybeSingle();
+            if (sequence !== loadSequence) return;
+            if (!todayError && todayEntry) {
+                selectedMood = todayEntry.mood;
+                byId("todayNote").value = todayEntry.note || "";
+            }
+            renderMoodOptions();
+        } else {
+            const todayEntry = entries.find((entry) => entry.person_key === currentPerson && entry.checkin_date === today);
+            selectedMood = todayEntry ? todayEntry.mood : "";
+            byId("todayNote").value = todayEntry ? (todayEntry.note || "") : "";
+            renderMoodOptions();
+        }
+
+        const byDateAndPerson = new Map(entries.map((entry) => [entry.checkin_date + ":" + entry.person_key, entry]));
+        for (let offset = 0; offset < 7; offset += 1) {
+            const date = addDays(displayedMonday, offset);
+            const card = document.createElement("article");
+            card.className = "day-card" + (date === today ? " today" : "");
+            const head = document.createElement("div");
+            head.className = "day-head";
+            const title = document.createElement("h3");
+            title.textContent = localDateLabel(date);
+            head.appendChild(title);
+            if (date === today) {
+                const todayTag = document.createElement("span");
+                todayTag.className = "today-tag";
+                todayTag.textContent = "Heute";
+                head.appendChild(todayTag);
+            }
+            const dayEntries = document.createElement("div");
+            dayEntries.className = "day-entries";
+            dayEntries.append(
+                renderEntry("yannik", date, byDateAndPerson.get(date + ":yannik")),
+                renderEntry("steffi", date, byDateAndPerson.get(date + ":steffi"))
+            );
+            card.append(head, dayEntries);
+            byId("weekList").appendChild(card);
+        }
+        setMessage("weekMessage", "", false);
+    }
+
+    byId("previousWeekButton").addEventListener("click", () => {
+        displayedMonday = addDays(displayedMonday, -7);
+        loadWeek();
+    });
+    byId("nextWeekButton").addEventListener("click", () => {
+        const next = addDays(displayedMonday, 7);
+        if (next <= mondayOf(today)) {
+            displayedMonday = next;
+            loadWeek();
+        }
+    });
+
+    byId("checkinForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!client || !currentPerson) return;
+        const updatedToday = berlinDate(new Date());
+        if (updatedToday !== today) {
+            const wasOnCurrentWeek = displayedMonday === mondayOf(today);
+            today = updatedToday;
+            if (wasOnCurrentWeek) displayedMonday = mondayOf(today);
+            selectedMood = "";
+            byId("todayNote").value = "";
+            renderMoodOptions();
+        }
+        if (!selectedMood) {
+            setMessage("checkinMessage", "Wähle erst ein Emoji aus — oder lass den Check-in einfach aus.", true);
+            return;
+        }
+        const button = byId("saveCheckinButton");
+        button.disabled = true;
+        setMessage("checkinMessage", "Dein Check-in wird gespeichert …", false);
+        const { error } = await client.from("couple_mood_checkins").upsert({
+            person_key: currentPerson,
+            mood: selectedMood,
+            note: byId("todayNote").value.trim(),
+            checkin_date: today
+        }, { onConflict: "person_key,checkin_date" });
+        if (error) {
+            setMessage("checkinMessage", "Dein Check-in konnte nicht gespeichert werden. Bitte versuche es erneut.", true);
+        } else {
+            setMessage("checkinMessage", "Dein Check-in ist gespeichert. Du kannst ihn heute jederzeit ändern. ❤️", false);
+            await loadWeek();
+        }
+        button.disabled = false;
+    });
+
+    renderMoodOptions();
+    window.createSteffiPrivateAuth({
+        onReady: async (supabase, user, personKey) => {
+            client = supabase;
+            currentPerson = personKey;
+            today = berlinDate(new Date());
+            displayedMonday = mondayOf(today);
+            byId("checkinMessage").textContent = "";
+            await loadWeek();
+        },
+        onLogout: () => {
+            client = null;
+            currentPerson = "";
+            selectedMood = "";
+            byId("weekList").replaceChildren();
+            byId("todayNote").value = "";
+            renderMoodOptions();
+            setMessage("checkinMessage", "", false);
+        }
+    });
+})();
+</script>
+</body>
+</html>
